@@ -1,0 +1,113 @@
+{
+  "name": "editabletable",
+  "version": "1.0.0",
+  "private": false,
+  "main": "dist/index.js",
+  "module": "dist/index.js",
+  "style": "dist/taillwind.css",
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "sideEffects": [
+    "**/*.css"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PrioriCS/EditableTable.git"
+  },
+  "lint-staged": {
+    "*.js": [
+      "eslint --fix",
+      "git add"
+    ]
+  },
+  "dependencies": {
+    "@headlessui/react": "^1.7.17",
+    "concurrently": "^8.2.2",
+    "currency.js": "^2.0.4",
+    "input-mask": "^1.1.20",
+    "lodash": "^4.17.21",
+    "moment": "^2.29.4",
+    "randomstring": "^1.2.2",
+    "react-bootstrap-icons": "^1.11.4",
+    "react-input-mask": "^2.0.4",
+    "tailwind-merge": "^1.14.0",
+    "web-vitals": "^2.1.4"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "rm -rf dist && NODE_ENV=production babel src/ --out-dir dist --copy-files && npx tailwindcss -i ./src/css/input.css -o ./dist/tailwind.css",
+    "watch:tailwind": "npx tailwindcss -i ./src/css/input.css -o ./dist/tailwind.css --watch",
+    "eject": "react-scripts eject",
+    "prepare": "husky install",
+    "lint-staged": "lint-staged",
+    "lint": "eslint ./src/**/*.{js,jsx,tsx} --fix",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
+    "storybook": "concurrently 'npm run watch:*'",
+    "watch:storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
+  },
+  "eslintConfig": {
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.22.9",
+    "@babel/core": "^7.22.9",
+    "@babel/preset-env": "^7.22.9",
+    "@babel/preset-react": "^7.22.5",
+    "@commitlint/cli": "^17.7.0",
+    "@commitlint/config-conventional": "^17.7.0",
+    "@commitlint/format": "^17.4.4",
+    "@storybook/addon-essentials": "^7.6.15",
+    "@storybook/addon-interactions": "^7.6.15",
+    "@storybook/addon-links": "^7.6.15",
+    "@storybook/addon-onboarding": "^1.0.11",
+    "@storybook/addon-styling-webpack": "^0.0.6",
+    "@storybook/addon-themes": "^7.6.15",
+    "@storybook/blocks": "^7.6.15",
+    "@storybook/preset-create-react-app": "^7.6.15",
+    "@storybook/react": "^7.6.15",
+    "@storybook/react-webpack5": "^7.6.15",
+    "@storybook/test": "^7.6.15",
+    "@tailwindcss/forms": "^0.5.6",
+    "autoprefixer": "^10.4.15",
+    "babel-jest": "^29.6.2",
+    "cross-env": "^7.0.3",
+    "css-loader": "^6.10.0",
+    "eslint": "^8.46.0",
+    "eslint-plugin-import": "^2.28.0",
+    "eslint-plugin-jest": "^27.2.3",
+    "eslint-plugin-react": "^7.33.1",
+    "eslint-plugin-storybook": "^0.6.15",
+    "eslint-plugin-tailwindcss": "^3.13.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.3",
+    "prettier": "^3.0.1",
+    "prop-types": "^15.8.1",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "react-scripts": "5.0.1",
+    "storybook": "^7.6.15",
+    "style-loader": "^3.3.4",
+    "tailwindcss": "^3.3.3",
+    "webpack": "^5.90.1"
+  }
+}
