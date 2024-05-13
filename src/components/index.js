@@ -1,4 +1,4 @@
 import EditableTable from './Table/EditableTable';
-import 'tailwindcss/tailwind.css';
+import '../../dist/tailwind.css';
 
 export { EditableTable };
