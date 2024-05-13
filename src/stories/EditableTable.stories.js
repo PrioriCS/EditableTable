@@ -1,5 +1,5 @@
 import { BinocularsFill, Search } from 'react-bootstrap-icons';
-import EditableTable from '../Components/Table/EditableTable';
+import EditableTable from '../components/Table/EditableTable';
 
 export default {
   title: 'EditableTable',
@@ -10,37 +10,9 @@ const update = (value) => {
   console.log(value);
 };
 
-const data = {
-  head: {
-    columns: [{ primaryKey: true, value: 'ID' }, { value: 'Nome do Cliente' }, { value: 'Telefone' }],
-  },
-  body: {
-    values: [
-      {
-        data: [
-          { key: 'id', value: '1', editable: false },
-          {
-            key: 'client_name',
-            value: 'Bernardo Magueta Kowalsky',
-            editable: true,
-          },
-          {
-            key: 'phone',
-            value: '(47) 98881-7898',
-            editable: false,
-            personalized: false,
-          },
-        ],
-      },
-    ],
-  },
-};
-
 export const Default = {
   args: {
     primary: true,
-    data: data,
-    onConfirm: update,
   },
 };
 
