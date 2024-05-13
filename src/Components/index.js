@@ -1,3 +1,3 @@
 import EditableTable from './Table/EditableTable';
 
-export { EditableTable };
+export default EditableTable;
