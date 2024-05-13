@@ -184,3 +184,41 @@ export const WithStyle = {
     data: dataWithStyle,
   },
 };
+
+const withoutPaginationAndToolbarData = {
+  table: {
+    withoutToolbar: true,
+    withoutPagination: true,
+  },
+  head: {
+    columns: [{ primaryKey: true, value: 'ID' }, { value: 'Nome do Cliente' }, { value: 'Telefone' }],
+  },
+  body: {
+    values: [
+      {
+        data: [
+          { key: 'id', value: '1', editable: false },
+          {
+            key: 'client_name',
+            value: 'Bernardo Magueta Kowalsky',
+            editable: true,
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+            editable: false,
+            personalized: false,
+          },
+        ],
+      },
+    ],
+  },
+};
+
+export const withoutPaginationAndToolbar = {
+  args: {
+    primary: true,
+    data: withoutPaginationAndToolbarData,
+    onConfirm: update,
+  },
+};

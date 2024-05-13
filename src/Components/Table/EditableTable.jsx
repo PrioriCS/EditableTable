@@ -31,18 +31,23 @@ export default function EditableTable({ data = {}, onConfirm = noop }) {
 
   return (
     <div className={twMerge('shadow-gray-600 drop-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full')}>
-      <SearchBar editing={isEditing} data={editableData?.searchBar} handleConfirm={handleConfirm} />
+      <SearchBar
+        editing={isEditing}
+        data={editableData?.searchBar}
+        handleConfirm={handleConfirm}
+        withoutToolbar={data?.table?.withoutToolbar}
+      />
       <div
         className={twMerge(
           'overflow-hidden',
-          data?.searchBar?.separated ? 'rounded-t-xl border' : '',
-          data?.pagination?.separated ? 'rounded-b-xl border' : '',
+          data?.searchBar?.separated || data?.table?.withoutToolbar ? 'rounded-t-xl border' : '',
+          data?.pagination?.separated || data?.table?.withoutPagination ? 'rounded-b-xl border' : '',
           data?.table?.style?.border ? data.table.style.border : ''
         )}>
         <div
           className={twMerge(
             'overflow-auto',
-            data?.table?.scrollY ? (data?.table?.scrollMaxHeight ? data.table.scrollMaxHeight : 'max-h-96') : ''
+            data?.table?.scrollY ? (data?.table?.scrollMaxHeight ? data.table.scrollMaxHeight : 'max-h-96') : 'h-full'
           )}>
           <table className={twMerge('border bg-white', data?.table?.scrollX ? 'w-screen' : 'w-full')}>
             <Head data={data?.head} />
@@ -50,7 +55,7 @@ export default function EditableTable({ data = {}, onConfirm = noop }) {
           </table>
         </div>
       </div>
-      <Pagination data={data?.pagination} />
+      {!data?.table?.withoutPagination && <Pagination data={data?.pagination} />}
     </div>
   );
 }
