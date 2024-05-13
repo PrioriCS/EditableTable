@@ -48,7 +48,8 @@
     "version:major": "npm version major",
     "storybook": "concurrently 'npm run watch:*'",
     "watch:storybook": "storybook dev -p 6006",
-    "build-storybook": "storybook build"
+    "build-storybook": "storybook build",
+    "babel-version": "babel --version"
   },
   "eslintConfig": {
     "extends": [
