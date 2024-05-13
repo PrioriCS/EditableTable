@@ -1,8 +1,9 @@
+import { noop } from 'lodash';
 import React from 'react';
 import { Floppy, Search } from 'react-bootstrap-icons';
 import { twMerge } from 'tailwind-merge';
 
-export default function SearchBar({ editing = false, data = {} }) {
+export default function SearchBar({ editing = false, data = {}, handleConfirm = noop }) {
   const { separated, saveButton, bar, style } = data;
   const SaveIcon = saveButton?.icon?.component;
   const BarIcon = bar?.icon?.component;
@@ -55,6 +56,7 @@ export default function SearchBar({ editing = false, data = {} }) {
         {editing && (
           <button
             type='button'
+            onClick={() => handleConfirm()}
             className={twMerge(
               'px-5 border py-2 text-gray-600 flex items-center space-x-2',
               saveButton?.style.rounded ? saveButton.style.rounded : 'rounded-md',

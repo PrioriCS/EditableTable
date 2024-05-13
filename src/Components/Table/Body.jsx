@@ -8,23 +8,36 @@ const Personalized = ({ component, functions, value }) => {
 };
 
 export default function Body({ data = {}, edit = noop }) {
+  const { style } = data;
   return (
-    <tbody className='border'>
-      <tr>
-        {data?.values?.map((row, rowIndex) =>
-          row?.data?.map((item, itemIndex) => (
+    <tbody>
+      {data?.values?.map((row, rowIndex) => (
+        <tr key={rowIndex}>
+          {row?.data?.map((item, itemIndex) => (
             <td
               key={itemIndex}
               className={twMerge(
-                'border text-center whitespace-nowrap text-gray-600',
-                item.editable || item.personalized ? '' : 'px-5 py-2 cursor-not-allowed bg-gray-50'
+                'text-center whitespace-nowrap',
+                item.editable || item.personalized ? '' : 'px-5 py-2 cursor-not-allowed',
+                rowIndex < data?.values?.length - 1 ? 'border-b' : '',
+                itemIndex < row?.data?.length - 1 ? 'border-r' : '',
+                style?.background ? style.background : '',
+                style?.disabled && !item.editable ? (item?.personalized ? '' : style.disabled) : 'bg-gray-50',
+                style?.border ? style.border : '',
+                style?.text ? style.text : 'text-gray-600',
+                style?.size ? style.size : ''
               )}>
-              {item.editable ? (
+              {item.editable && !item.disabled ? (
                 <input
+                  type={item?.type ? item.type : 'text'}
                   value={item.value}
                   onChange={({ target }) => edit(rowIndex, itemIndex, target.value)}
                   disabled={!item.editable}
-                  className='py-2 border-none w-full focus:border-transparent focus:ring-0 text-center'
+                  className={twMerge(
+                    'py-2 border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center',
+                    style?.background ? style.background : '',
+                    style?.size ? style.size : ''
+                  )}
                 />
               ) : item.personalized ? (
                 <Personalized component={item.component} functions={item.functions} value={item.value} />
@@ -32,9 +45,9 @@ export default function Body({ data = {}, edit = noop }) {
                 item.value
               )}
             </td>
-          ))
-        )}
-      </tr>
+          ))}
+        </tr>
+      ))}
     </tbody>
   );
 }

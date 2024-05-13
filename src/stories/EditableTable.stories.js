@@ -6,6 +6,44 @@ export default {
   component: EditableTable,
 };
 
+const update = (value) => {
+  console.log(value);
+};
+
+const data = {
+  head: {
+    columns: [{ primaryKey: true, value: 'ID' }, { value: 'Nome do Cliente' }, { value: 'Telefone' }],
+  },
+  body: {
+    values: [
+      {
+        data: [
+          { key: 'id', value: '1', editable: false },
+          {
+            key: 'client_name',
+            value: 'Bernardo Magueta Kowalsky',
+            editable: true,
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+            editable: false,
+            personalized: false,
+          },
+        ],
+      },
+    ],
+  },
+};
+
+export const Default = {
+  args: {
+    primary: true,
+    data: data,
+    onConfirm: update,
+  },
+};
+
 const Personalized = ({ functions, value }) => {
   const { test } = functions;
   return (
@@ -19,9 +57,14 @@ const test = (value) => {
   console.log(value);
 };
 
-const data = {
+const dataWithStyle = {
   table: {
-    style: {},
+    style: {
+      border: 'border-red-800',
+    },
+    scrollX: true,
+    scrollY: true,
+    scrollMaxHeight: 'max-h-40',
   },
   searchBar: {
     bar: {
@@ -65,16 +108,41 @@ const data = {
   },
   head: {
     columns: [{ primaryKey: true, value: 'ID' }, { value: 'Nome do Cliente' }, { value: 'Telefone' }],
-    style: {},
+    style: {
+      background: 'bg-red-100',
+      border: 'border-red-800',
+      text: 'text-green-600',
+      font: 'font-thin',
+      size: 'text-6xl',
+    },
   },
   body: {
     values: [
       {
         data: [
-          { key: 'id', value: '1', editable: false },
+          { key: 'id', type: 'number', value: '1', editable: false },
           {
             key: 'client_name',
             value: 'Bernardo Magueta Kowalsky',
+            editable: true,
+            type: 'text',
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+            editable: false,
+            personalized: true,
+            component: Personalized,
+            functions: { test },
+          },
+        ],
+      },
+      {
+        data: [
+          { key: 'id', value: '2', editable: false },
+          {
+            key: 'client_name',
+            value: 'Artur Ramiro Furtado',
             editable: true,
           },
           {
@@ -88,49 +156,31 @@ const data = {
         ],
       },
     ],
+    style: {
+      background: 'bg-yellow-100',
+      disabled: 'bg-yellow-200',
+      border: 'border-blue-700',
+      text: 'text-purple-600',
+      size: 'text-4xl',
+    },
   },
   pagination: {
-    style: {},
+    style: {
+      background: 'bg-purple-100',
+      border: 'border-green-600',
+      text: 'text-red-600',
+      size: 'text-2xl',
+    },
+    icons: {
+      size: 'text-3xl',
+    },
     separated: true,
   },
 };
 
-export const Primary = {
+export const WithStyle = {
   args: {
-    primary: true,
-    data: data,
-  },
-};
-
-const secondData = {
-  head: {
-    columns: [{ primaryKey: true, value: 'ID' }, { value: 'Nome do Cliente' }, { value: 'Telefone' }],
-  },
-  body: {
-    values: [
-      {
-        data: [
-          { key: 'id', value: '1', editable: false },
-          {
-            key: 'client_name',
-            value: 'Bernardo Magueta Kowalsky',
-            editable: true,
-          },
-          {
-            key: 'phone',
-            value: '(47) 98881-7898',
-            editable: false,
-            personalized: false,
-          },
-        ],
-      },
-    ],
-  },
-};
-
-export const Secondary = {
-  args: {
-    primary: true,
-    data: secondData,
+    primary: false,
+    data: dataWithStyle,
   },
 };
