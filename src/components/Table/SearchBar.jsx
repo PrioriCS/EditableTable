@@ -5,8 +5,8 @@ import { twMerge } from 'tailwind-merge';
 
 export default function SearchBar({ editing = false, data = {}, handleConfirm = noop, withoutToolbar = false }) {
   const { separated, saveButton, bar, style } = data;
-  const SaveIcon = saveButton?.icon?.component;
-  const BarIcon = bar?.icon?.component;
+  const SaveIcon = saveButton?.icon?.component ? saveButton.icon.component : Floppy;
+  const BarIcon = bar?.icon?.component ? bar.icon.component : Search;
 
   return (
     <div
@@ -38,21 +38,12 @@ export default function SearchBar({ editing = false, data = {}, handleConfirm = 
               placeholder={bar?.placeholder ? bar.placeholder : 'Pesquisar...'}
             />
             <div className='absolute right-4 top-1/2 -translate-y-1/2 text-gray-300'>
-              {bar?.icon ? (
-                <BarIcon
-                  className={twMerge(
-                    bar?.icon.style.text ? bar.icon.style.text : '',
-                    bar?.icon.style.size ? bar.icon.style.size : ''
-                  )}
-                />
-              ) : (
-                <Search
-                  className={twMerge(
-                    bar?.icon.style.text ? bar.icon.style.text : '',
-                    bar?.icon.style.size ? bar.icon.style.size : ''
-                  )}
-                />
-              )}
+              <BarIcon
+                className={twMerge(
+                  bar?.icon?.style?.text ? bar.icon.style.text : '',
+                  bar?.icon?.style?.size ? bar.icon.style.size : ''
+                )}
+              />
             </div>
           </>
         )}
@@ -65,28 +56,20 @@ export default function SearchBar({ editing = false, data = {}, handleConfirm = 
             disabled={!editing}
             className={twMerge(
               'px-5 border py-2 text-gray-600 flex items-center space-x-2',
-              saveButton?.style.rounded ? saveButton.style.rounded : 'rounded-md',
-              saveButton?.style.border ? saveButton.style.border : 'border-gray-300',
-              saveButton?.style.background ? saveButton.style.background : 'bg-white',
-              saveButton?.style.text ? saveButton.style.text : 'text-gray-600',
+              saveButton?.style?.rounded ? saveButton.style.rounded : 'rounded-md',
+              saveButton?.style?.border ? saveButton.style.border : 'border-gray-300',
+              saveButton?.style?.background ? saveButton.style.background : 'bg-white',
+              saveButton?.style?.text ? saveButton.style.text : 'text-gray-600',
               !editing ? 'cursor-not-allowed' : ''
             )}>
             <p>Salvar</p>
-            {saveButton?.icon ? (
-              <SaveIcon
-                className={twMerge(
-                  saveButton?.icon.style.text ? saveButton.icon.style.text : '',
-                  saveButton?.icon.style.size ? saveButton.icon.style.size : ''
-                )}
-              />
-            ) : (
-              <Floppy
-                className={twMerge(
-                  saveButton?.icon.style.text ? saveButton.icon.style.text : '',
-                  saveButton?.icon.style.size ? saveButton.icon.style.size : ''
-                )}
-              />
-            )}
+
+            <SaveIcon
+              className={twMerge(
+                saveButton?.icon?.style?.text ? saveButton.icon.style.text : '',
+                saveButton?.icon?.style?.size ? saveButton.icon.style.size : ''
+              )}
+            />
           </button>
         )}
       </div>
