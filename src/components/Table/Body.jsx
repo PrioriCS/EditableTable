@@ -1,14 +1,16 @@
 import { noop } from 'lodash';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
+import { validate } from '../validator';
 
 const Personalized = ({ component, functions, value }) => {
   const Component = component;
   return <Component functions={functions} value={value} />;
 };
 
-export default function Body({ data = {}, edit = noop }) {
+export default function Body({ data = {}, columns = [], edit = noop }) {
   const { style } = data;
+
   return (
     <tbody>
       {data?.values?.map((row, rowIndex) => (
@@ -18,29 +20,54 @@ export default function Body({ data = {}, edit = noop }) {
               key={itemIndex}
               className={twMerge(
                 'text-center whitespace-nowrap',
-                item.editable || item.personalized ? '' : 'px-5 py-2 cursor-not-allowed',
+                (columns?.find((column) => column.key == item.key)?.editable &&
+                  !columns?.find((column) => column.key == item.key)?.disabled) ||
+                  columns?.find((column) => column.key == item.key)?.personalized
+                  ? ''
+                  : 'cursor-not-allowed',
                 rowIndex < data?.values?.length - 1 ? 'border-b' : '',
                 itemIndex < row?.data?.length - 1 ? 'border-r' : '',
-                style?.background ? style.background : '',
-                style?.disabled && !item.editable ? (item?.personalized ? '' : style.disabled) : 'bg-gray-50',
-                style?.border ? style.border : '',
-                style?.text ? style.text : 'text-gray-600',
-                style?.size ? style.size : ''
+                style?.background &&
+                  !columns?.find((column) => column.key == item.key)?.disabled &&
+                  (columns?.find((column) => column.key == item.key)?.editable ||
+                    columns?.find((column) => column.key == item.key)?.personalized)
+                  ? validate(style.background, 'bg-([\\S]+)')
+                  : '',
+                (style?.disabled && columns?.find((column) => column.key == item.key)?.disabled) ||
+                  (!columns?.find((column) => column.key == item.key)?.editable && style?.disabled)
+                  ? columns?.find((column) => column.key == item.key)?.personalized
+                    ? ''
+                    : validate(style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+                  : columns?.find((column) => column.key == item.key)?.personalized
+                    ? ''
+                    : 'bg-slate-50',
+                style?.border ? validate(style.border, 'border-([\\S]+)') : '',
+                style?.text ? validate(style.text, 'text-([\\S]+)', 'text-gray-600') : 'text-gray-600',
+                style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
               )}>
-              {item.editable && !item.disabled ? (
+              {columns?.find((column) => column.key == item.key)?.editable &&
+              !columns?.find((column) => column.key == item.key)?.disabled ? (
                 <input
-                  type={item?.type ? item.type : 'text'}
+                  type={
+                    columns?.find((column) => column.key == item.key)?.type
+                      ? columns?.find((column) => column.key == item.key)?.type
+                      : 'text'
+                  }
                   value={item.value}
                   onChange={({ target }) => edit(rowIndex, itemIndex, target.value)}
-                  disabled={!item.editable}
+                  disabled={columns?.find((column) => column.key == item.key)?.disabled}
                   className={twMerge(
-                    'py-2 border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center',
-                    style?.background ? style.background : '',
-                    style?.size ? style.size : ''
+                    'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center',
+                    style?.background ? validate(style.background, 'bg-([\\S]+)') : '',
+                    style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
                   )}
                 />
-              ) : item.personalized ? (
-                <Personalized component={item.component} functions={item.functions} value={item.value} />
+              ) : columns?.find((column) => column.key == item.key)?.personalized ? (
+                <Personalized
+                  component={columns?.find((column) => column.key == item.key)?.component}
+                  functions={columns?.find((column) => column.key == item.key)?.functions}
+                  value={item.value}
+                />
               ) : (
                 item.value
               )}

@@ -6,13 +6,37 @@ export default {
   component: EditableTable,
 };
 
-const update = (value) => {
-  console.log(value);
+const data = {
+  head: {
+    columns: [
+      { key: 'id', primaryKey: true, value: 'ID' },
+      { key: 'client_name', value: 'Nome do Cliente', editable: true },
+      { key: 'phone', value: 'Telefone' },
+    ],
+  },
+  body: {
+    values: [
+      {
+        data: [
+          { key: 'id', value: '1' },
+          {
+            key: 'client_name',
+            value: 'Bernardo Magueta Kowalsky',
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+          },
+        ],
+      },
+    ],
+  },
 };
 
 export const Default = {
   args: {
     primary: true,
+    data: data,
   },
 };
 
@@ -42,10 +66,12 @@ const dataWithStyle = {
     bar: {
       style: {
         rounded: 'rounded-full',
-        border: 'border-red-300 focus:border-red-300',
+        border: 'border-red-300',
+        focus: 'focus:border-red-300',
         text: 'text-red-600',
-        placeholder: 'placeholder:text-red-100',
+        placeholder: 'placeholder:text-red-300',
         background: 'bg-cyan-100',
+        size: 'text-xl',
       },
       icon: {
         component: Search,
@@ -62,6 +88,7 @@ const dataWithStyle = {
         border: 'border-pink-300',
         background: 'bg-yellow-200',
         text: 'text-orange-600',
+        size: 'text-base',
       },
       icon: {
         component: BinocularsFill,
@@ -79,7 +106,11 @@ const dataWithStyle = {
     separated: true,
   },
   head: {
-    columns: [{ primaryKey: true, value: 'ID' }, { value: 'Nome do Cliente' }, { value: 'Telefone' }],
+    columns: [
+      { key: 'id', primaryKey: true, value: 'ID' },
+      { key: 'client_name', value: 'Nome do Cliente', editable: true },
+      { key: 'phone', value: 'Telefone', personalized: true, component: Personalized, functions: { test } },
+    ],
     style: {
       background: 'bg-red-100',
       border: 'border-red-800',
@@ -92,38 +123,27 @@ const dataWithStyle = {
     values: [
       {
         data: [
-          { key: 'id', type: 'number', value: '1', editable: false },
+          { key: 'id', type: 'number', value: '1' },
           {
             key: 'client_name',
             value: 'Bernardo Magueta Kowalsky',
-            editable: true,
-            type: 'text',
           },
           {
             key: 'phone',
             value: '(47) 98881-7898',
-            editable: false,
-            personalized: true,
-            component: Personalized,
-            functions: { test },
           },
         ],
       },
       {
         data: [
-          { key: 'id', value: '2', editable: false },
+          { key: 'id', value: '2' },
           {
             key: 'client_name',
             value: 'Artur Ramiro Furtado',
-            editable: true,
           },
           {
             key: 'phone',
             value: '(47) 98881-7898',
-            editable: false,
-            personalized: true,
-            component: Personalized,
-            functions: { test },
           },
         ],
       },
@@ -157,29 +177,34 @@ export const WithStyle = {
   },
 };
 
+const update = (value) => {
+  console.log(value);
+};
+
 const withoutPaginationAndToolbarData = {
   table: {
     withoutToolbar: true,
     withoutPagination: true,
   },
   head: {
-    columns: [{ primaryKey: true, value: 'ID' }, { value: 'Nome do Cliente' }, { value: 'Telefone' }],
+    columns: [
+      { key: 'id', primaryKey: true, value: 'ID' },
+      { key: 'client_name', value: 'Nome do Cliente', editable: true },
+      { key: 'phone', value: 'Telefone' },
+    ],
   },
   body: {
     values: [
       {
         data: [
-          { key: 'id', value: '1', editable: false },
+          { key: 'id', value: '1' },
           {
             key: 'client_name',
             value: 'Bernardo Magueta Kowalsky',
-            editable: true,
           },
           {
             key: 'phone',
             value: '(47) 98881-7898',
-            editable: false,
-            personalized: false,
           },
         ],
       },

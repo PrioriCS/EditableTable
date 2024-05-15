@@ -1,6 +1,7 @@
 import { noop } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { validate } from '../validator';
 import Body from './Body';
 import Head from './Head';
 import Pagination from './Pagination';
@@ -42,16 +43,16 @@ export default function EditableTable({ data = {}, onConfirm = noop }) {
           'overflow-hidden',
           data?.searchBar?.separated || data?.table?.withoutToolbar ? 'rounded-t-xl border' : '',
           data?.pagination?.separated || data?.table?.withoutPagination ? 'rounded-b-xl border' : '',
-          data?.table?.style?.border ? data.table.style.border : ''
+          data?.table?.style?.border ? validate(data.table.style.border, 'border-([\\S]+)') : ''
         )}>
         <div
           className={twMerge(
             'overflow-auto',
             data?.table?.scrollY ? (data?.table?.scrollMaxHeight ? data.table.scrollMaxHeight : 'max-h-96') : 'h-full'
           )}>
-          <table className={twMerge('border bg-white', data?.table?.scrollX ? 'w-screen' : 'w-full')}>
+          <table className={twMerge('border bg-white', data?.table?.scrollX ? 'max-w-screen w-full' : 'w-full')}>
             <Head data={data?.head} />
-            <Body data={editableData?.body} edit={edit} />
+            <Body data={editableData?.body} columns={data?.head?.columns} edit={edit} />
           </table>
         </div>
       </div>
