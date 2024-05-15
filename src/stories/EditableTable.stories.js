@@ -120,34 +120,6 @@ const dataWithStyle = {
     },
   },
   body: {
-    values: [
-      {
-        data: [
-          { key: 'id', type: 'number', value: '1' },
-          {
-            key: 'client_name',
-            value: 'Bernardo Magueta Kowalsky',
-          },
-          {
-            key: 'phone',
-            value: '(47) 98881-7898',
-          },
-        ],
-      },
-      {
-        data: [
-          { key: 'id', value: '2' },
-          {
-            key: 'client_name',
-            value: 'Artur Ramiro Furtado',
-          },
-          {
-            key: 'phone',
-            value: '(47) 98881-7898',
-          },
-        ],
-      },
-    ],
     style: {
       background: 'bg-yellow-100',
       disabled: 'bg-yellow-200',
@@ -173,7 +145,40 @@ const dataWithStyle = {
 export const WithStyle = {
   args: {
     primary: false,
-    data: dataWithStyle,
+    data: {
+      ...dataWithStyle,
+      body: {
+        ...dataWithStyle.body,
+        values: [
+          {
+            data: [
+              { key: 'id', type: 'number', value: '1' },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+            ],
+          },
+          {
+            data: [
+              { key: 'id', value: '2' },
+              {
+                key: 'client_name',
+                value: 'Artur Ramiro Furtado',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+            ],
+          },
+        ],
+      },
+    },
   },
 };
 
@@ -185,6 +190,9 @@ const withoutPaginationAndToolbarData = {
   table: {
     withoutToolbar: true,
     withoutPagination: true,
+  },
+  searchBar: {
+    separated: true,
   },
   head: {
     columns: [

@@ -51,7 +51,7 @@ const validateDirection = (size, valOne, valTwo) => {
     : directions.includes(valOne) || sizes.includes(valOne) || valOne.match(/\[\d+px\]/g);
 };
 
-export function validate(value = '', regex = '', errorVal = '', validator = 'color') {
+export function validate(value = '', regex = '', defaultVal = '', validator = 'color') {
   const regexDefined = new RegExp(regex);
   const matchVal = value.match(regexDefined);
 
@@ -65,9 +65,11 @@ export function validate(value = '', regex = '', errorVal = '', validator = 'col
     ) {
       return matchVal[0];
     } else {
-      return errorVal;
+      console.error('Invalid style attempt');
+      return defaultVal;
     }
   } else {
-    return errorVal;
+    console.error('Invalid style attempt');
+    return defaultVal;
   }
 }

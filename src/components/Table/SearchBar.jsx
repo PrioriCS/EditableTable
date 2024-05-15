@@ -13,7 +13,7 @@ export default function SearchBar({ editing = false, data = {}, handleConfirm = 
     <div
       className={twMerge(
         'flex items-center justify-between px-4 bg-slate-50 border',
-        separated || withoutToolbar
+        separated
           ? style?.rounded
             ? validate(style.rounded, 'rounded-([\\S]+)', 'rounded-xl mb-5', 'direction') + ' mb-5'
             : 'rounded-xl mb-5'
@@ -21,10 +21,9 @@ export default function SearchBar({ editing = false, data = {}, handleConfirm = 
             ? validate(style.rounded, 'rounded-([\\S]+)', 'rounded-t-xl', 'direction')
             : 'rounded-t-xl',
         style?.background ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50') : 'bg-slate-50',
-        style?.border ? validate(style.border, 'border-([\\S]+)') : '',
-        withoutToolbar ? 'sticky top-4 z-10' : ''
+        style?.border ? validate(style.border, 'border-([\\S]+)') : ''
       )}>
-      <div className={twMerge('w-1/2 relative', withoutToolbar ? 'py-8' : 'py-5')}>
+      <div className={twMerge('relative', withoutToolbar ? 'py-8' : 'py-5 w-1/2')}>
         {!withoutToolbar && (
           <>
             <input
@@ -57,7 +56,7 @@ export default function SearchBar({ editing = false, data = {}, handleConfirm = 
           </>
         )}
       </div>
-      <div className='w-1/2 flex items-center justify-end'>
+      <div className={twMerge('w-1/2 flex items-center justify-end', withoutToolbar ? 'w-full' : 'w-1/2')}>
         {(editing || withoutToolbar) && (
           <button
             type='button'
