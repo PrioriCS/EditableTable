@@ -69,8 +69,9 @@ const dataWithStyle = {
         border: 'border-red-300',
         focus: 'focus:border-red-300',
         text: 'text-red-600',
-        placeholder: 'placeholder:text-red-100',
+        placeholder: 'placeholder:text-red-300',
         background: 'bg-cyan-100',
+        size: 'text-xl',
       },
       icon: {
         component: Search,
@@ -87,6 +88,7 @@ const dataWithStyle = {
         border: 'border-pink-300',
         background: 'bg-yellow-200',
         text: 'text-orange-600',
+        size: 'text-base',
       },
       icon: {
         component: BinocularsFill,

@@ -43,7 +43,7 @@ export default function Body({ data = {}, columns = [], edit = noop }) {
                     : 'bg-slate-50',
                 style?.border ? validate(style.border, 'border-([\\S]+)') : '',
                 style?.text ? validate(style.text, 'text-([\\S]+)', 'text-gray-600') : 'text-gray-600',
-                style?.size ? validate(style.size, 'text-([\\S]+)') : ''
+                style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
               )}>
               {columns?.find((column) => column.key == item.key)?.editable &&
               !columns?.find((column) => column.key == item.key)?.disabled ? (
@@ -59,7 +59,7 @@ export default function Body({ data = {}, columns = [], edit = noop }) {
                   className={twMerge(
                     'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center',
                     style?.background ? validate(style.background, 'bg-([\\S]+)') : '',
-                    style?.size ? validate(style.size, 'text-([\\S]+)') : ''
+                    style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
                   )}
                 />
               ) : columns?.find((column) => column.key == item.key)?.personalized ? (

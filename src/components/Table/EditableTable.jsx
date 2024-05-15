@@ -43,7 +43,7 @@ export default function EditableTable({ data = {}, onConfirm = noop }) {
           'overflow-hidden',
           data?.searchBar?.separated || data?.table?.withoutToolbar ? 'rounded-t-xl border' : '',
           data?.pagination?.separated || data?.table?.withoutPagination ? 'rounded-b-xl border' : '',
-          data?.table?.style?.border ? validate(data.table.style.border, 'border-([\\S]+)', 'text-base') : ''
+          data?.table?.style?.border ? validate(data.table.style.border, 'border-([\\S]+)') : ''
         )}>
         <div
           className={twMerge(

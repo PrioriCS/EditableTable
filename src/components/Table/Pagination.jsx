@@ -9,7 +9,7 @@ const PageButton = ({ icon: Icon, style = '', isIcon = false, value = '' }) => {
       type='button'
       className={twMerge(
         'rounded-md border',
-        style ? validate(style, 'text-([\\S]+)', 'text-sm') : 'text-sm',
+        style ? validate(style, 'text-([\\S]+)', 'text-sm', 'size') : 'text-sm',
         isIcon ? 'py-1.5 px-1.5' : 'py-1 px-2.5',
         style?.background ? style.background : 'bg-white',
         style?.border ? style.border : 'border-gray-300'
@@ -35,12 +35,12 @@ export default function Pagination({ data = {} }) {
       )}>
       <PageButton
         icon={icons?.fullLeft?.component ? icons.fullLeft.component : ChevronDoubleLeft}
-        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base') : 'text-base'}
+        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
         isIcon
       />
       <PageButton
         icon={icons?.left?.component ? icons.left.component : ChevronLeft}
-        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base') : 'text-base'}
+        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
         isIcon
       />
 
@@ -50,12 +50,12 @@ export default function Pagination({ data = {} }) {
 
       <PageButton
         icon={icons?.right?.component ? icons.right.component : ChevronRight}
-        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base') : 'text-base'}
+        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
         isIcon
       />
       <PageButton
         icon={icons?.fullRight?.component ? icons.fullRight.component : ChevronDoubleRight}
-        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base') : 'text-base'}
+        style={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
         isIcon
       />
     </div>
