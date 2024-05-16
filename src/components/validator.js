@@ -33,7 +33,10 @@ const directions = ['s', 'e', 't', 'r', 'b', 'l', 'ss', 'se', 'ee', 'es', 'tl', 
 
 const validateColor = (valOne, valTwo) => {
   return (
-    (colors.includes(valOne) && scales.includes(valTwo)) || valOne.match(/\[#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6})\]/g)
+    (colors.includes(valOne) && scales.includes(valTwo)) ||
+    valOne.match(/\[#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6})\]/g) ||
+    valOne == 'white' ||
+    valOne == 'black'
   );
 };
 

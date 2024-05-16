@@ -162,6 +162,11 @@ export const WithStyle = {
                 value: '(47) 98881-7898',
               },
             ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+            },
           },
           {
             data: [
@@ -183,7 +188,16 @@ export const WithStyle = {
 };
 
 const update = (value) => {
-  console.log(value);
+  const arr = [];
+  value.map((val) => {
+    let tempObj = {};
+    val.data.map((dat) => {
+      tempObj = { ...tempObj, [dat.key]: dat.value };
+    });
+    arr.push(tempObj);
+  });
+
+  console.log(arr);
 };
 
 const withoutPaginationAndToolbarData = {

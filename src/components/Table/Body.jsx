@@ -24,25 +24,47 @@ export default function Body({ data = {}, columns = [], edit = noop }) {
                   !columns?.find((column) => column.key == item.key)?.disabled) ||
                   columns?.find((column) => column.key == item.key)?.personalized
                   ? ''
-                  : 'cursor-not-allowed',
+                  : 'cursor-not-allowed py-3',
                 rowIndex < data?.values?.length - 1 ? 'border-b' : '',
                 itemIndex < row?.data?.length - 1 ? 'border-r' : '',
-                style?.background &&
+                row?.style?.background &&
                   !columns?.find((column) => column.key == item.key)?.disabled &&
                   (columns?.find((column) => column.key == item.key)?.editable ||
                     columns?.find((column) => column.key == item.key)?.personalized)
-                  ? validate(style.background, 'bg-([\\S]+)')
-                  : '',
-                (style?.disabled && columns?.find((column) => column.key == item.key)?.disabled) ||
-                  (!columns?.find((column) => column.key == item.key)?.editable && style?.disabled)
-                  ? columns?.find((column) => column.key == item.key)?.personalized
-                    ? ''
-                    : validate(style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
-                  : columns?.find((column) => column.key == item.key)?.personalized
-                    ? ''
-                    : 'bg-slate-50',
+                  ? validate(row.style.background, 'bg-([\\S]+)')
+                  : style?.background &&
+                      !columns?.find((column) => column.key == item.key)?.disabled &&
+                      (columns?.find((column) => column.key == item.key)?.editable ||
+                        columns?.find((column) => column.key == item.key)?.personalized)
+                    ? validate(style.background, 'bg-([\\S]+)')
+                    : '',
+                row?.style?.disabled
+                  ? (row?.style?.disabled && columns?.find((column) => column.key == item.key)?.disabled) ||
+                    (!columns?.find((column) => column.key == item.key)?.editable && row?.style?.disabled)
+                    ? columns?.find((column) => column.key == item.key)?.personalized
+                      ? ''
+                      : validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+                    : columns?.find((column) => column.key == item.key)?.personalized
+                      ? ''
+                      : row?.style?.background
+                        ? validate(row.style.background, 'bg-([\\S]+)')
+                        : 'bg-slate-50'
+                  : (style?.disabled && columns?.find((column) => column.key == item.key)?.disabled) ||
+                      (!columns?.find((column) => column.key == item.key)?.editable && style?.disabled)
+                    ? columns?.find((column) => column.key == item.key)?.personalized
+                      ? ''
+                      : validate(style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+                    : columns?.find((column) => column.key == item.key)?.personalized
+                      ? ''
+                      : style?.background
+                        ? validate(style.background, 'bg-([\\S]+)')
+                        : 'bg-slate-50',
                 style?.border ? validate(style.border, 'border-([\\S]+)') : '',
-                style?.text ? validate(style.text, 'text-([\\S]+)', 'text-gray-600') : 'text-gray-600',
+                row?.style?.text
+                  ? validate(row.style.text, 'text-([\\S]+)', 'text-gray-600')
+                  : style?.text
+                    ? validate(style.text, 'text-([\\S]+)', 'text-gray-600')
+                    : 'text-gray-600',
                 style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
               )}>
               {columns?.find((column) => column.key == item.key)?.editable &&
@@ -57,8 +79,12 @@ export default function Body({ data = {}, columns = [], edit = noop }) {
                   onChange={({ target }) => edit(rowIndex, itemIndex, target.value)}
                   disabled={columns?.find((column) => column.key == item.key)?.disabled}
                   className={twMerge(
-                    'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center',
-                    style?.background ? validate(style.background, 'bg-([\\S]+)') : '',
+                    'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center overflow-y-hidden',
+                    row?.style?.background
+                      ? validate(row.style.background, 'bg-([\\S]+)')
+                      : style?.background
+                        ? validate(style.background, 'bg-([\\S]+)')
+                        : '',
                     style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
                   )}
                 />
