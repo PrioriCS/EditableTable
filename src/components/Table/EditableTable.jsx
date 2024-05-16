@@ -48,9 +48,13 @@ export default function EditableTable({ data = {}, onConfirm = noop }) {
         <div
           className={twMerge(
             'overflow-auto',
-            data?.table?.scrollY ? (data?.table?.scrollMaxHeight ? data.table.scrollMaxHeight : 'max-h-96') : 'h-full'
+            data?.table?.scrollY
+              ? data?.table?.scrollMaxHeight
+                ? validate(data.table.scrollMaxHeight, 'max-h-([\\S]+)', 'max-h-96', 'height')
+                : 'max-h-96'
+              : 'h-full'
           )}>
-          <table className={twMerge('border bg-white', data?.table?.scrollX ? 'max-w-screen w-full' : 'w-full')}>
+          <table className={twMerge('border bg-white', data?.table?.scrollX ? 'max-w-none w-full' : 'w-full')}>
             <Head data={data?.head} />
             <Body data={editableData?.body} columns={data?.head?.columns} edit={edit} />
           </table>

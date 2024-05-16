@@ -24,7 +24,7 @@ export default function Body({ data = {}, columns = [], edit = noop }) {
                   !columns?.find((column) => column.key == item.key)?.disabled) ||
                   columns?.find((column) => column.key == item.key)?.personalized
                   ? ''
-                  : 'cursor-not-allowed py-3',
+                  : 'cursor-not-allowed py-3 px-4',
                 rowIndex < data?.values?.length - 1 ? 'border-b' : '',
                 itemIndex < row?.data?.length - 1 ? 'border-r' : '',
                 row?.style?.background &&
@@ -47,8 +47,10 @@ export default function Body({ data = {}, columns = [], edit = noop }) {
                     : columns?.find((column) => column.key == item.key)?.personalized
                       ? ''
                       : row?.style?.background
-                        ? validate(row.style.background, 'bg-([\\S]+)')
-                        : 'bg-slate-50'
+                        ? validate(row.style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                        : style?.background
+                          ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                          : 'bg-slate-50'
                   : (style?.disabled && columns?.find((column) => column.key == item.key)?.disabled) ||
                       (!columns?.find((column) => column.key == item.key)?.editable && style?.disabled)
                     ? columns?.find((column) => column.key == item.key)?.personalized
@@ -56,9 +58,11 @@ export default function Body({ data = {}, columns = [], edit = noop }) {
                       : validate(style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
                     : columns?.find((column) => column.key == item.key)?.personalized
                       ? ''
-                      : style?.background
-                        ? validate(style.background, 'bg-([\\S]+)')
-                        : 'bg-slate-50',
+                      : row?.style?.background
+                        ? validate(row.style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                        : style?.background
+                          ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                          : 'bg-slate-50',
                 style?.border ? validate(style.border, 'border-([\\S]+)') : '',
                 row?.style?.text
                   ? validate(row.style.text, 'text-([\\S]+)', 'text-gray-600')
