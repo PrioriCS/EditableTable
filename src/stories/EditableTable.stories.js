@@ -7,6 +7,9 @@ export default {
 };
 
 const data = {
+  table: {
+    transferableRow: true,
+  },
   head: {
     columns: [
       { key: 'id', primaryKey: true, value: 'ID' },
@@ -53,6 +56,10 @@ const test = (value) => {
   console.log(value);
 };
 
+const selections = (value) => {
+  console.log(value);
+};
+
 const dataWithStyle = {
   table: {
     style: {
@@ -61,6 +68,7 @@ const dataWithStyle = {
     scrollX: true,
     scrollY: true,
     scrollMaxHeight: 'max-h-40',
+    transferableRow: true,
   },
   searchBar: {
     bar: {
@@ -98,6 +106,9 @@ const dataWithStyle = {
         },
       },
     },
+    confirmRows: {
+      text: 'Teste',
+    },
     style: {
       background: 'bg-green-50',
       border: 'border-amber-300',
@@ -118,6 +129,15 @@ const dataWithStyle = {
       font: 'font-thin',
       size: 'text-6xl',
     },
+    checkbox: {
+      style: {
+        border: 'border-red-800',
+        background: 'bg-red-600',
+        width: 'w-10',
+        height: 'h-10',
+        rounded: 'rounded-full',
+      },
+    },
   },
   body: {
     style: {
@@ -126,6 +146,15 @@ const dataWithStyle = {
       border: 'border-blue-700',
       text: 'text-purple-600',
       size: 'text-4xl',
+    },
+    checkbox: {
+      style: {
+        border: 'border-green-400',
+        background: 'bg-green-800',
+        width: 'w-8',
+        height: 'h-8',
+        rounded: 'rounded-xl',
+      },
     },
   },
   pagination: {
@@ -184,6 +213,7 @@ export const WithStyle = {
         ],
       },
     },
+    rowsSelectionConfirm: selections,
   },
 };
 

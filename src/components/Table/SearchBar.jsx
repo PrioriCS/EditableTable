@@ -1,13 +1,52 @@
 import { noop } from 'lodash';
 import React from 'react';
-import { Floppy, Search } from 'react-bootstrap-icons';
+import { CheckSquare, Floppy, Search } from 'react-bootstrap-icons';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';
 
-export default function SearchBar({ editing = false, data = {}, handleConfirm = noop, withoutToolbar = false }) {
-  const { separated, saveButton, bar, style } = data;
+const ConfirmButton = ({ handleConfirm = noop, editing = true, wichButton = {}, text = 'Salvar', icon: Icon }) => {
+  return (
+    <button
+      type='button'
+      onClick={() => handleConfirm()}
+      disabled={!editing}
+      className={twMerge(
+        'px-5 border py-2 flex items-center space-x-2',
+        wichButton?.style?.rounded
+          ? validate(wichButton.style.rounded, 'rounded-([\\S]+)', 'rounded-md', 'direction')
+          : 'rounded-md',
+        wichButton?.style?.border ? validate(wichButton.style.border, 'border-([\\S]+)', 'border-gray-300') : 'border-gray-300',
+        wichButton?.style?.background ? validate(wichButton.style.background, 'bg-([\\S]+)', 'bg-white') : 'bg-white',
+        wichButton?.style?.text ? validate(wichButton.style.text, 'text-([\\S]+)', 'text-gray-600') : 'text-gray-600',
+        wichButton?.style?.size ? validate(wichButton.style.size, 'text-([\\S]+)', '', 'size') : '',
+        !editing ? 'cursor-not-allowed' : ''
+      )}>
+      <p>{text}</p>
+
+      <Icon
+        className={twMerge(
+          wichButton?.icon?.style?.text
+            ? validate(wichButton.icon.style.text, 'text-([\\S]+)', 'text-gray-600')
+            : 'text-gray-600',
+          wichButton?.icon?.style?.size ? validate(wichButton.icon.style.size, 'text-([\\S]+)', 'text-xl', 'size') : 'text-xl'
+        )}
+      />
+    </button>
+  );
+};
+
+export default function SearchBar({
+  editing = false,
+  data = {},
+  handleConfirmUpdate = noop,
+  handleConfirmRowsSelection = noop,
+  withoutToolbar = false,
+  transferableRow = false,
+}) {
+  const { separated, saveButton, confirmRows, bar, style } = data;
   const SaveIcon = saveButton?.icon?.component ? saveButton.icon.component : Floppy;
   const BarIcon = bar?.icon?.component ? bar.icon.component : Search;
+  const ConfirmRowsIcon = confirmRows?.icon?.component ? confirmRows.icon.component : CheckSquare;
 
   return (
     <div
@@ -56,38 +95,24 @@ export default function SearchBar({ editing = false, data = {}, handleConfirm = 
           </>
         )}
       </div>
-      <div className={twMerge('w-1/2 flex items-center justify-end', withoutToolbar ? 'w-full' : 'w-1/2')}>
-        {(editing || withoutToolbar) && (
-          <button
-            type='button'
-            onClick={() => handleConfirm()}
-            disabled={!editing}
-            className={twMerge(
-              'px-5 border py-2 flex items-center space-x-2',
-              saveButton?.style?.rounded
-                ? validate(saveButton.style.rounded, 'rounded-([\\S]+)', 'rounded-md', 'direction')
-                : 'rounded-md',
-              saveButton?.style?.border
-                ? validate(saveButton.style.border, 'border-([\\S]+)', 'border-gray-300')
-                : 'border-gray-300',
-              saveButton?.style?.background ? validate(saveButton.style.background, 'bg-([\\S]+)', 'bg-white') : 'bg-white',
-              saveButton?.style?.text ? validate(saveButton.style.text, 'text-([\\S]+)', 'text-gray-600') : 'text-gray-600',
-              saveButton?.style?.size ? validate(saveButton.style.size, 'text-([\\S]+)', '', 'size') : '',
-              !editing ? 'cursor-not-allowed' : ''
-            )}>
-            <p>Salvar</p>
+      <div className={twMerge('w-1/2 flex items-center justify-end space-x-4', withoutToolbar ? 'w-full' : 'w-1/2')}>
+        {transferableRow && (
+          <ConfirmButton
+            handleConfirm={handleConfirmRowsSelection}
+            wichButton={confirmRows}
+            text={confirmRows?.text ? confirmRows.text : 'Confirmar Linhas'}
+            icon={ConfirmRowsIcon}
+          />
+        )}
 
-            <SaveIcon
-              className={twMerge(
-                saveButton?.icon?.style?.text
-                  ? validate(saveButton.icon.style.text, 'text-([\\S]+)', 'text-gray-600')
-                  : 'text-gray-600',
-                saveButton?.icon?.style?.size
-                  ? validate(saveButton.icon.style.size, 'text-([\\S]+)', 'text-xl', 'size')
-                  : 'text-xl'
-              )}
-            />
-          </button>
+        {(editing || withoutToolbar) && (
+          <ConfirmButton
+            handleConfirm={handleConfirmUpdate}
+            editing={editing}
+            wichButton={saveButton}
+            text='Salvar'
+            icon={SaveIcon}
+          />
         )}
       </div>
     </div>

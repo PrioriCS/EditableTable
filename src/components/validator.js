@@ -80,18 +80,18 @@ const directions = ['s', 'e', 't', 'r', 'b', 'l', 'ss', 'se', 'ee', 'es', 'tl', 
 const validateColor = (valOne, valTwo) => {
   return (
     (colors.includes(valOne) && scales.includes(valTwo)) ||
-    valOne.match(/\[#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6})\]/g) ||
+    valOne?.match(/\[#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{4}|[0-9A-Fa-f]{6})\]/g) ||
     valOne == 'white' ||
     valOne == 'black'
   );
 };
 
 const validateSize = (val) => {
-  return sizes.includes(val) || val.match(/\[\d+px\]/g);
+  return sizes.includes(val) || val?.match(/\[\d+px\]/g);
 };
 
 const validateHeight = (val) => {
-  return heights.includes(val) || val.match(/\[\d+px\]/g);
+  return heights.includes(val) || val?.match(/\[\d+px\]/g);
 };
 
 const validateWeight = (val) => {
@@ -100,17 +100,17 @@ const validateWeight = (val) => {
 
 const validateDirection = (size, valOne, valTwo) => {
   return size > 2
-    ? directions.includes(valOne) && (sizes.includes(valTwo) || valTwo.match(/\[\d+px\]/g))
-    : directions.includes(valOne) || sizes.includes(valOne) || valOne.match(/\[\d+px\]/g);
+    ? directions.includes(valOne) && (sizes.includes(valTwo) || valTwo?.match(/\[\d+px\]/g))
+    : directions.includes(valOne) || sizes.includes(valOne) || valOne?.match(/\[\d+px\]/g);
 };
 
 export function validate(value = '', regex = '', defaultVal = '', validator = 'color') {
   const regexDefined = new RegExp(regex);
-  const matchVal = value.match(regexDefined);
+  const matchVal = value?.match(regexDefined);
 
   if (!isEmpty(matchVal)) {
     if (
-      (validator == 'height' && validateHeight(matchVal[0].split('-')[2])) ||
+      (validator == 'height' && (validateHeight(matchVal[0].split('-')[2]) || validateHeight(matchVal[0].split('-')[1]))) ||
       (validator == 'weight' && validateWeight(matchVal[0].split('-')[1])) ||
       (validator == 'color' && validateColor(matchVal[0].split('-')[1], matchVal[0].split('-')[2])) ||
       (validator == 'size' && validateSize(matchVal[0].split('-')[1])) ||

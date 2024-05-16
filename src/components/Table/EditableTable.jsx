@@ -1,33 +1,40 @@
 import { noop } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
+import { edit, selectAllRows, selectRow } from '../utils';
 import { validate } from '../validator';
 import Body from './Body';
 import Head from './Head';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 
-export default function EditableTable({ data = {}, onConfirm = noop }) {
+export default function EditableTable({ data = {}, onConfirm = noop, rowsSelectionConfirm = noop }) {
   const [editableData, setEditableData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
+  const [selectedRows, setSelectedRows] = useState([]);
 
   useEffect(() => {
     setEditableData(data);
   }, [data]);
 
-  const edit = (rowIndex, itemIndex, newVal) => {
-    setEditableData((value) => {
-      const temp = { ...value };
-
-      temp.body.values[rowIndex].data[itemIndex].value = newVal;
-
-      return temp;
-    });
-    setIsEditing(true);
+  const handleEdit = (rowIndex, itemIndex, newVal) => {
+    edit(setEditableData, setIsEditing, rowIndex, itemIndex, newVal);
   };
 
-  const handleConfirm = () => {
+  const handleConfirmUpdate = () => {
     onConfirm(editableData.body.values);
+  };
+
+  const handleConfirmRowsSelection = () => {
+    rowsSelectionConfirm(selectedRows);
+  };
+
+  const handleSelectAll = () => {
+    selectAllRows(selectedRows, editableData, setSelectedRows);
+  };
+
+  const handleSelectRow = (rowIndex) => {
+    selectRow(editableData, rowIndex, selectedRows, setSelectedRows);
   };
 
   return (
@@ -35,8 +42,10 @@ export default function EditableTable({ data = {}, onConfirm = noop }) {
       <SearchBar
         editing={isEditing}
         data={editableData?.searchBar}
-        handleConfirm={handleConfirm}
+        handleConfirmUpdate={handleConfirmUpdate}
+        handleConfirmRowsSelection={handleConfirmRowsSelection}
         withoutToolbar={data?.table?.withoutToolbar}
+        transferableRow={data?.table?.transferableRow}
       />
       <div
         className={twMerge(
@@ -55,8 +64,20 @@ export default function EditableTable({ data = {}, onConfirm = noop }) {
               : 'h-full'
           )}>
           <table className={twMerge('border bg-white', data?.table?.scrollX ? 'max-w-none w-full' : 'w-full')}>
-            <Head data={data?.head} />
-            <Body data={editableData?.body} columns={data?.head?.columns} edit={edit} />
+            <Head
+              data={data?.head}
+              transferableRow={data?.table?.transferableRow}
+              handleSelectAll={handleSelectAll}
+              allSelected={selectedRows.length == editableData?.body?.values?.length}
+            />
+            <Body
+              data={editableData?.body}
+              columns={data?.head?.columns}
+              transferableRow={data?.table?.transferableRow}
+              selected={selectedRows}
+              edit={handleEdit}
+              handleSelectRow={handleSelectRow}
+            />
           </table>
         </div>
       </div>
