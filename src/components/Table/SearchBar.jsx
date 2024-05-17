@@ -43,7 +43,7 @@ export default function SearchBar({
   withoutToolbar = false,
   transferableRow = false,
 }) {
-  const { separated, saveButton, confirmRows, bar, style } = data;
+  const { separated = false, saveButton = {}, confirmRows = {}, bar = {}, style = {}, onSearch = noop } = data;
   const SaveIcon = saveButton?.icon?.component ? saveButton.icon.component : Floppy;
   const BarIcon = bar?.icon?.component ? bar.icon.component : Search;
   const ConfirmRowsIcon = confirmRows?.icon?.component ? confirmRows.icon.component : CheckSquare;
@@ -83,6 +83,7 @@ export default function SearchBar({
                 bar?.style?.size ? validate(bar.style.size, 'text-([\\S]+)', '', 'size') : ''
               )}
               placeholder={bar?.placeholder ? bar.placeholder : 'Pesquisar...'}
+              onChange={({ target }) => onSearch(target.value)}
             />
             <div className='absolute right-4 top-1/2 -translate-y-1/2 text-gray-300'>
               <BarIcon

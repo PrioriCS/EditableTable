@@ -60,7 +60,11 @@ const selections = (value) => {
   console.log(value);
 };
 
-const dataWithStyle = {
+const search = (value) => {
+  console.log(value);
+};
+
+let dataWithStyle = {
   table: {
     style: {
       border: 'border-red-800',
@@ -114,6 +118,7 @@ const dataWithStyle = {
       border: 'border-amber-300',
       rounded: 'rounded-xl',
     },
+    onSearch: search,
     separated: true,
   },
   head: {
@@ -167,8 +172,50 @@ const dataWithStyle = {
     icons: {
       size: 'text-3xl',
     },
+    lastPage: 5,
+    currentPage: 1,
     separated: true,
   },
+};
+
+const changePage = (page) => {
+  console.log(page);
+  dataWithStyle.body = {
+    ...dataWithStyle.body,
+    values: [
+      {
+        data: [
+          { key: 'id', type: 'number', value: '3' },
+          {
+            key: 'client_name',
+            value: 'Vitor Marcelo Vicente',
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+          },
+        ],
+        style: {
+          background: 'bg-pink-200',
+          disabled: 'bg-green-200',
+          text: 'text-red-600',
+        },
+      },
+      {
+        data: [
+          { key: 'id', value: '4' },
+          {
+            key: 'client_name',
+            value: 'Lucas Matheus Gonçalves',
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+          },
+        ],
+      },
+    ],
+  };
 };
 
 export const WithStyle = {
@@ -176,6 +223,10 @@ export const WithStyle = {
     primary: false,
     data: {
       ...dataWithStyle,
+      pagination: {
+        ...dataWithStyle.pagination,
+        handleChangePage: changePage,
+      },
       body: {
         ...dataWithStyle.body,
         values: [
