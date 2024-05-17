@@ -87,11 +87,11 @@ const validateColor = (valOne, valTwo) => {
 };
 
 const validateSize = (val) => {
-  return sizes.includes(val) || val?.match(/\[\d+px\]/g);
+  return sizes.includes(val) || val?.match(/\[\d+(px|rem)\]/g);
 };
 
 const validateHeight = (val) => {
-  return heights.includes(val) || val?.match(/\[\d+px\]/g);
+  return heights.includes(val) || val?.match(/\[\d+(px|rem|vh|vw)\]/g);
 };
 
 const validateWeight = (val) => {
@@ -100,8 +100,8 @@ const validateWeight = (val) => {
 
 const validateDirection = (size, valOne, valTwo) => {
   return size > 2
-    ? directions.includes(valOne) && (sizes.includes(valTwo) || valTwo?.match(/\[\d+px\]/g))
-    : directions.includes(valOne) || sizes.includes(valOne) || valOne?.match(/\[\d+px\]/g);
+    ? directions.includes(valOne) && (sizes.includes(valTwo) || valTwo?.match(/\[\d+(px|rem)\]/g))
+    : directions.includes(valOne) || sizes.includes(valOne) || valOne?.match(/\[\d+(px|rem)\]/g);
 };
 
 export function validate(value = '', regex = '', defaultVal = '', validator = 'color') {
