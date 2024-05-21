@@ -64,6 +64,50 @@ const search = (value) => {
   console.log(value);
 };
 
+const changePage = (page) => {
+  console.log(page);
+  dataWithStyle.body = {
+    ...dataWithStyle.body,
+    values: [
+      {
+        data: [
+          { key: 'id', type: 'number', value: '3' },
+          {
+            key: 'client_name',
+            value: 'Vitor Marcelo Vicente',
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+          },
+        ],
+        style: {
+          background: 'bg-pink-200',
+          disabled: 'bg-green-200',
+          text: 'text-red-600',
+        },
+      },
+      {
+        data: [
+          { key: 'id', value: '4' },
+          {
+            key: 'client_name',
+            value: 'Lucas Matheus Gonçalves',
+          },
+          {
+            key: 'phone',
+            value: '(47) 98881-7898',
+          },
+        ],
+      },
+    ],
+  };
+};
+
+const ButtonTest = () => {
+  return <button type='button'>Teste</button>;
+};
+
 let dataWithStyle = {
   table: {
     style: {
@@ -73,6 +117,7 @@ let dataWithStyle = {
     scrollY: true,
     scrollMaxHeight: 'max-h-40',
     transferableRow: true,
+    rowsSelectionConfirm: selections,
   },
   searchBar: {
     bar: {
@@ -94,6 +139,7 @@ let dataWithStyle = {
       },
       placeholder: 'Pesquise aqui!',
     },
+    onRight: ButtonTest,
     saveButton: {
       style: {
         rounded: 'rounded-md',
@@ -175,47 +221,8 @@ let dataWithStyle = {
     lastPage: 5,
     currentPage: 1,
     separated: true,
+    handleChangePage: changePage,
   },
-};
-
-const changePage = (page) => {
-  console.log(page);
-  dataWithStyle.body = {
-    ...dataWithStyle.body,
-    values: [
-      {
-        data: [
-          { key: 'id', type: 'number', value: '3' },
-          {
-            key: 'client_name',
-            value: 'Vitor Marcelo Vicente',
-          },
-          {
-            key: 'phone',
-            value: '(47) 98881-7898',
-          },
-        ],
-        style: {
-          background: 'bg-pink-200',
-          disabled: 'bg-green-200',
-          text: 'text-red-600',
-        },
-      },
-      {
-        data: [
-          { key: 'id', value: '4' },
-          {
-            key: 'client_name',
-            value: 'Lucas Matheus Gonçalves',
-          },
-          {
-            key: 'phone',
-            value: '(47) 98881-7898',
-          },
-        ],
-      },
-    ],
-  };
 };
 
 export const WithStyle = {
@@ -223,10 +230,6 @@ export const WithStyle = {
     primary: false,
     data: {
       ...dataWithStyle,
-      pagination: {
-        ...dataWithStyle.pagination,
-        handleChangePage: changePage,
-      },
       body: {
         ...dataWithStyle.body,
         values: [
@@ -264,7 +267,6 @@ export const WithStyle = {
         ],
       },
     },
-    rowsSelectionConfirm: selections,
   },
 };
 
@@ -285,6 +287,7 @@ const withoutPaginationAndToolbarData = {
   table: {
     withoutToolbar: true,
     withoutPagination: true,
+    onConfirm: update,
   },
   searchBar: {
     separated: true,
@@ -319,6 +322,5 @@ export const withoutPaginationAndToolbar = {
   args: {
     primary: true,
     data: withoutPaginationAndToolbarData,
-    onConfirm: update,
   },
 };

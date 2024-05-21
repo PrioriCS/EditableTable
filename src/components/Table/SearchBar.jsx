@@ -43,7 +43,15 @@ export default function SearchBar({
   withoutToolbar = false,
   transferableRow = false,
 }) {
-  const { separated = false, saveButton = {}, confirmRows = {}, bar = {}, style = {}, onSearch = noop } = data;
+  const {
+    separated = false,
+    saveButton = {},
+    confirmRows = {},
+    bar = {},
+    style = {},
+    onSearch = noop,
+    onRight: RightComponent,
+  } = data;
   const SaveIcon = saveButton?.icon?.component ? saveButton.icon.component : Floppy;
   const BarIcon = bar?.icon?.component ? bar.icon.component : Search;
   const ConfirmRowsIcon = confirmRows?.icon?.component ? confirmRows.icon.component : CheckSquare;
@@ -97,6 +105,8 @@ export default function SearchBar({
         )}
       </div>
       <div className={twMerge('w-1/2 flex items-center justify-end space-x-4', withoutToolbar ? 'w-full' : 'w-1/2')}>
+        {RightComponent && <RightComponent />}
+
         {transferableRow && (
           <ConfirmButton
             handleConfirm={handleConfirmRowsSelection}

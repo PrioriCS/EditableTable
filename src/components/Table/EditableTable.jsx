@@ -8,10 +8,13 @@ import Head from './Head';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
 
-export default function EditableTable({ data = {}, onConfirm = noop, rowsSelectionConfirm = noop }) {
+export default function EditableTable({ data = {} }) {
   const [editableData, setEditableData] = useState({});
   const [isEditing, setIsEditing] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
+
+  const { table = {} } = data;
+  const { rowsSelectionConfirm = noop, onConfirm = noop } = table;
 
   useEffect(() => {
     setEditableData(data);
