@@ -9,6 +9,7 @@ export default {
 const data = {
   table: {
     transferableRow: true,
+    transferencyKey: 'id',
   },
   head: {
     columns: [

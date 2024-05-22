@@ -9,7 +9,7 @@ export function edit(setEditableData, setIsEditing, rowIndex, itemIndex, newVal)
   setIsEditing(true);
 }
 
-export function selectAllRows(selected, data, setSelected) {
+export function selectAllRows(selected, data, setSelected, key) {
   if (selected.length == data?.body?.values?.length) {
     setSelected([]);
   } else {
@@ -17,7 +17,7 @@ export function selectAllRows(selected, data, setSelected) {
       const temp = [];
 
       data?.body?.values?.map((item) => {
-        const index = item?.data?.findIndex((val) => val.key == 'id');
+        const index = item?.data?.findIndex((val) => val.key == key);
         temp.push(parseInt(item?.data[index].value));
       });
 
@@ -26,8 +26,8 @@ export function selectAllRows(selected, data, setSelected) {
   }
 }
 
-export function selectRow(data, rowIndex, selected, setSelected) {
-  const index = data?.body?.values[rowIndex]?.data?.findIndex((val) => val.key == 'id');
+export function selectRow(data, rowIndex, selected, setSelected, key) {
+  const index = data?.body?.values[rowIndex]?.data?.findIndex((val) => val.key == key);
   const value = data?.body?.values[rowIndex]?.data[index]?.value;
 
   if (selected.find((item) => item == parseInt(value))) {

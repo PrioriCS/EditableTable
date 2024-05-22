@@ -33,11 +33,22 @@ export default function EditableTable({ data = {} }) {
   };
 
   const handleSelectAll = () => {
-    selectAllRows(selectedRows, editableData, setSelectedRows);
+    selectAllRows(
+      selectedRows,
+      editableData,
+      setSelectedRows,
+      data?.table?.transferencykey ? data.table.transferencykey : 'id'
+    );
   };
 
   const handleSelectRow = (rowIndex) => {
-    selectRow(editableData, rowIndex, selectedRows, setSelectedRows);
+    selectRow(
+      editableData,
+      rowIndex,
+      selectedRows,
+      setSelectedRows,
+      data?.table?.transferencykey ? data.table.transferencykey : 'id'
+    );
   };
 
   return (
@@ -77,6 +88,7 @@ export default function EditableTable({ data = {} }) {
               data={editableData?.body}
               columns={data?.head?.columns}
               transferableRow={data?.table?.transferableRow}
+              transferencykey={data?.table?.transferencykey ? data.table.transferencykey : 'id'}
               selected={selectedRows}
               edit={handleEdit}
               handleSelectRow={handleSelectRow}

@@ -75,6 +75,7 @@ export default function Body({
   columns = [],
   edit = noop,
   transferableRow = false,
+  transferencykey = '',
   handleSelectRow = noop,
   selected = [],
 }) {
@@ -90,7 +91,7 @@ export default function Body({
                 <input
                   type='checkbox'
                   checked={selected.find((item) => {
-                    const index = row?.data?.findIndex((val) => val.key == 'id');
+                    const index = row?.data?.findIndex((val) => val.key == transferencykey);
                     return row?.data[index]?.value == item;
                   })}
                   onChange={() => handleSelectRow(rowIndex)}
