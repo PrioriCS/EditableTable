@@ -1,4 +1,5 @@
 import { noop } from 'lodash';
+import moment from 'moment';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';
@@ -147,6 +148,18 @@ export default function Body({
                   functions={columns?.find((column) => column.key == item.key)?.functions}
                   value={item.value}
                 />
+              ) : columns?.find((column) => column.key == item.key)?.date ? (
+                moment(
+                  item.value,
+                  columns?.find((column) => column.key == item.key)?.format
+                    ? columns.find((column) => column.key == item.key).format
+                    : 'L'
+                )
+              ) : columns?.find((column) => column.key == item.key)?.money ? (
+                'R$' +
+                item.value.toLocaleString('pt-br', {
+                  minimumFractionDigits: 2,
+                })
               ) : (
                 item.value
               )}
