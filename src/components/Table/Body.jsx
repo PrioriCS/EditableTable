@@ -18,7 +18,7 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
           !columns?.find((column) => column?.key == item?.key)?.disabled) ||
           columns?.find((column) => column?.key == item?.key)?.personalized
           ? ''
-          : 'cursor-not-allowed px-4',
+          : 'cursor-not-allowed px-4 py-2',
         rowIndex < data?.values?.length - 1 ? 'border-b' : '',
         itemIndex < row?.data?.length - 1 ? 'border-r' : '',
         row?.style?.background &&
@@ -149,8 +149,7 @@ export default function Body({
                   value={item.value}
                 />
               ) : columns?.find((column) => column.key == item.key)?.date ? (
-                moment(
-                  item.value,
+                moment(item.value).format(
                   columns?.find((column) => column.key == item.key)?.format
                     ? columns.find((column) => column.key == item.key).format
                     : 'L'
