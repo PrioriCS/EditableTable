@@ -150,11 +150,13 @@ export default function Body({
                   value={item.value}
                 />
               ) : columns?.find((column) => column.key == item.key)?.date ? (
-                moment(item.value).format(
-                  columns?.find((column) => column.key == item.key)?.format
-                    ? columns.find((column) => column.key == item.key).format
-                    : 'L'
-                )
+                moment
+                  .utc(item.value)
+                  .format(
+                    columns?.find((column) => column.key == item.key)?.format
+                      ? columns.find((column) => column.key == item.key).format
+                      : 'L'
+                  )
               ) : columns?.find((column) => column.key == item.key)?.money ? (
                 'R$' +
                 item.value.toLocaleString('pt-br', {
