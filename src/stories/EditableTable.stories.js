@@ -198,7 +198,7 @@ let dataWithStyle = {
         selectPrimaryKey: true,
         options: [
           { code: 1, name: 'Teste' },
-          { code: 2, name: 'Cu' },
+          { code: 2, name: 'Teste 2' },
         ],
       },
     ],
