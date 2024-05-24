@@ -16,6 +16,7 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
         'text-center whitespace-nowrap',
         (columns?.find((column) => column?.key == item?.key)?.editable &&
           !columns?.find((column) => column?.key == item?.key)?.disabled) ||
+          columns?.find((column) => column?.key == item?.key)?.select ||
           columns?.find((column) => column?.key == item?.key)?.personalized
           ? ''
           : 'cursor-not-allowed px-4 py-2',
@@ -24,17 +25,24 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
         row?.style?.background &&
           !columns?.find((column) => column?.key == item?.key)?.disabled &&
           (columns?.find((column) => column?.key == item?.key)?.editable ||
+            columns?.find((column) => column?.key == item?.key)?.select ||
             columns?.find((column) => column?.key == item?.key)?.personalized)
           ? validate(row.style.background, 'bg-([\\S]+)')
           : style?.background &&
               !columns?.find((column) => column?.key == item?.key)?.disabled &&
               (columns?.find((column) => column?.key == item?.key)?.editable ||
+                columns?.find((column) => column?.key == item?.key)?.select ||
                 columns?.find((column) => column?.key == item?.key)?.personalized)
             ? validate(style.background, 'bg-([\\S]+)')
             : '',
         row?.style?.disabled
           ? (row?.style?.disabled && columns?.find((column) => column?.key == item?.key)?.disabled) ||
-            (!columns?.find((column) => column?.key == item?.key)?.editable && row?.style?.disabled)
+            (!columns?.find((column) => column?.key == item?.key)?.editable &&
+              !columns?.find((column) => column?.key == item?.key)?.select &&
+              row?.style?.disabled) ||
+            (columns?.find((column) => column?.key == item?.key)?.select &&
+              columns?.find((column) => column?.key == item?.key)?.disabled &&
+              row?.style?.disabled)
             ? columns?.find((column) => column?.key == item?.key)?.personalized
               ? ''
               : validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
@@ -122,8 +130,62 @@ export default function Body({
               data={data}
               style={style}
               key={itemIndex}>
-              {columns?.find((column) => column.key == item.key)?.editable &&
-              !columns?.find((column) => column.key == item.key)?.disabled ? (
+              {columns?.find((column) => column.key == item.key)?.select ? (
+                <div>
+                  <select
+                    value={item.value}
+                    onChange={({ target }) =>
+                      edit(
+                        rowIndex,
+                        itemIndex,
+                        columns?.find((column) => column.key == item.key)?.selectPrimaryKey
+                          ? parseInt(target.value)
+                          : target.value
+                      )
+                    }
+                    disabled={columns?.find((column) => column.key == item.key)?.disabled}
+                    className={twMerge(
+                      'border-none ring-0 w-full focus:border-transparent focus:ring-0',
+                      columns?.find((column) => column.key == item.key)?.disabled && row?.style?.disabled
+                        ? validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+                        : row?.style?.background
+                          ? validate(row.style.background, 'bg-([\\S]+)')
+                          : style?.background
+                            ? validate(style.background, 'bg-([\\S]+)')
+                            : '',
+                      style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : '',
+                      columns?.find((column) => column.key == item.key)?.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+                    )}>
+                    <option disabled={!columns?.find((column) => column.key == item.key)?.canClearSelect}>
+                      {columns?.find((column) => column.key == item.key)?.selectText
+                        ? columns.find((column) => column.key == item.key).selectText
+                        : 'Selecione uma opção'}
+                    </option>
+                    {columns
+                      ?.find((column) => column.key == item.key)
+                      ?.options.map((option, index) => (
+                        <option
+                          value={
+                            option[
+                              columns?.find((column) => column.key == item.key)?.selectKey
+                                ? columns.find((column) => column.key == item.key).selectKey
+                                : 'id'
+                            ]
+                          }
+                          key={index}>
+                          {
+                            option[
+                              columns?.find((column) => column.key == item.key)?.selectView
+                                ? columns.find((column) => column.key == item.key).selectView
+                                : 'name'
+                            ]
+                          }
+                        </option>
+                      ))}
+                  </select>
+                </div>
+              ) : columns?.find((column) => column.key == item.key)?.editable &&
+                !columns?.find((column) => column.key == item.key)?.disabled ? (
                 <input
                   type={
                     columns?.find((column) => column.key == item.key)?.type

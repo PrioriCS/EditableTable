@@ -26,7 +26,7 @@ export default function Head({ data = {}, transferableRow = false, handleSelectA
   return (
     <thead
       className={twMerge(
-        'sticky top-0 w-full',
+        'sticky top-0 w-full z-10',
         style?.background ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50') : 'bg-slate-50'
       )}>
       <tr>

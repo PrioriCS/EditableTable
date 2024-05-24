@@ -109,6 +109,20 @@ const ButtonTest = () => {
   return <button type='button'>Teste</button>;
 };
 
+const update = (value) => {
+  const arr = [];
+
+  value.map((val) => {
+    let tempObj = {};
+    val.map((dat) => {
+      tempObj = { ...tempObj, [dat.key]: dat.value };
+    });
+    arr.push(tempObj);
+  });
+
+  console.log(arr);
+};
+
 let dataWithStyle = {
   table: {
     style: {
@@ -119,6 +133,7 @@ let dataWithStyle = {
     scrollMaxHeight: 'max-h-40',
     transferableRow: true,
     rowsSelectionConfirm: selections,
+    onConfirm: update,
   },
   searchBar: {
     bar: {
@@ -173,6 +188,19 @@ let dataWithStyle = {
       { key: 'id', primaryKey: true, value: 'ID' },
       { key: 'client_name', value: 'Nome do Cliente', editable: true },
       { key: 'phone', value: 'Telefone', personalized: true, component: Personalized, functions: { test } },
+      {
+        key: 'code',
+        value: 'Teste',
+        select: true,
+        selectKey: 'code',
+        selectView: 'name',
+        selectText: 'Selecione aqui',
+        selectPrimaryKey: true,
+        options: [
+          { code: 1, name: 'Teste' },
+          { code: 2, name: 'Cu' },
+        ],
+      },
     ],
     style: {
       background: 'bg-red-100',
@@ -236,7 +264,7 @@ export const WithStyle = {
         values: [
           {
             data: [
-              { key: 'id', type: 'number', value: '1' },
+              { key: 'id', type: 'number', value: 1 },
               {
                 key: 'client_name',
                 value: 'Bernardo Magueta Kowalsky',
@@ -244,6 +272,10 @@ export const WithStyle = {
               {
                 key: 'phone',
                 value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
               },
             ],
             style: {
@@ -254,7 +286,7 @@ export const WithStyle = {
           },
           {
             data: [
-              { key: 'id', value: '2' },
+              { key: 'id', value: 2 },
               {
                 key: 'client_name',
                 value: 'Artur Ramiro Furtado',
@@ -263,25 +295,16 @@ export const WithStyle = {
                 key: 'phone',
                 value: '(47) 98881-7898',
               },
+              {
+                key: 'code',
+                value: 2,
+              },
             ],
           },
         ],
       },
     },
   },
-};
-
-const update = (value) => {
-  const arr = [];
-  value.map((val) => {
-    let tempObj = {};
-    val.data.map((dat) => {
-      tempObj = { ...tempObj, [dat.key]: dat.value };
-    });
-    arr.push(tempObj);
-  });
-
-  console.log(arr);
 };
 
 const withoutPaginationAndToolbarData = {

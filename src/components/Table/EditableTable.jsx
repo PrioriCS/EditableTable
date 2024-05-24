@@ -10,6 +10,7 @@ import SearchBar from './SearchBar';
 
 export default function EditableTable({ data = {} }) {
   const [editableData, setEditableData] = useState({});
+  const [editedData, setEditedData] = useState({ values: [] });
   const [isEditing, setIsEditing] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
 
@@ -21,11 +22,11 @@ export default function EditableTable({ data = {} }) {
   }, [data]);
 
   const handleEdit = (rowIndex, itemIndex, newVal) => {
-    edit(setEditableData, setIsEditing, rowIndex, itemIndex, newVal);
+    edit(setEditableData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal);
   };
 
   const handleConfirmUpdate = () => {
-    onConfirm(editableData.body.values);
+    onConfirm(editedData.values);
   };
 
   const handleConfirmRowsSelection = () => {

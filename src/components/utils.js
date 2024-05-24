@@ -1,11 +1,25 @@
-export function edit(setEditableData, setIsEditing, rowIndex, itemIndex, newVal) {
-  setEditableData((value) => {
+export function edit(setData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal) {
+  setData((value) => {
     const temp = { ...value };
+
+    setEditedData((val) => {
+      const tempVal = { ...val };
+      const valIndex = tempVal.values.findIndex((item) => item == temp.body.values[rowIndex].data);
+
+      if (valIndex >= 0) {
+        tempVal.values[valIndex][itemIndex].value = newVal;
+      } else {
+        tempVal.values = [...tempVal.values, temp.body.values[rowIndex].data];
+      }
+
+      return tempVal;
+    });
 
     temp.body.values[rowIndex].data[itemIndex].value = newVal;
 
     return temp;
   });
+
   setIsEditing(true);
 }
 
