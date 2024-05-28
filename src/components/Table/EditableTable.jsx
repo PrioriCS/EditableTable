@@ -27,6 +27,7 @@ export default function EditableTable({ data = {} }) {
 
   const handleConfirmUpdate = () => {
     onConfirm(editedData.values);
+    setEditedData({ values: [] });
   };
 
   const handleConfirmRowsSelection = () => {
