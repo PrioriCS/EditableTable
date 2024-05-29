@@ -4,9 +4,9 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';
 
-const Personalized = ({ component, functions, value }) => {
+const Personalized = ({ component, functions, value, row }) => {
   const Component = component;
-  return <Component functions={functions} value={value} />;
+  return <Component functions={functions} value={value} row={row} />;
 };
 
 const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, children }) => {
