@@ -210,6 +210,7 @@ export default function Body({
                   component={columns?.find((column) => column.key == item.key)?.component}
                   functions={columns?.find((column) => column.key == item.key)?.functions}
                   value={item.value}
+                  row={row}
                 />
               ) : columns?.find((column) => column.key == item.key)?.date ? (
                 moment
