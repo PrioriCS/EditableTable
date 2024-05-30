@@ -222,9 +222,9 @@ export default function Body({
                           ? columns.find((column) => column.key == item.key).format
                           : 'L'
                       )
-                  ) : columns?.find((column) => column.key == item.key)?.money ? (
+                  ) : columns?.find((column) => column.key == item.key)?.money && item?.value ? (
                     'R$' +
-                    item.value.toLocaleString('pt-br', {
+                    item?.value?.toLocaleString('pt-br', {
                       minimumFractionDigits: 2,
                     })
                   ) : (
