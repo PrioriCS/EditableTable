@@ -130,7 +130,7 @@ let dataWithStyle = {
     },
     scrollX: true,
     scrollY: true,
-    scrollMaxHeight: 'max-h-40',
+    scrollMinHeight: 'max-h-40',
     transferableRow: true,
     rowsSelectionConfirm: selections,
     onConfirm: update,

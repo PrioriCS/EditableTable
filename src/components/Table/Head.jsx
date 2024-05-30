@@ -21,7 +21,13 @@ const TableHead = ({ index = '', columns = [], column = {}, style = {}, checkbox
   );
 };
 
-export default function Head({ data = {}, transferableRow = false, handleSelectAll = noop(), allSelected = false }) {
+export default function Head({
+  data = {},
+  transferableRow = false,
+  handleSelectAll = noop(),
+  allSelected = false,
+  items = [],
+}) {
   const { columns, style, checkbox } = data;
   return (
     <thead
@@ -54,11 +60,14 @@ export default function Head({ data = {}, transferableRow = false, handleSelectA
           </TableHead>
         )}
 
-        {columns?.map((column, index) => (
-          <TableHead key={index} index={index} columns={columns} column={column} style={style}>
-            {column.value}
-          </TableHead>
-        ))}
+        {columns?.map(
+          (column, index) =>
+            items.find((item) => item.data.find((data) => data.key == column.key)) && (
+              <TableHead key={index} index={index} columns={columns} column={column} style={style}>
+                {column.value}
+              </TableHead>
+            )
+        )}
       </tr>
     </thead>
   );

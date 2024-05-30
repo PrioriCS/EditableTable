@@ -120,116 +120,119 @@ export default function Body({
             </TableData>
           )}
 
-          {row?.data?.map((item, itemIndex) => (
-            <TableData
-              columns={columns}
-              item={item}
-              rowIndex={rowIndex}
-              itemIndex={itemIndex}
-              row={row}
-              data={data}
-              style={style}
-              key={itemIndex}>
-              {columns?.find((column) => column.key == item.key)?.select ? (
-                <div>
-                  <select
-                    value={item.value}
-                    onChange={({ target }) =>
-                      edit(
-                        rowIndex,
-                        itemIndex,
-                        columns?.find((column) => column.key == item.key)?.selectPrimaryKey
-                          ? parseInt(target.value)
-                          : target.value
-                      )
-                    }
-                    disabled={columns?.find((column) => column.key == item.key)?.disabled}
-                    className={twMerge(
-                      'border-none ring-0 w-full focus:border-transparent focus:ring-0',
-                      columns?.find((column) => column.key == item.key)?.disabled && row?.style?.disabled
-                        ? validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
-                        : row?.style?.background
+          {row?.data?.map(
+            (item, itemIndex) =>
+              columns?.find((column) => column.key == item.key) && (
+                <TableData
+                  columns={columns}
+                  item={item}
+                  rowIndex={rowIndex}
+                  itemIndex={itemIndex}
+                  row={row}
+                  data={data}
+                  style={style}
+                  key={itemIndex}>
+                  {columns?.find((column) => column.key == item.key)?.select ? (
+                    <div>
+                      <select
+                        value={item.value}
+                        onChange={({ target }) =>
+                          edit(
+                            rowIndex,
+                            itemIndex,
+                            columns?.find((column) => column.key == item.key)?.selectPrimaryKey
+                              ? parseInt(target.value)
+                              : target.value
+                          )
+                        }
+                        disabled={columns?.find((column) => column.key == item.key)?.disabled}
+                        className={twMerge(
+                          'border-none ring-0 w-full focus:border-transparent focus:ring-0',
+                          columns?.find((column) => column.key == item.key)?.disabled && row?.style?.disabled
+                            ? validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+                            : row?.style?.background
+                              ? validate(row.style.background, 'bg-([\\S]+)')
+                              : style?.background
+                                ? validate(style.background, 'bg-([\\S]+)')
+                                : '',
+                          style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : '',
+                          columns?.find((column) => column.key == item.key)?.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
+                        )}>
+                        <option disabled={!columns?.find((column) => column.key == item.key)?.canClearSelect}>
+                          {columns?.find((column) => column.key == item.key)?.selectText
+                            ? columns.find((column) => column.key == item.key).selectText
+                            : 'Selecione uma opção'}
+                        </option>
+                        {columns
+                          ?.find((column) => column.key == item.key)
+                          ?.options.map((option, index) => (
+                            <option
+                              value={
+                                option[
+                                  columns?.find((column) => column.key == item.key)?.selectKey
+                                    ? columns.find((column) => column.key == item.key).selectKey
+                                    : 'id'
+                                ]
+                              }
+                              key={index}>
+                              {
+                                option[
+                                  columns?.find((column) => column.key == item.key)?.selectView
+                                    ? columns.find((column) => column.key == item.key).selectView
+                                    : 'name'
+                                ]
+                              }
+                            </option>
+                          ))}
+                      </select>
+                    </div>
+                  ) : columns?.find((column) => column.key == item.key)?.editable &&
+                    !columns?.find((column) => column.key == item.key)?.disabled ? (
+                    <input
+                      type={
+                        columns?.find((column) => column.key == item.key)?.type
+                          ? columns?.find((column) => column.key == item.key)?.type
+                          : 'text'
+                      }
+                      value={item.value}
+                      onChange={({ target }) => edit(rowIndex, itemIndex, target.value)}
+                      disabled={columns?.find((column) => column.key == item.key)?.disabled}
+                      className={twMerge(
+                        'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center overflow-y-hidden',
+                        row?.style?.background
                           ? validate(row.style.background, 'bg-([\\S]+)')
                           : style?.background
                             ? validate(style.background, 'bg-([\\S]+)')
                             : '',
-                      style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : '',
-                      columns?.find((column) => column.key == item.key)?.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
-                    )}>
-                    <option disabled={!columns?.find((column) => column.key == item.key)?.canClearSelect}>
-                      {columns?.find((column) => column.key == item.key)?.selectText
-                        ? columns.find((column) => column.key == item.key).selectText
-                        : 'Selecione uma opção'}
-                    </option>
-                    {columns
-                      ?.find((column) => column.key == item.key)
-                      ?.options.map((option, index) => (
-                        <option
-                          value={
-                            option[
-                              columns?.find((column) => column.key == item.key)?.selectKey
-                                ? columns.find((column) => column.key == item.key).selectKey
-                                : 'id'
-                            ]
-                          }
-                          key={index}>
-                          {
-                            option[
-                              columns?.find((column) => column.key == item.key)?.selectView
-                                ? columns.find((column) => column.key == item.key).selectView
-                                : 'name'
-                            ]
-                          }
-                        </option>
-                      ))}
-                  </select>
-                </div>
-              ) : columns?.find((column) => column.key == item.key)?.editable &&
-                !columns?.find((column) => column.key == item.key)?.disabled ? (
-                <input
-                  type={
-                    columns?.find((column) => column.key == item.key)?.type
-                      ? columns?.find((column) => column.key == item.key)?.type
-                      : 'text'
-                  }
-                  value={item.value}
-                  onChange={({ target }) => edit(rowIndex, itemIndex, target.value)}
-                  disabled={columns?.find((column) => column.key == item.key)?.disabled}
-                  className={twMerge(
-                    'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center overflow-y-hidden',
-                    row?.style?.background
-                      ? validate(row.style.background, 'bg-([\\S]+)')
-                      : style?.background
-                        ? validate(style.background, 'bg-([\\S]+)')
-                        : '',
-                    style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
+                        style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
+                      )}
+                    />
+                  ) : columns?.find((column) => column.key == item.key)?.personalized ? (
+                    <Personalized
+                      component={columns?.find((column) => column.key == item.key)?.component}
+                      functions={columns?.find((column) => column.key == item.key)?.functions}
+                      value={item.value}
+                      row={row}
+                    />
+                  ) : columns?.find((column) => column.key == item.key)?.date ? (
+                    moment
+                      .utc(item.value)
+                      .format(
+                        columns?.find((column) => column.key == item.key)?.format
+                          ? columns.find((column) => column.key == item.key).format
+                          : 'L'
+                      )
+                  ) : columns?.find((column) => column.key == item.key)?.money ? (
+                    'R$' +
+                    item.value.toLocaleString('pt-br', {
+                      minimumFractionDigits: 2,
+                    })
+                  ) : (
+                    item.value
                   )}
-                />
-              ) : columns?.find((column) => column.key == item.key)?.personalized ? (
-                <Personalized
-                  component={columns?.find((column) => column.key == item.key)?.component}
-                  functions={columns?.find((column) => column.key == item.key)?.functions}
-                  value={item.value}
-                  row={row}
-                />
-              ) : columns?.find((column) => column.key == item.key)?.date ? (
-                moment
-                  .utc(item.value)
-                  .format(
-                    columns?.find((column) => column.key == item.key)?.format
-                      ? columns.find((column) => column.key == item.key).format
-                      : 'L'
-                  )
-              ) : columns?.find((column) => column.key == item.key)?.money ? (
-                'R$' +
-                item.value.toLocaleString('pt-br', {
-                  minimumFractionDigits: 2,
-                })
-              ) : (
-                item.value
-              )}
-            </TableData>
-          ))}
+                </TableData>
+              )
+          )}
         </tr>
       ))}
     </tbody>

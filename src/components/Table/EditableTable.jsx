@@ -74,13 +74,14 @@ export default function EditableTable({ data = {} }) {
           className={twMerge(
             'overflow-auto',
             data?.table?.scrollY
-              ? data?.table?.scrollMaxHeight
-                ? validate(data.table.scrollMaxHeight, 'max-h-([\\S]+)', 'max-h-96', 'height')
+              ? data?.table?.scrollMinHeight
+                ? validate(data.table.scrollMinHeight, 'max-h-([\\S]+)', 'max-h-96', 'height')
                 : 'max-h-96'
               : 'h-full'
           )}>
           <table className={twMerge('border bg-white', data?.table?.scrollX ? 'max-w-none w-full' : 'w-full')}>
             <Head
+              items={editableData?.body?.values}
               data={data?.head}
               transferableRow={data?.table?.transferableRow}
               handleSelectAll={handleSelectAll}
