@@ -1,4 +1,4 @@
-import { noop } from 'lodash';
+import { isNil, noop } from 'lodash';
 import moment from 'moment';
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
@@ -214,7 +214,7 @@ export default function Body({
                       value={item.value}
                       row={row}
                     />
-                  ) : columns?.find((column) => column.key == item.key)?.date && item?.value ? (
+                  ) : columns?.find((column) => column.key == item.key)?.date && !isNil(item?.value) ? (
                     moment
                       .utc(item.value)
                       .format(
