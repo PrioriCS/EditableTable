@@ -214,7 +214,7 @@ export default function Body({
                       value={item.value}
                       row={row}
                     />
-                  ) : columns?.find((column) => column.key == item.key)?.date ? (
+                  ) : columns?.find((column) => column.key == item.key)?.date && item?.value ? (
                     moment
                       .utc(item.value)
                       .format(
