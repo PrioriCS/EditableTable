@@ -150,7 +150,7 @@ export default function Body({
                         }
                         disabled={columns?.find((column) => column.key == item.key)?.disabled}
                         className={twMerge(
-                          'border-none ring-0 focus:border-transparent focus:ring-0 w-full min-w-max',
+                          'border-none ring-0 focus:border-transparent focus:ring-0 w-full min-w-max text-center',
                           columns?.find((column) => column.key == item.key)?.disabled && row?.style?.disabled
                             ? validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
                             : row?.style?.background
