@@ -136,7 +136,7 @@ export default function Body({
                   style={style}
                   key={itemIndex}>
                   {columns?.find((column) => column.key == item.key)?.select ? (
-                    <div>
+                    <div className='w-full'>
                       <select
                         value={item.value}
                         onChange={({ target }) =>
@@ -150,7 +150,7 @@ export default function Body({
                         }
                         disabled={columns?.find((column) => column.key == item.key)?.disabled}
                         className={twMerge(
-                          'border-none ring-0 w-full focus:border-transparent focus:ring-0',
+                          'border-none ring-0 w-full whitespace-nowrap focus:border-transparent focus:ring-0',
                           columns?.find((column) => column.key == item.key)?.disabled && row?.style?.disabled
                             ? validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
                             : row?.style?.background

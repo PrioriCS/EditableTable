@@ -204,6 +204,7 @@ let dataWithStyle = {
         options: [
           { code: 1, name: 'Teste' },
           { code: 2, name: 'Teste 2' },
+          { code: 3, name: 'Bernardo Magueta Kowalsky' },
         ],
       },
       { key: 'date', value: 'Data', date: true, editable: true },
