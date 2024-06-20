@@ -1,4 +1,21 @@
-export function edit(setData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal) {
+export const normalizeMoney = (money) => {
+  const numberToFormat = typeof money === 'number' ? String(money) : money;
+
+  const moneyFormatted = numberToFormat?.replace(/\D/g, '');
+
+  return moneyFormatted
+    ?.split('')
+    .reverse()
+    .join('')
+    .replace('.', '')
+    .replace(/(\d{2})/, '$1,')
+    .replace(/(\d{3}(?!$))/g, '$1.')
+    .split('')
+    .reverse()
+    .join('');
+};
+
+export function edit(setData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal, money = false) {
   setData((value) => {
     const temp = { ...value };
 
@@ -7,7 +24,7 @@ export function edit(setData, setEditedData, setIsEditing, rowIndex, itemIndex, 
       const valIndex = tempVal.values.findIndex((item) => item == temp.body.values[rowIndex].data);
 
       if (valIndex >= 0) {
-        tempVal.values[valIndex][itemIndex].value = newVal;
+        tempVal.values[valIndex][itemIndex].value = money ? normalizeMoney(newVal) : newVal;
       } else {
         tempVal.values = [...tempVal.values, temp.body.values[rowIndex].data];
       }
@@ -15,7 +32,7 @@ export function edit(setData, setEditedData, setIsEditing, rowIndex, itemIndex, 
       return tempVal;
     });
 
-    temp.body.values[rowIndex].data[itemIndex].value = newVal;
+    temp.body.values[rowIndex].data[itemIndex].value = money ? normalizeMoney(newVal) : newVal;
 
     return temp;
   });

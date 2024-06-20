@@ -6,10 +6,15 @@ export default {
   component: EditableTable,
 };
 
+const test = (value) => {
+  console.log(value);
+};
+
 const data = {
   table: {
     transferableRow: true,
     transferencyKey: 'id',
+    onConfirm: test,
   },
   head: {
     columns: [
@@ -17,6 +22,7 @@ const data = {
       { key: 'client_name', value: 'Nome do Cliente', editable: true },
       { key: 'phone', value: 'Telefone' },
       { key: 'date', value: 'Data', date: true, editable: true },
+      { key: 'money', value: 'Grana', money: true, editable: true },
     ],
   },
   body: {
@@ -33,6 +39,7 @@ const data = {
             value: '(47) 98881-7898',
           },
           { key: 'date', value: new Date() },
+          { key: 'money', value: 10000 },
         ],
       },
     ],
@@ -53,10 +60,6 @@ const Personalized = ({ functions, value }) => {
       {value}
     </button>
   );
-};
-
-const test = (value) => {
-  console.log(value);
 };
 
 const selections = (value) => {

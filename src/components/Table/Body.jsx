@@ -214,8 +214,16 @@ export default function Body({
                             ? columns?.find((column) => column.key == item.key)?.type
                             : 'text'
                         }
-                        value={item.value}
-                        onChange={({ target }) => edit(rowIndex, itemIndex, target.value)}
+                        value={
+                          columns?.find((column) => column.key == item.key)?.money
+                            ? item.value.toLocaleString('pt-br', {
+                                minimumFractionDigits: 2,
+                              })
+                            : item.value
+                        }
+                        onChange={({ target }) =>
+                          edit(rowIndex, itemIndex, target.value, columns?.find((column) => column.key == item.key)?.money)
+                        }
                         disabled={columns?.find((column) => column.key == item.key)?.disabled}
                         className={twMerge(
                           'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center overflow-y-hidden',
