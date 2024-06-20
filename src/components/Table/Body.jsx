@@ -150,7 +150,7 @@ export default function Body({
                         }
                         disabled={columns?.find((column) => column.key == item.key)?.disabled}
                         className={twMerge(
-                          'border-none ring-0 w-full whitespace-nowrap focus:border-transparent focus:ring-0',
+                          'border-none ring-0 focus:border-transparent focus:ring-0 w-full min-w-max',
                           columns?.find((column) => column.key == item.key)?.disabled && row?.style?.disabled
                             ? validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
                             : row?.style?.background
@@ -198,7 +198,7 @@ export default function Body({
                         disabled={columns?.find((column) => column.key == item.key)?.disabled}
                         dateFormat='dd/MM/yyyy'
                         className={twMerge(
-                          'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center',
+                          'border-none ring-0 w-full min-w-max focus:border-transparent focus:ring-0 text-center',
                           row?.style?.background
                             ? validate(row.style.background, 'bg-([\\S]+)')
                             : style?.background
@@ -226,7 +226,7 @@ export default function Body({
                         }
                         disabled={columns?.find((column) => column.key == item.key)?.disabled}
                         className={twMerge(
-                          'border-none ring-0 w-full focus:border-transparent focus:ring-0 text-center overflow-y-hidden',
+                          'border-none ring-0 focus:border-transparent focus:ring-0 text-center overflow-y-hidden min-w-max w-full',
                           row?.style?.background
                             ? validate(row.style.background, 'bg-([\\S]+)')
                             : style?.background
