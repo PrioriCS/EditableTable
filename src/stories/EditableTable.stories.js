@@ -16,6 +16,7 @@ const data = {
       { key: 'id', primaryKey: true, value: 'ID' },
       { key: 'client_name', value: 'Nome do Cliente', editable: true },
       { key: 'phone', value: 'Telefone' },
+      { key: 'date', value: 'Data', date: true, editable: true },
     ],
   },
   body: {
@@ -31,6 +32,7 @@ const data = {
             key: 'phone',
             value: '(47) 98881-7898',
           },
+          { key: 'date', value: new Date() },
         ],
       },
     ],
@@ -201,6 +203,7 @@ let dataWithStyle = {
           { code: 2, name: 'Teste 2' },
         ],
       },
+      { key: 'date', value: 'Data', date: true, editable: true },
     ],
     style: {
       background: 'bg-red-100',
@@ -277,6 +280,7 @@ export const WithStyle = {
                 key: 'code',
                 value: 1,
               },
+              { key: 'date', value: new Date() },
             ],
             style: {
               background: 'bg-pink-200',
