@@ -290,6 +290,7 @@ export const WithStyle = {
               background: 'bg-pink-200',
               disabled: 'bg-green-200',
               text: 'text-red-600',
+              textStyle: 'italic',
             },
           },
           {

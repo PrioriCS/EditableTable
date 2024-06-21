@@ -74,6 +74,11 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
           : style?.text
             ? validate(style.text, 'text-([\\S]+)', 'text-gray-600')
             : 'text-gray-600',
+        row?.style?.textStyle
+          ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
+          : style?.textStyle
+            ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
+            : 'not-italic	',
         style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
       )}>
       {children}
@@ -159,6 +164,11 @@ export default function Body({
                                 ? validate(style.background, 'bg-([\\S]+)')
                                 : '',
                           style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : '',
+                          row?.style?.textStyle
+                            ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
+                            : style?.textStyle
+                              ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
+                              : 'not-italic	',
                           columns?.find((column) => column.key == item.key)?.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
                         )}>
                         <option disabled={!columns?.find((column) => column.key == item.key)?.canClearSelect}>
@@ -204,6 +214,11 @@ export default function Body({
                             : style?.background
                               ? validate(style.background, 'bg-([\\S]+)')
                               : '',
+                          row?.style?.textStyle
+                            ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
+                            : style?.textStyle
+                              ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
+                              : 'not-italic	',
                           style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
                         )}
                       />
@@ -232,6 +247,11 @@ export default function Body({
                             : style?.background
                               ? validate(style.background, 'bg-([\\S]+)')
                               : '',
+                          row?.style?.textStyle
+                            ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
+                            : style?.textStyle
+                              ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
+                              : 'not-italic	',
                           style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
                         )}
                       />

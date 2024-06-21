@@ -76,6 +76,7 @@ const heights = [
 const sizes = ['xs', 'sm', 'base', 'md', 'lg', 'xl', '2xl', '3xl', '4xl', '5xl', '6xl', '7xl', '8xl', '9xl', 'full', 'none'];
 const weights = ['thin', 'extralight', 'light', 'normal', 'medium', 'semibold', 'bold', 'extrabold', 'black'];
 const directions = ['s', 'e', 't', 'r', 'b', 'l', 'ss', 'se', 'ee', 'es', 'tl', 'tr', 'br', 'bl'];
+const textStyles = ['italic', 'not-italic'];
 
 const validateColor = (valOne, valTwo) => {
   return (
@@ -104,12 +105,17 @@ const validateDirection = (size, valOne, valTwo) => {
     : directions.includes(valOne) || sizes.includes(valOne) || valOne?.match(/\[\d+(px|rem)\]/g);
 };
 
+const validateTextStyle = (val) => {
+  return textStyles.includes(val);
+};
+
 export function validate(value = '', regex = '', defaultVal = '', validator = 'color') {
   const regexDefined = new RegExp(regex);
   const matchVal = value?.match(regexDefined);
 
   if (!isEmpty(matchVal)) {
     if (
+      (validator == 'textStyle' && validateTextStyle(matchVal[0])) ||
       (validator == 'height' && (validateHeight(matchVal[0].split('-')[2]) || validateHeight(matchVal[0].split('-')[1]))) ||
       (validator == 'weight' && validateWeight(matchVal[0].split('-')[1])) ||
       (validator == 'color' && validateColor(matchVal[0].split('-')[1], matchVal[0].split('-')[2])) ||
