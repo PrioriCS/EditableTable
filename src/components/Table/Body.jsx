@@ -231,7 +231,7 @@ export default function Body({
                         }
                         value={
                           columns?.find((column) => column.key == item.key)?.money
-                            ? item.value.toLocaleString('pt-br', {
+                            ? item?.value?.toLocaleString('pt-br', {
                                 minimumFractionDigits: 2,
                               })
                             : item.value
