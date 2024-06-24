@@ -23,6 +23,7 @@ export default function EditableTable({ data = {} }) {
 
   const handleEdit = (rowIndex, itemIndex, newVal, money = false) => {
     edit(setEditableData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal, money);
+    setIsEditing(false);
   };
 
   const handleConfirmUpdate = () => {
