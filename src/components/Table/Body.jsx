@@ -169,6 +169,7 @@ export default function Body({
                             : style?.textStyle
                               ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
                               : 'not-italic	',
+                          isNil(item.value) ? 'text-gray-300' : '',
                           columns?.find((column) => column.key == item.key)?.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
                         )}>
                         <option
