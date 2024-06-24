@@ -171,7 +171,10 @@ export default function Body({
                               : 'not-italic	',
                           columns?.find((column) => column.key == item.key)?.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
                         )}>
-                        <option disabled={!columns?.find((column) => column.key == item.key)?.canClearSelect} value=''>
+                        <option
+                          disabled={!columns?.find((column) => column.key == item.key)?.canClearSelect}
+                          value=''
+                          className='text-gray-300'>
                           {columns?.find((column) => column.key == item.key)?.selectText
                             ? columns.find((column) => column.key == item.key).selectText
                             : 'Selecione uma opção'}
