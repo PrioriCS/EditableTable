@@ -1,6 +1,6 @@
 {
   "name": "priorics-table",
-  "version": "1.5.3",
+  "version": "1.5.4",
   "private": false,
   "main": "dist/index",
   "types": "dist/index",

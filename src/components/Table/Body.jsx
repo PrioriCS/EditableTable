@@ -230,7 +230,7 @@ export default function Body({
                             : 'text'
                         }
                         value={
-                          columns?.find((column) => column.key == item.key)?.money && item?.value && !isNil(item?.value)
+                          columns?.find((column) => column.key == item.key)?.money && item?.value
                             ? item?.value?.toLocaleString('pt-br', {
                                 minimumFractionDigits: 2,
                               })
