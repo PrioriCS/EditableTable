@@ -23,12 +23,12 @@ export default function EditableTable({ data = {} }) {
 
   const handleEdit = (rowIndex, itemIndex, newVal, money = false) => {
     edit(setEditableData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal, money);
-    setIsEditing(false);
   };
 
   const handleConfirmUpdate = () => {
     onConfirm(editedData.values);
     setEditedData({ values: [] });
+    setIsEditing(false);
   };
 
   const handleConfirmRowsSelection = () => {
