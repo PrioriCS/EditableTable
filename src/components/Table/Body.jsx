@@ -143,7 +143,7 @@ export default function Body({
                   {columns?.find((column) => column.key == item.key)?.select ? (
                     <div className='w-full'>
                       <select
-                        value={item.value}
+                        value={isNil(item.value) ? '' : item.value}
                         onChange={({ target }) =>
                           edit(
                             rowIndex,
