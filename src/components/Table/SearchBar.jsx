@@ -1,4 +1,4 @@
-import { noop } from 'lodash';
+import { isEmpty, noop } from 'lodash';
 import React from 'react';
 import { CheckSquare, Floppy, Search } from 'react-bootstrap-icons';
 import { twMerge } from 'tailwind-merge';
@@ -42,6 +42,7 @@ export default function SearchBar({
   handleConfirmRowsSelection = noop,
   withoutToolbar = false,
   transferableRow = false,
+  selectedRows = [],
 }) {
   const {
     separated = false,
@@ -107,7 +108,7 @@ export default function SearchBar({
       <div className={twMerge('w-1/2 flex items-center justify-end space-x-4', withoutToolbar ? 'w-full' : 'w-1/2')}>
         {RightComponent && <RightComponent />}
 
-        {transferableRow && (
+        {transferableRow && !isEmpty(selectedRows) && (
           <ConfirmButton
             handleConfirm={handleConfirmRowsSelection}
             wichButton={confirmRows}

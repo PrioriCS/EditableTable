@@ -1,4 +1,4 @@
-import { noop } from 'lodash';
+import { isEmpty, noop } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { edit, selectAllRows, selectRow } from '../utils';
@@ -63,6 +63,7 @@ export default function EditableTable({ data = {} }) {
         handleConfirmRowsSelection={handleConfirmRowsSelection}
         withoutToolbar={data?.table?.withoutToolbar}
         transferableRow={data?.table?.transferableRow}
+        selectedRows={selectedRows}
       />
       <div
         className={twMerge(
@@ -82,11 +83,11 @@ export default function EditableTable({ data = {} }) {
           )}>
           <table className={twMerge('border bg-white', data?.table?.scrollX ? 'max-w-none w-full' : 'w-full')}>
             <Head
-              items={editableData?.body?.values}
               data={data?.head}
               transferableRow={data?.table?.transferableRow}
               handleSelectAll={handleSelectAll}
-              allSelected={selectedRows.length == editableData?.body?.values?.length}
+              allSelected={selectedRows.length == editableData?.body?.values?.length && !isEmpty(selectedRows)}
+              disableAllSelect={isEmpty(selectedRows)}
             />
             <Body
               data={editableData?.body}

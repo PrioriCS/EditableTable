@@ -26,7 +26,7 @@ export default function Head({
   transferableRow = false,
   handleSelectAll = noop(),
   allSelected = false,
-  items = [],
+  disableAllSelect = false,
 }) {
   const { columns, style, checkbox } = data;
   return (
@@ -43,6 +43,7 @@ export default function Head({
                 type='checkbox'
                 onChange={handleSelectAll}
                 checked={allSelected}
+                disabled={disableAllSelect}
                 className={twMerge(
                   'appearance-none focus:ring-0 focus:ring-offset-0',
                   checkbox?.style?.width ? validate(checkbox.style.width, 'w-([\\S]+)', 'w-6', 'height') : 'w-6',
@@ -53,7 +54,8 @@ export default function Head({
                   checkbox?.style?.border ? validate(checkbox.style.border, 'border-([\\S]+)') : '',
                   `checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
                   `focus:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
-                  `hover:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`
+                  `hover:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
+                  disableAllSelect ? 'cursor-not-allowed' : ''
                 )}
               />
             </div>
@@ -62,7 +64,7 @@ export default function Head({
 
         {columns?.map(
           (column, index) =>
-            items.find((item) => item.data.find((data) => data.key == column.key)) && (
+            !column.disabled && (
               <TableHead key={index} index={index} columns={columns} column={column} style={style}>
                 {column.value}
               </TableHead>
