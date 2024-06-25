@@ -112,7 +112,7 @@ export default function Body({
                   })}
                   onChange={() => handleSelectRow(rowIndex)}
                   className={twMerge(
-                    'appearance-none focus:ring-0 focus:ring-offset-0',
+                    'appearance-none focus:ring-0 focus:ring-offset-0 cursor-pointer',
                     checkbox?.style?.width ? validate(checkbox.style.width, 'w-([\\S]+)', 'w-6', 'height') : 'w-6',
                     checkbox?.style?.height ? validate(checkbox.style.height, 'h-([\\S]+)', 'h-6', 'height') : 'h-6',
                     checkbox?.style?.rounded

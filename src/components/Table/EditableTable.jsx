@@ -33,6 +33,7 @@ export default function EditableTable({ data = {} }) {
 
   const handleConfirmRowsSelection = () => {
     rowsSelectionConfirm(selectedRows);
+    setSelectedRows([]);
   };
 
   const handleSelectAll = () => {

@@ -55,7 +55,7 @@ export default function Head({
                   `checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
                   `focus:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
                   `hover:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
-                  disableAllSelect ? 'cursor-not-allowed' : ''
+                  disableAllSelect ? 'cursor-not-allowed' : 'cursor-pointer'
                 )}
               />
             </div>
