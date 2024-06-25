@@ -38,7 +38,7 @@ export default function Head({
       <tr>
         {transferableRow && (
           <TableHead columns={columns} style={style} checkboxOnly>
-            <div className='flex items-center justify-center'>
+            <div className='flex items-center justify-center px-4'>
               <input
                 type='checkbox'
                 onChange={handleSelectAll}

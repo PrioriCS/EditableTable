@@ -1,4 +1,4 @@
-import { isEmpty, noop } from 'lodash';
+import { isEmpty, isNil, isUndefined, noop } from 'lodash';
 import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { edit, selectAllRows, selectRow } from '../utils';
@@ -87,7 +87,11 @@ export default function EditableTable({ data = {} }) {
               transferableRow={data?.table?.transferableRow}
               handleSelectAll={handleSelectAll}
               allSelected={selectedRows.length == editableData?.body?.values?.length && !isEmpty(selectedRows)}
-              disableAllSelect={isEmpty(selectedRows)}
+              disableAllSelect={
+                isEmpty(editableData?.body?.values) ||
+                isNil(editableData?.body?.values) ||
+                isUndefined(editableData?.body?.values)
+              }
             />
             <Body
               data={editableData?.body}
