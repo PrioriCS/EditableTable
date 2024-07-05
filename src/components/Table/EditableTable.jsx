@@ -15,7 +15,7 @@ export default function EditableTable({ data = {} }) {
   const [selectedRows, setSelectedRows] = useState([]);
 
   const { table = {} } = data;
-  const { rowsSelectionConfirm = noop, onConfirm = noop } = table;
+  const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop } = table;
 
   useEffect(() => {
     setEditableData(data);
@@ -101,6 +101,7 @@ export default function EditableTable({ data = {} }) {
               selected={selectedRows}
               edit={handleEdit}
               handleSelectRow={handleSelectRow}
+              onRowDoubleClick={onRowDoubleClick}
             />
           </table>
         </div>

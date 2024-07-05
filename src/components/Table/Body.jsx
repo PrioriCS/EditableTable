@@ -32,10 +32,10 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
             columns?.find((column) => column?.key == item?.key)?.personalized)
           ? validate(row.style.background, 'bg-([\\S]+)')
           : style?.background &&
-              !columns?.find((column) => column?.key == item?.key)?.disabled &&
-              (columns?.find((column) => column?.key == item?.key)?.editable ||
-                columns?.find((column) => column?.key == item?.key)?.select ||
-                columns?.find((column) => column?.key == item?.key)?.personalized)
+            !columns?.find((column) => column?.key == item?.key)?.disabled &&
+            (columns?.find((column) => column?.key == item?.key)?.editable ||
+              columns?.find((column) => column?.key == item?.key)?.select ||
+              columns?.find((column) => column?.key == item?.key)?.personalized)
             ? validate(style.background, 'bg-([\\S]+)')
             : '',
         row?.style?.disabled
@@ -57,7 +57,7 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
                   ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50')
                   : 'bg-slate-50'
           : (style?.disabled && columns?.find((column) => column?.key == item?.key)?.disabled) ||
-              (!columns?.find((column) => column?.key == item?.key)?.editable && style?.disabled)
+            (!columns?.find((column) => column?.key == item?.key)?.editable && style?.disabled)
             ? columns?.find((column) => column?.key == item?.key)?.personalized
               ? ''
               : validate(style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
@@ -93,14 +93,14 @@ export default function Body({
   transferableRow = false,
   transferencykey = '',
   handleSelectRow = noop,
+  onRowDoubleClick = noop,
   selected = [],
 }) {
   const { style, checkbox } = data;
-
   return (
-    <tbody>
+    <tbody id='table-body'>
       {data?.values?.map((row, rowIndex) => (
-        <tr key={rowIndex}>
+        <tr key={rowIndex} onDoubleClick={() => onRowDoubleClick({ row: row, primaryKey: transferencykey })}>
           {transferableRow && (
             <TableData columns={columns} row={row} rowIndex={rowIndex} itemIndex={0} data={data} style={style}>
               <div className='flex items-center justify-center'>
@@ -127,10 +127,11 @@ export default function Body({
               </div>
             </TableData>
           )}
-
-          {row?.data?.map(
-            (item, itemIndex) =>
-              columns?.find((column) => column.key == item.key) && (
+          {columns.map(
+            (column) => {
+              const item = row.data?.find((value) => value.key == column.key);
+              const itemIndex = row.data?.indexOf(item);
+              return item && (
                 <TableData
                   columns={columns}
                   item={item}
@@ -186,17 +187,17 @@ export default function Body({
                             <option
                               value={
                                 option[
-                                  columns?.find((column) => column.key == item.key)?.selectKey
-                                    ? columns.find((column) => column.key == item.key).selectKey
-                                    : 'id'
+                                columns?.find((column) => column.key == item.key)?.selectKey
+                                  ? columns.find((column) => column.key == item.key).selectKey
+                                  : 'id'
                                 ]
                               }
                               key={index}>
                               {
                                 option[
-                                  columns?.find((column) => column.key == item.key)?.selectView
-                                    ? columns.find((column) => column.key == item.key).selectView
-                                    : 'name'
+                                columns?.find((column) => column.key == item.key)?.selectView
+                                  ? columns.find((column) => column.key == item.key).selectView
+                                  : 'name'
                                 ]
                               }
                             </option>
@@ -236,8 +237,8 @@ export default function Body({
                         value={
                           columns?.find((column) => column.key == item.key)?.money && item?.value && !isNil(item.value)
                             ? item?.value?.toLocaleString('pt-br', {
-                                minimumFractionDigits: 2,
-                              })
+                              minimumFractionDigits: 2,
+                            })
                             : isNil(item.value)
                               ? ''
                               : item.value
@@ -286,7 +287,8 @@ export default function Body({
                     item.value
                   )}
                 </TableData>
-              )
+              );
+            }
           )}
         </tr>
       ))}
