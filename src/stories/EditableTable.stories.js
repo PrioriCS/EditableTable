@@ -15,6 +15,7 @@ const data = {
     transferableRow: true,
     transferencyKey: 'id',
     onConfirm: test,
+    onRowDoubleClick: (e) => console.log(e)
   },
   head: {
     columns: [
@@ -40,6 +41,21 @@ const data = {
           },
           { key: 'date', value: new Date() },
           { key: 'money', value: 10000 },
+        ],
+      },
+      {
+        data: [
+          {
+            key: 'client_name',
+            value: 'Bernardo Magueta Kowalsky',
+          },
+          {
+            key: 'phone',
+            value: '(47) 88881-7898',
+          },
+          { key: 'money', value: 20000 },
+          { key: 'date', value: new Date() },
+          { key: 'id', value: '1' },
         ],
       },
     ],
@@ -135,7 +151,7 @@ let dataWithStyle = {
     },
     scrollX: true,
     scrollY: true,
-    scrollMinHeight: 'max-h-40',
+    scrollMinHeight: 'max-h-56',
     transferableRow: true,
     rowsSelectionConfirm: selections,
     onConfirm: update,
@@ -295,7 +311,199 @@ export const WithStyle = {
           },
           {
             data: [
-              { key: 'id', value: 2 },
+              { key: 'id', type: 'number', value: 2 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', type: 'number', value: 3 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', type: 'number', value: 4 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', type: 'number', value: 5 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', type: 'number', value: 6 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', type: 'number', value: 7 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', type: 'number', value: 8 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', type: 'number', value: 9 },
+              {
+                key: 'client_name',
+                value: 'Bernardo Magueta Kowalsky',
+              },
+              {
+                key: 'phone',
+                value: '(47) 98881-7898',
+              },
+              {
+                key: 'code',
+                value: 1,
+              },
+              { key: 'date', value: new Date() },
+            ],
+            style: {
+              background: 'bg-pink-200',
+              disabled: 'bg-green-200',
+              text: 'text-red-600',
+              textStyle: 'italic',
+            },
+          },
+          {
+            data: [
+              { key: 'id', value: 10 },
               {
                 key: 'client_name',
                 value: 'Artur Ramiro Furtado',
