@@ -1,5 +1,5 @@
 import { noop } from 'lodash';
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronDoubleLeft, ChevronDoubleRight, ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';

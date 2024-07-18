@@ -1,5 +1,5 @@
 import { isEmpty, isNil, isUndefined, noop } from 'lodash';
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { edit, selectAllRows, selectRow } from '../utils';
 import { validate } from '../validator';
@@ -7,21 +7,27 @@ import Body from './Body';
 import Head from './Head';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
+import { DataType, ITable } from '../tableTypes';
 
-export default function EditableTable({ data = {} }) {
+export default function EditableTable({ data }: DataType) {
   const [editableData, setEditableData] = useState({});
   const [editedData, setEditedData] = useState({ values: [] });
   const [isEditing, setIsEditing] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const { table = {} } = data;
-  const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop } = table;
+  const { table = {} as ITable } = data;
+  const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop }: ITable = table;
 
   useEffect(() => {
     setEditableData(data);
   }, [data]);
 
-  const handleEdit = (rowIndex, itemIndex, newVal, money = false) => {
+  const handleEdit = (
+    rowIndex: string | number,
+    itemIndex: string | number,
+    newVal: string | number | Date | boolean,
+    money = false
+  ) => {
     edit(setEditableData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal, money);
   };
 
@@ -40,17 +46,17 @@ export default function EditableTable({ data = {} }) {
       selectedRows,
       editableData,
       setSelectedRows,
-      data?.table?.transferencykey ? data.table.transferencykey : 'id'
+      data?.table?.transferencyKey ? data.table.transferencyKey : 'id'
     );
   };
 
-  const handleSelectRow = (rowIndex) => {
+  const handleSelectRow = (rowIndex: string | number) => {
     selectRow(
       editableData,
       rowIndex,
       selectedRows,
       setSelectedRows,
-      data?.table?.transferencykey ? data.table.transferencykey : 'id'
+      data?.table?.transferencyKey ? data.table.transferencyKey : 'id'
     );
   };
 
@@ -97,7 +103,7 @@ export default function EditableTable({ data = {} }) {
               data={editableData?.body}
               columns={data?.head?.columns}
               transferableRow={data?.table?.transferableRow}
-              transferencykey={data?.table?.transferencykey ? data.table.transferencykey : 'id'}
+              transferencykey={data?.table?.transferencyKey ? data.table.transferencyKey : 'id'}
               selected={selectedRows}
               edit={handleEdit}
               handleSelectRow={handleSelectRow}

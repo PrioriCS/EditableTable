@@ -36,6 +36,7 @@
     "react-input-mask": "^2.0.4",
     "react-router-dom": "^6.23.1",
     "tailwind-merge": "^1.14.0",
+    "typescript": "^5.5.3",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
