@@ -1,63 +1,63 @@
-export interface IStyle {
-  rounded: string | null;
-  border: string | null;
-  focus: string | null;
-  text: string | null;
-  placeholder: string | null;
-  background: string | null;
-  size: string | null;
-}
+export type Style = {
+  rounded?: string;
+  border?: string;
+  focus?: string;
+  text?: string;
+  placeholder?: string;
+  background?: string;
+  size?: string;
+};
 
-export interface IIcon {
-  component: React.ComponentType<{ className?: string }> | null;
-  style: IStyle | null;
-}
+export type Icon = {
+  component?: React.ComponentType<{ className?: string }>;
+  style?: Style;
+};
 
-export interface ISaveButton {
-  icon: IIcon | null;
-  style: IStyle | null;
-  text: string | null;
-}
+export type SaveButton = {
+  icon?: Icon;
+  style?: Style;
+  text?: string;
+};
 
-export interface IConfirmRows {
-  icon: IIcon | null;
-  style: IStyle | null;
-  text: string | null;
-}
+export type ConfirmRows = {
+  icon?: Icon;
+  style?: Style;
+  text?: string;
+};
 
-export interface IBar {
-  icon: IIcon | null;
-  style: IStyle | null;
-  placeholder: string | null;
-}
+export type Bar = {
+  icon?: Icon;
+  style?: Style;
+  placeholder?: string;
+};
 
-export interface ISearchBar {
-  separated: boolean | null;
-  saveButton: ISaveButton | null;
-  confirmRows: IConfirmRows | null;
-  bar: IBar | null;
-  style: IStyle | null;
-  onSearch: Function | null;
-  onRight: React.ComponentType | null;
-}
+export type SearchBar = {
+  separated?: boolean;
+  saveButton?: SaveButton;
+  confirmRows?: ConfirmRows;
+  bar?: Bar;
+  style?: Style;
+  onSearch?: Function;
+  onRight?: React.ComponentType;
+};
 
-export interface ITable {
-  transferableRow: boolean | null;
-  withoutToolbar: boolean | null;
-  withoutPagination: boolean | null;
-  scrollY: boolean | null;
-  scrollX: boolean | null;
-  transferencyKey: string | null;
-  scrollMinHeight: string | null;
-  onConfirm: Function | null;
-  rowsSelectionConfirm: Function | null;
-  onRowDoubleClick: Function | null;
-  style: IStyle | null;
-}
+export type Table = {
+  transferableRow?: boolean;
+  withoutToolbar?: boolean;
+  withoutPagination?: boolean;
+  scrollY?: boolean;
+  scrollX?: boolean;
+  transferencyKey?: string;
+  scrollMinHeight?: string;
+  onConfirm?: Function;
+  rowsSelectionConfirm?: Function;
+  onRowDoubleClick?: Function;
+  style?: Style;
+};
 
-export interface DataType {
+export type DataType = {
   data: {
-    table: ITable | null;
-    searchBar: ISearchBar | null;
+    table?: Table;
+    searchBar?: SearchBar;
   };
-}
+};

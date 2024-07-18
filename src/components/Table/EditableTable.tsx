@@ -7,7 +7,7 @@ import Body from './Body';
 import Head from './Head';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
-import { DataType, ITable } from '../tableTypes';
+import { DataType, Table } from '../tableTypes';
 
 export default function EditableTable({ data }: DataType) {
   const [editableData, setEditableData] = useState({});
@@ -15,8 +15,8 @@ export default function EditableTable({ data }: DataType) {
   const [isEditing, setIsEditing] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const { table = {} as ITable } = data;
-  const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop }: ITable = table;
+  const { table = {} as Table } = data;
+  const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop }: Table = table;
 
   useEffect(() => {
     setEditableData(data);
