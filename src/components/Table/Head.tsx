@@ -1,14 +1,22 @@
 import { noop } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';
+import { Columns, TableHeadProps } from '../tableTypes';
 
-const TableHead = ({ index = '', columns = [], column = {}, style = {}, checkboxOnly = false, children }) => {
+const TableHead: React.FC<TableHeadProps> = ({
+  index = 0,
+  columns = [],
+  column = {},
+  style = {},
+  checkboxOnly = false,
+  children,
+}) => {
   return (
     <th
       key={index}
       className={twMerge(
         'border-b whitespace-nowrap',
-        index < columns?.length - 1 ? 'border-r' : '',
+        index < (columns?.length ?? 0) - 1 ? 'border-r' : '',
         column?.primaryKey ? 'py-3 px-5' : checkboxOnly ? '' : 'p-3',
         style?.border ? validate(style.border, 'border-([\\S]+)') : '',
         style?.text ? validate(style.text, 'text-([\\S]+)', 'text-gray-600') : 'text-gray-600',
@@ -23,11 +31,11 @@ const TableHead = ({ index = '', columns = [], column = {}, style = {}, checkbox
 export default function Head({
   data = {},
   transferableRow = false,
-  handleSelectAll = noop(),
+  handleSelectAll = noop,
   allSelected = false,
   disableAllSelect = false,
 }) {
-  const { columns, style, checkbox } = data;
+  const { columns, style, checkbox }: any = data;
   return (
     <thead
       className={twMerge(
@@ -62,7 +70,7 @@ export default function Head({
         )}
 
         {columns?.map(
-          (column, index) =>
+          (column: Columns, index: number) =>
             !column.disabled && (
               <TableHead key={index} index={index} columns={columns} column={column} style={style}>
                 {column.value}

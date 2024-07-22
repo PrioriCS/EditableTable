@@ -8,16 +8,16 @@ const config = {
     '@storybook/addon-onboarding',
     '@storybook/addon-interactions',
     '@storybook/addon-styling-webpack',
-    ({
-      name: "@storybook/addon-postcss",
-
+    '@storybook/preset-typescript',
+    {
+      name: '@storybook/addon-postcss',
       options: {
         postcssLoaderOptions: {
           implementation: require('postcss'),
         },
-      }
-    }),
-    '@storybook/addon-themes'
+      },
+    },
+    '@storybook/addon-themes',
   ],
   framework: {
     name: '@storybook/react-webpack5',

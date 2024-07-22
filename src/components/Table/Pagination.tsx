@@ -8,7 +8,7 @@ const PageButton = ({
   icon: Icon,
   size = '',
   isIcon = false,
-  value = '',
+  value = 0,
   isCurrent = false,
   onClick = noop,
   disabled = false,
@@ -32,13 +32,13 @@ const PageButton = ({
 };
 
 export default function Pagination({ data = {} }) {
-  const { separated = false, style = {}, icons = {}, lastPage = 1, currentPage = 1, handleChangePage = noop } = data;
+  const { separated = false, style = {}, icons = {}, lastPage = 1, currentPage = 1, handleChangePage = noop }: any = data;
   const [current, setCurrent] = useState(currentPage);
 
   const maxButtonPages = 5;
   const lastButton = current < lastPage ? maxButtonPages - 1 : maxButtonPages;
 
-  const handleChange = (page) => {
+  const handleChange = (page: string | number) => {
     const newPage = page;
     setCurrent(newPage);
     handleChangePage(newPage);
@@ -71,6 +71,7 @@ export default function Pagination({ data = {} }) {
       {Array.from({ length: Math.min(maxButtonPages, lastPage) })
         .map((_, index) => 1 + index + Math.max(current - lastButton, 0))
         .map((itemPage) => (
+          // @ts-ignore
           <PageButton
             isCurrent={itemPage == current}
             size={style?.size ? style.size : ''}

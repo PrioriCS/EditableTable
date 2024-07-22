@@ -7,15 +7,15 @@ import Body from './Body';
 import Head from './Head';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
-import { DataType, Table } from '../tableTypes';
+import { DataType, EditableDataType, Table } from '../tableTypes';
 
 export default function EditableTable({ data }: DataType) {
-  const [editableData, setEditableData] = useState({});
+  const [editableData, setEditableData] = useState<EditableDataType>({});
   const [editedData, setEditedData] = useState({ values: [] });
   const [isEditing, setIsEditing] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
 
-  const { table = {} as Table } = data;
+  const { table = {} } = data;
   const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop }: Table = table;
 
   useEffect(() => {
