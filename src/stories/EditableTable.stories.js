@@ -1,5 +1,6 @@
 import { BinocularsFill, Search } from 'react-bootstrap-icons';
-import EditableTable from '../components/Table/EditableTable';
+import { EditableTable } from '../components';
+import React from 'react';
 
 export default {
   title: 'EditableTable',
@@ -15,7 +16,7 @@ const data = {
     transferableRow: true,
     transferencyKey: 'id',
     onConfirm: test,
-    onRowDoubleClick: (e) => console.log(e)
+    onRowDoubleClick: (e) => console.log(e),
   },
   head: {
     columns: [

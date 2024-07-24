@@ -1,10 +1,18 @@
-import { isEmpty, noop } from 'lodash';
 import React from 'react';
+import { isEmpty, noop } from 'lodash';
 import { CheckSquare, Floppy, Search } from 'react-bootstrap-icons';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';
+import { TBar, TConfirmRows, TSaveButton, TSearchBar, TStyle } from '../tableTypes';
 
-const ConfirmButton = ({ handleConfirm = noop, editing = true, wichButton = {}, text = 'Salvar', icon: Icon }) => {
+const ConfirmButton = ({
+  handleConfirm = noop,
+  editing = true,
+  wichButton = {} as TConfirmRows,
+  text = 'Salvar',
+  //@ts-ignore
+  icon: Icon,
+}) => {
   return (
     <button
       type='button'
@@ -37,7 +45,7 @@ const ConfirmButton = ({ handleConfirm = noop, editing = true, wichButton = {}, 
 
 export default function SearchBar({
   editing = false,
-  data = {},
+  data = {} as TSearchBar,
   handleConfirmUpdate = noop,
   handleConfirmRowsSelection = noop,
   withoutToolbar = false,
@@ -46,13 +54,13 @@ export default function SearchBar({
 }) {
   const {
     separated = false,
-    saveButton = {},
-    confirmRows = {},
-    bar = {},
-    style = {},
+    saveButton = {} as TSaveButton,
+    confirmRows = {} as TConfirmRows,
+    bar = {} as TBar,
+    style = {} as TStyle,
     onSearch = noop,
     onRight: RightComponent,
-  } = data;
+  }: TSearchBar = data;
   const SaveIcon = saveButton?.icon?.component ? saveButton.icon.component : Floppy;
   const BarIcon = bar?.icon?.component ? bar.icon.component : Search;
   const ConfirmRowsIcon = confirmRows?.icon?.component ? confirmRows.icon.component : CheckSquare;
