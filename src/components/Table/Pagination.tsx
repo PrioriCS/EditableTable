@@ -1,8 +1,9 @@
 import { noop } from 'lodash';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ChevronDoubleLeft, ChevronDoubleRight, ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';
+import { TPagination } from '../tableTypes';
 
 const PageButton = ({
   icon: Icon,
@@ -12,7 +13,7 @@ const PageButton = ({
   isCurrent = false,
   onClick = noop,
   disabled = false,
-}) => {
+}: any) => {
   return (
     <button
       type='button'
@@ -32,13 +33,20 @@ const PageButton = ({
 };
 
 export default function Pagination({ data = {} }) {
-  const { separated = false, style = {}, icons = {}, lastPage = 1, currentPage = 1, handleChangePage = noop }: any = data;
-  const [current, setCurrent] = useState(currentPage);
+  const {
+    separated = false,
+    style = {},
+    icons = {},
+    lastPage = 1,
+    currentPage = 1,
+    handleChangePage = noop,
+  }: TPagination = data;
+  const [current, setCurrent] = useState<number>(currentPage);
 
   const maxButtonPages = 5;
   const lastButton = current < lastPage ? maxButtonPages - 1 : maxButtonPages;
 
-  const handleChange = (page: string | number) => {
+  const handleChange = (page: number) => {
     const newPage = page;
     setCurrent(newPage);
     handleChangePage(newPage);

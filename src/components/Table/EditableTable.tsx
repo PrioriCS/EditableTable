@@ -1,5 +1,5 @@
 import { isEmpty, isNil, isUndefined, noop } from 'lodash';
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { twMerge } from 'tailwind-merge';
 import { edit, selectAllRows, selectRow } from '../utils';
 import { validate } from '../validator';
@@ -7,18 +7,20 @@ import Body from './Body';
 import Head from './Head';
 import Pagination from './Pagination';
 import SearchBar from './SearchBar';
-import { DataType, EditableDataType, Table } from '../tableTypes';
+import { TDataType, TEditableDataType, TTable } from '../tableTypes';
 
-export default function EditableTable({ data }: DataType) {
-  const [editableData, setEditableData] = useState<EditableDataType>({});
+export default function EditableTable({ data }: TDataType) {
+  const [editableData, setEditableData] = useState<TEditableDataType>({});
   const [editedData, setEditedData] = useState({ values: [] });
   const [isEditing, setIsEditing] = useState(false);
   const [selectedRows, setSelectedRows] = useState([]);
 
+  //@ts-ignore
   const { table = {} } = data;
-  const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop }: Table = table;
+  const { rowsSelectionConfirm = noop, onConfirm = noop, onRowDoubleClick = noop }: TTable = table;
 
   useEffect(() => {
+    //@ts-ignore
     setEditableData(data);
   }, [data]);
 

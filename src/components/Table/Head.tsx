@@ -1,9 +1,10 @@
+import React from 'react';
 import { noop } from 'lodash';
 import { twMerge } from 'tailwind-merge';
 import { validate } from '../validator';
-import { Columns, TableHeadProps } from '../tableTypes';
+import { TColumns, THead, TTableHeadProps } from '../tableTypes';
 
-const TableHead: React.FC<TableHeadProps> = ({
+const TableHead: React.FC<TTableHeadProps> = ({
   index = 0,
   columns = [],
   column = {},
@@ -35,7 +36,7 @@ export default function Head({
   allSelected = false,
   disableAllSelect = false,
 }) {
-  const { columns, style, checkbox }: any = data;
+  const { columns, style, checkbox }: THead = data;
   return (
     <thead
       className={twMerge(
@@ -70,7 +71,7 @@ export default function Head({
         )}
 
         {columns?.map(
-          (column: Columns, index: number) =>
+          (column: TColumns, index: number) =>
             !column.disabled && (
               <TableHead key={index} index={index} columns={columns} column={column} style={style}>
                 {column.value}

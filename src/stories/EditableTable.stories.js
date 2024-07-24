@@ -1,5 +1,6 @@
 import { BinocularsFill, Search } from 'react-bootstrap-icons';
 import { EditableTable } from '../components';
+import React from 'react';
 
 export default {
   title: 'EditableTable',

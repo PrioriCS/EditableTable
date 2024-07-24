@@ -1,4 +1,4 @@
-export type Style = {
+export type TStyle = {
   rounded?: string;
   border?: string;
   focus?: string;
@@ -9,42 +9,44 @@ export type Style = {
   font?: string;
   disabled?: string;
   textStyle?: string;
+  width?: string;
+  height?: string;
 };
 
-export type Icon = {
+export type TIcon = {
   component?: React.ComponentType<{ className?: string }>;
-  style?: Style;
+  style?: TStyle;
 };
 
-export type SaveButton = {
-  icon?: Icon;
-  style?: Style;
+export type TSaveButton = {
+  icon?: TIcon;
+  style?: TStyle;
   text?: string;
 };
 
-export type ConfirmRows = {
-  icon?: Icon;
-  style?: Style;
+export type TConfirmRows = {
+  icon?: TIcon;
+  style?: TStyle;
   text?: string;
 };
 
-export type Bar = {
-  icon?: Icon;
-  style?: Style;
+export type TBar = {
+  icon?: TIcon;
+  style?: TStyle;
   placeholder?: string;
 };
 
-export type SearchBar = {
+export type TSearchBar = {
   separated?: boolean;
-  saveButton?: SaveButton;
-  confirmRows?: ConfirmRows;
-  bar?: Bar;
-  style?: Style;
+  saveButton?: TSaveButton;
+  confirmRows?: TConfirmRows;
+  bar?: TBar;
+  style?: TStyle;
   onSearch?: Function;
   onRight?: React.ComponentType;
 };
 
-export type Table = {
+export type TTable = {
   transferableRow?: boolean;
   withoutToolbar?: boolean;
   withoutPagination?: boolean;
@@ -55,15 +57,15 @@ export type Table = {
   onConfirm?: Function;
   rowsSelectionConfirm?: Function;
   onRowDoubleClick?: Function;
-  style?: Style;
+  style?: TStyle;
 };
 
-export type SelectOptions = {
+export type TSelectOptions = {
   code: number | string;
   name: string;
 };
 
-export type Columns = {
+export type TColumns = {
   disabled?: boolean;
   value?: number | string | boolean;
   primaryKey?: string | number;
@@ -82,45 +84,49 @@ export type Columns = {
   personalized?: boolean;
   component?: React.ReactNode;
   functions?: Function[];
-  options?: SelectOptions[];
+  options?: TSelectOptions[];
 };
 
-export type RowItem = {
+export type TRowItem = {
   key?: string | number;
-  value?: string | number | boolean | Date | any;
+  value?: any;
 };
 
-export type Row = {
-  data?: RowItem[];
-  style?: Style;
+export type TRow = {
+  data?: TRowItem[];
+  style?: TStyle;
 };
 
-export type Head = {
-  columns?: Columns[];
+export type THead = {
+  columns?: TColumns[];
+  style?: TStyle;
+  checkbox?: {
+    style?: TStyle;
+  };
 };
 
-export type TableHeadProps = {
+export type TTableHeadProps = {
   index?: number;
-  columns?: Columns[];
-  column?: Columns;
-  style?: Style;
+  columns?: TColumns[];
+  column?: TColumns;
+  style?: TStyle;
   checkboxOnly?: boolean;
   children?: React.ReactNode;
 };
 
-export type Pagination = {
-  separated?: boolean;
+export type TBodyValues = TRow[];
+
+export type TBody = {
+  values?: TBodyValues;
+  style?: TStyle;
+  checkbox?: {
+    style?: TStyle;
+  };
 };
 
-export type BodyValues = Row[];
-
-export type Body = {
-  values?: BodyValues;
-};
-
-export type BodyHeader = {
-  data?: Body;
-  columns?: Columns[];
+export type TBodyHeader = {
+  data?: TBody;
+  columns?: TColumns[];
   edit?: Function;
   transferableRow?: boolean;
   transferencykey?: string;
@@ -129,19 +135,45 @@ export type BodyHeader = {
   selected?: any[];
 };
 
-export type EditableDataType = {
-  table?: Table;
-  head?: Head;
-  pagination?: Pagination;
-  searchBar?: SearchBar;
-  body?: Body;
+export type TPaginationIcon = {
+  fullLeft?: {
+    component: React.ReactNode;
+  };
+  left?: {
+    component: React.ReactNode;
+  };
+  right?: {
+    component: React.ReactNode;
+  };
+  fullRight?: {
+    component: React.ReactNode;
+  };
+  size?: string;
 };
 
-export type DataType = {
+export type TPagination = {
+  separated?: boolean;
+  style?: TStyle;
+  icons?: TPaginationIcon;
+  lastPage?: number;
+  currentPage?: number;
+  handleChangePage?: Function;
+};
+
+export type TEditableDataType = {
+  table?: TTable;
+  head?: THead;
+  pagination?: TPagination;
+  searchBar?: TSearchBar;
+  body?: TBody;
+};
+
+export type TDataType = {
   data?: {
-    table?: Table;
-    head?: Head;
-    pagination?: Pagination;
-    searchBar?: SearchBar;
+    table?: TTable;
+    searchBar?: TSearchBar;
+    head?: THead;
+    body?: TBody;
+    pagination?: TPagination;
   };
 };

@@ -5,7 +5,12 @@
     "jest": true,
     "node": true
   },
-  "extends": ["plugin:react/recommended", "eslint:recommended", "plugin:storybook/recommended"],
+  "extends": [
+    "plugin:react/recommended",
+    "eslint:recommended",
+    "plugin:storybook/recommended",
+    "plugin:@typescript-eslint/recommended"
+  ],
   "overrides": [],
   "parserOptions": {
     "ecmaVersion": "latest",
@@ -14,7 +19,6 @@
       "jsx": true
     }
   },
-  "plugins": ["react"],
   "rules": {
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
