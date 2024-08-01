@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { noop } from 'lodash';
 import { twMerge } from 'tailwind-merge';
-import { validate } from '../validator';
 import { TColumns, THead, TTableHeadProps } from '../tableTypes';
 
 const TableHead: React.FC<TTableHeadProps> = ({
@@ -10,27 +9,68 @@ const TableHead: React.FC<TTableHeadProps> = ({
   column = {},
   style = {},
   checkboxOnly = false,
+  handleChangeColumnWidth = noop,
   children,
 }) => {
+  const [width, setWidth] = useState(column?.width ? column?.width : 'w-auto');
+  const [resizing, setResizing] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [startWidth, setStartWidth] = useState(0);
+
+  const handleMouseDown = (e: any) => {
+    setStartX(e.clientX);
+    setStartWidth(e.target.parentElement.offsetWidth);
+    setResizing(true);
+  };
+
+  const handleMouseMove = (e: any) => {
+    if (!resizing) return;
+    const newWidth = startWidth + e.clientX - startX;
+    //@ts-ignore
+    setWidth(newWidth);
+
+    handleChangeColumnWidth(newWidth, index);
+  };
+
+  const handleMouseUp = () => {
+    setResizing(false);
+  };
+
+  React.useEffect(() => {
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    return () => {
+      document.removeEventListener('mousemove', handleMouseMove);
+      document.removeEventListener('mouseup', handleMouseUp);
+    };
+  }, [resizing]);
+
   return (
     <th
       key={index}
       className={twMerge(
-        'border-b whitespace-nowrap',
+        'border-b overflow-x-scroll text-center w-auto',
         index < (columns?.length ?? 0) - 1 ? 'border-r' : '',
-        column?.primaryKey ? 'py-3 px-5' : checkboxOnly ? '' : 'p-3',
-        style?.border ? validate(style.border, 'border-([\\S]+)') : '',
-        style?.text ? validate(style.text, 'text-([\\S]+)', 'text-gray-600') : 'text-gray-600',
-        style?.font ? validate(style.font, 'font-([\\S]+)', '', 'weight') : '',
-        style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
-      )}>
-      {children}
+        column?.primaryKey ? 'py-3 px-5' : checkboxOnly ? '' : 'py-3',
+        style?.border ? style.border : '',
+        style?.text ? style.text : 'text-gray-600',
+        style?.font ? style.font : '',
+        style?.size ? style.size : ''
+      )}
+      style={{ width }}>
+      <div
+        className={twMerge('relative whitespace-nowrap', checkboxOnly ? '' : 'cursor-col-resize')}
+        style={{ width }}
+        onMouseDown={checkboxOnly ? noop : handleMouseDown}>
+        {children}
+      </div>
     </th>
   );
 };
 
 export default function Head({
   data = {},
+  handleChangeColumnWidth = noop,
   transferableRow = false,
   handleSelectAll = noop,
   allSelected = false,
@@ -38,11 +78,7 @@ export default function Head({
 }) {
   const { columns, style, checkbox }: THead = data;
   return (
-    <thead
-      className={twMerge(
-        'sticky top-0 w-full z-10',
-        style?.background ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50') : 'bg-slate-50'
-      )}>
+    <thead className={twMerge('sticky top-0 w-full z-10', style?.background ? style.background : 'bg-slate-50')}>
       <tr>
         {transferableRow && (
           <TableHead columns={columns} style={style} checkboxOnly>
@@ -54,15 +90,13 @@ export default function Head({
                 disabled={disableAllSelect}
                 className={twMerge(
                   'appearance-none focus:ring-0 focus:ring-offset-0',
-                  checkbox?.style?.width ? validate(checkbox.style.width, 'w-([\\S]+)', 'w-6', 'height') : 'w-6',
-                  checkbox?.style?.height ? validate(checkbox.style.height, 'h-([\\S]+)', 'h-6', 'height') : 'h-6',
-                  checkbox?.style?.rounded
-                    ? validate(checkbox.style.rounded, 'rounded-([\\S]+)', 'rounded-md', 'direction')
-                    : 'rounded-md',
-                  checkbox?.style?.border ? validate(checkbox.style.border, 'border-([\\S]+)') : '',
-                  `checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
-                  `focus:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
-                  `hover:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
+                  checkbox?.style?.width ? checkbox.style.width : 'w-6',
+                  checkbox?.style?.height ? checkbox.style.height : 'h-6',
+                  checkbox?.style?.rounded ? checkbox.style.rounded : 'rounded-md',
+                  checkbox?.style?.border ? checkbox.style.border : '',
+                  `checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
+                  `focus:checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
+                  `hover:checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
                   disableAllSelect ? 'cursor-not-allowed' : 'cursor-pointer'
                 )}
               />
@@ -73,7 +107,13 @@ export default function Head({
         {columns?.map(
           (column: TColumns, index: number) =>
             !column.disabled && (
-              <TableHead key={index} index={index} columns={columns} column={column} style={style}>
+              <TableHead
+                key={index}
+                index={index}
+                columns={columns}
+                column={column}
+                style={style}
+                handleChangeColumnWidth={handleChangeColumnWidth}>
                 {column.value}
               </TableHead>
             )

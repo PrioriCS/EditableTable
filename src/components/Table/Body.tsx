@@ -2,7 +2,6 @@ import React from 'react';
 import { isNil, noop } from 'lodash';
 import moment from 'moment';
 import { twMerge } from 'tailwind-merge';
-import { validate } from '../validator';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import { TBodyHeader, TColumns, TRow, TRowItem } from '../tableTypes';
@@ -16,14 +15,18 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
   return (
     <td
       className={twMerge(
-        'text-center whitespace-nowrap',
-        columns?.find((column: TColumns) => column?.key == item?.key)?.date ? 'w-48' : '',
+        'text-center overflow-x-scroll overflow-y-hidden',
+        columns?.find((column: TColumns) => column?.key == item?.key)?.date
+          ? 'w-48'
+          : columns?.find((column: TColumns) => column?.key == item?.key)?.width
+            ? columns?.find((column: TColumns) => column?.key == item?.key)?.width
+            : 'w-auto',
         (columns?.find((column: TColumns) => column?.key == item?.key)?.editable &&
           !columns?.find((column: TColumns) => column?.key == item?.key)?.disabled) ||
           columns?.find((column: TColumns) => column?.key == item?.key)?.select ||
           columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
           ? ''
-          : 'cursor-not-allowed px-4 py-2',
+          : 'cursor-not-allowed',
         rowIndex < data?.values?.length - 1 ? 'border-b' : '',
         itemIndex < row?.data?.length - 1 ? 'border-r' : '',
         row?.style?.background &&
@@ -31,13 +34,13 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
           (columns?.find((column: TColumns) => column?.key == item?.key)?.editable ||
             columns?.find((column: TColumns) => column?.key == item?.key)?.select ||
             columns?.find((column: TColumns) => column?.key == item?.key)?.personalized)
-          ? validate(row.style.background, 'bg-([\\S]+)')
+          ? row.style.background
           : style?.background &&
               !columns?.find((column: TColumns) => column?.key == item?.key)?.disabled &&
               (columns?.find((column: TColumns) => column?.key == item?.key)?.editable ||
                 columns?.find((column: TColumns) => column?.key == item?.key)?.select ||
                 columns?.find((column: TColumns) => column?.key == item?.key)?.personalized)
-            ? validate(style.background, 'bg-([\\S]+)')
+            ? style.background
             : '',
         row?.style?.disabled
           ? (row?.style?.disabled && columns?.find((column: TColumns) => column?.key == item?.key)?.disabled) ||
@@ -49,40 +52,37 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
               row?.style?.disabled)
             ? columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
               ? ''
-              : validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+              : row.style.disabled
             : columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
               ? ''
               : row?.style?.background
-                ? validate(row.style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                ? row.style.background
                 : style?.background
-                  ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                  ? style.background
                   : 'bg-slate-50'
           : (style?.disabled && columns?.find((column: TColumns) => column?.key == item?.key)?.disabled) ||
               (!columns?.find((column: TColumns) => column?.key == item?.key)?.editable && style?.disabled)
             ? columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
               ? ''
-              : validate(style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+              : style.disabled
             : columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
               ? ''
               : row?.style?.background
-                ? validate(row.style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                ? row.style.background
                 : style?.background
-                  ? validate(style.background, 'bg-([\\S]+)', 'bg-slate-50')
+                  ? style.background
                   : 'bg-slate-50',
-        style?.border ? validate(style.border, 'border-([\\S]+)') : '',
-        row?.style?.text
-          ? validate(row.style.text, 'text-([\\S]+)', 'text-gray-600')
-          : style?.text
-            ? validate(style.text, 'text-([\\S]+)', 'text-gray-600')
-            : 'text-gray-600',
-        row?.style?.textStyle
-          ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
-          : style?.textStyle
-            ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
-            : 'not-italic	',
-        style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
-      )}>
-      {children}
+        style?.border ? style.border : '',
+        row?.style?.text ? row.style.text : style?.text ? style.text : 'text-gray-600',
+        row?.style?.textStyle ? row.style.textStyle : style?.textStyle ? style.textStyle : 'not-italic	',
+        style?.size ? style.size : ''
+      )}
+      style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
+      <div
+        className='whitespace-nowrap text-center'
+        style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
+        {children}
+      </div>
     </td>
   );
 };
@@ -116,15 +116,13 @@ export default function Body({
                   onChange={() => handleSelectRow(rowIndex)}
                   className={twMerge(
                     'appearance-none focus:ring-0 focus:ring-offset-0 cursor-pointer',
-                    checkbox?.style?.width ? validate(checkbox.style.width, 'w-([\\S]+)', 'w-6', 'height') : 'w-6',
-                    checkbox?.style?.height ? validate(checkbox.style.height, 'h-([\\S]+)', 'h-6', 'height') : 'h-6',
-                    checkbox?.style?.rounded
-                      ? validate(checkbox.style.rounded, 'rounded-([\\S]+)', 'rounded-md', 'direction')
-                      : 'rounded-md',
-                    checkbox?.style?.border ? validate(checkbox.style.border, 'border-([\\S]+)') : '',
-                    `checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
-                    `focus:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`,
-                    `hover:checked:${checkbox?.style?.background ? validate(checkbox.style.background, 'bg-([\\S]+)') : ''}`
+                    checkbox?.style?.width ? checkbox.style.width : 'w-6',
+                    checkbox?.style?.height ? checkbox.style.height : 'h-6',
+                    checkbox?.style?.rounded ? checkbox.style.rounded : 'rounded-md',
+                    checkbox?.style?.border ? checkbox.style.border : '',
+                    `checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
+                    `focus:checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
+                    `hover:checked:${checkbox?.style?.background ? checkbox.style.background : ''}`
                   )}
                 />
               </div>
@@ -162,18 +160,14 @@ export default function Body({
                         className={twMerge(
                           'border-none ring-0 focus:border-transparent focus:ring-0 w-full min-w-max text-center',
                           columns?.find((column: TColumns) => column.key == item.key)?.disabled && row?.style?.disabled
-                            ? validate(row.style.disabled, 'bg-([\\S]+)', 'bg-slate-50')
+                            ? row.style.disabled
                             : row?.style?.background
-                              ? validate(row.style.background, 'bg-([\\S]+)')
+                              ? row.style.background
                               : style?.background
-                                ? validate(style.background, 'bg-([\\S]+)')
+                                ? style.background
                                 : '',
-                          style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : '',
-                          row?.style?.textStyle
-                            ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
-                            : style?.textStyle
-                              ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
-                              : 'not-italic	',
+                          style?.size ? style.size : '',
+                          row?.style?.textStyle ? row.style.textStyle : style?.textStyle ? style.textStyle : 'not-italic	',
                           isNil(item.value) ? 'text-gray-300' : '',
                           columns?.find((column: TColumns) => column.key == item.key)?.disabled
                             ? 'cursor-not-allowed'
@@ -226,17 +220,9 @@ export default function Body({
                         dateFormat='dd/MM/yyyy'
                         className={twMerge(
                           'border-none ring-0 w-full min-w-max focus:border-transparent focus:ring-0 text-center',
-                          row?.style?.background
-                            ? validate(row.style.background, 'bg-([\\S]+)')
-                            : style?.background
-                              ? validate(style.background, 'bg-([\\S]+)')
-                              : '',
-                          row?.style?.textStyle
-                            ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
-                            : style?.textStyle
-                              ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
-                              : 'not-italic	',
-                          style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
+                          row?.style?.background ? row.style.background : style?.background ? style.background : '',
+                          row?.style?.textStyle ? row.style.textStyle : style?.textStyle ? style.textStyle : 'not-italic	',
+                          style?.size ? style.size : ''
                         )}
                       />
                     ) : (
@@ -267,18 +253,13 @@ export default function Body({
                         }
                         disabled={columns?.find((column: TColumns) => column.key == item.key)?.disabled}
                         className={twMerge(
-                          'border-none ring-0 focus:border-transparent focus:ring-0 text-center overflow-y-hidden min-w-max w-full',
-                          row?.style?.background
-                            ? validate(row.style.background, 'bg-([\\S]+)')
-                            : style?.background
-                              ? validate(style.background, 'bg-([\\S]+)')
-                              : '',
-                          row?.style?.textStyle
-                            ? validate(row.style.textStyle, 'italic', 'not-italic', 'textStyle')
-                            : style?.textStyle
-                              ? validate(style.textStyle, 'italic', 'not-italic', 'textStyle')
-                              : 'not-italic	',
-                          style?.size ? validate(style.size, 'text-([\\S]+)', '', 'size') : ''
+                          'border-none ring-0 focus:border-transparent focus:ring-0 text-center overflow-y-hidden w-full min-w-max',
+                          row?.style?.background ? row.style.background : style?.background ? style.background : '',
+                          columns?.find((column: TColumns) => column?.key == item?.key)?.width
+                            ? columns?.find((column: TColumns) => column?.key == item?.key)?.width
+                            : 'w-full',
+                          row?.style?.textStyle ? row.style.textStyle : style?.textStyle ? style.textStyle : 'not-italic	',
+                          style?.size ? style.size : ''
                         )}
                       />
                     )
@@ -302,7 +283,7 @@ export default function Body({
                       minimumFractionDigits: 2,
                     })
                   ) : (
-                    item.value
+                    <div>{item.value}</div>
                   )}
                 </TableData>
               )
