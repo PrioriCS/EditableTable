@@ -2,14 +2,13 @@ import { noop } from 'lodash';
 import React, { useState } from 'react';
 import { ChevronDoubleLeft, ChevronDoubleRight, ChevronLeft, ChevronRight } from 'react-bootstrap-icons';
 import { twMerge } from 'tailwind-merge';
-import { validate } from '../validator';
 import { TPagination } from '../tableTypes';
 
 const PageButton = ({
   icon: Icon,
   size = '',
   isIcon = false,
-  value = 0,
+  value = '',
   isCurrent = false,
   onClick = noop,
   disabled = false,
@@ -21,7 +20,7 @@ const PageButton = ({
       disabled={disabled}
       className={twMerge(
         'rounded-md border border-gray-300',
-        size ? validate(size, 'text-([\\S]+)', 'text-sm', 'size') : 'text-sm',
+        size ? size : 'text-sm',
         isIcon ? 'py-1.5 px-1.5' : 'py-1 px-2.5',
         isCurrent ? 'bg-blue-50' : 'bg-white',
         disabled ? 'cursor-not-allowed bg-gray-100 opacity-75' : 'cursor-pointer'
@@ -63,14 +62,14 @@ export default function Pagination({ data = {} }) {
       )}>
       <PageButton
         icon={icons?.fullLeft?.component ? icons.fullLeft.component : ChevronDoubleLeft}
-        size={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
+        size={icons?.size ? icons.size : 'text-base'}
         disabled={current === 1}
         onClick={() => handleChange(1)}
         isIcon
       />
       <PageButton
         icon={icons?.left?.component ? icons.left.component : ChevronLeft}
-        size={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
+        size={icons?.size ? icons.size : 'text-base'}
         disabled={current === 1}
         onClick={() => handleChange(current - 1)}
         isIcon
@@ -91,14 +90,14 @@ export default function Pagination({ data = {} }) {
 
       <PageButton
         icon={icons?.right?.component ? icons.right.component : ChevronRight}
-        size={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
+        size={icons?.size ? icons.size : 'text-base'}
         disabled={current === lastPage}
         onClick={() => handleChange(current + 1)}
         isIcon
       />
       <PageButton
         icon={icons?.fullRight?.component ? icons.fullRight.component : ChevronDoubleRight}
-        size={icons?.size ? validate(icons.size, 'text-([\\S]+)', 'text-base', 'size') : 'text-base'}
+        size={icons?.size ? icons.size : 'text-base'}
         disabled={current === lastPage}
         onClick={() => handleChange(lastPage)}
         isIcon
