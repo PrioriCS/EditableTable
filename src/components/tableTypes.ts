@@ -234,6 +234,7 @@ export type THead = {
   checkbox?: {
     style?: TStyle;
   };
+  linesHeight?: string;
 };
 
 export type TTableHeadProps = {
@@ -244,6 +245,7 @@ export type TTableHeadProps = {
   checkboxOnly?: boolean;
   children?: React.ReactNode;
   handleChangeColumnWidth?: Function;
+  lineHeight?: string;
 };
 
 export type TBodyValues = TRow[];
@@ -254,6 +256,7 @@ export type TBody = {
   checkbox?: {
     style?: TStyle;
   };
+  linesHeight?: string;
 };
 
 export type TBodyHeader = {

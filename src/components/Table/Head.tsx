@@ -10,6 +10,7 @@ const TableHead: React.FC<TTableHeadProps> = ({
   style = {},
   checkboxOnly = false,
   handleChangeColumnWidth = noop,
+  lineHeight,
   children,
 }) => {
   const [width, setWidth] = useState(column?.width ? column?.width : 'w-auto');
@@ -51,7 +52,15 @@ const TableHead: React.FC<TTableHeadProps> = ({
       className={twMerge(
         'border-b overflow-x-scroll text-center w-auto',
         index < (columns?.length ?? 0) - 1 ? 'border-r' : '',
-        column?.primaryKey ? 'py-3 px-5' : checkboxOnly ? '' : 'py-3',
+        column?.primaryKey
+          ? lineHeight
+            ? lineHeight + ' px-5'
+            : 'py-3 px-5'
+          : checkboxOnly
+            ? ''
+            : lineHeight
+              ? lineHeight
+              : 'py-3',
         style?.border ? style.border : '',
         style?.text ? style.text : 'text-gray-600',
         style?.font ? style.font : '',
@@ -76,7 +85,7 @@ export default function Head({
   allSelected = false,
   disableAllSelect = false,
 }) {
-  const { columns, style, checkbox }: THead = data;
+  const { columns, style, checkbox, linesHeight }: THead = data;
   return (
     <thead className={twMerge('sticky top-0 w-full z-10', style?.background ? style.background : 'bg-slate-50')}>
       <tr>
@@ -113,6 +122,7 @@ export default function Head({
                 columns={columns}
                 column={column}
                 style={style}
+                lineHeight={linesHeight}
                 handleChangeColumnWidth={handleChangeColumnWidth}>
                 {column.value}
               </TableHead>

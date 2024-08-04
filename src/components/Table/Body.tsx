@@ -11,11 +11,11 @@ const Personalized: React.FC<any> = ({ component, functions, value, row }) => {
   return <Component functions={functions} value={value} row={row} />;
 };
 
-const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, children }: any) => {
+const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, children, lineHeight }: any) => {
   return (
     <td
       className={twMerge(
-        'text-center overflow-x-scroll overflow-y-hidden',
+        'text-center overflow-x-scroll overflow-y-hidden scrollbar-custom',
         columns?.find((column: TColumns) => column?.key == item?.key)?.date
           ? 'w-48'
           : columns?.find((column: TColumns) => column?.key == item?.key)?.width
@@ -79,7 +79,7 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
       )}
       style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
       <div
-        className='whitespace-nowrap text-center'
+        className={twMerge('whitespace-nowrap text-center', lineHeight ? lineHeight : '-my-2')}
         style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
         {children}
       </div>
@@ -141,6 +141,7 @@ export default function Body({
                   itemIndex={itemIndex}
                   row={row}
                   data={data}
+                  lineHeight={data.linesHeight}
                   style={style}
                   key={itemIndex}>
                   {columns?.find((column: TColumns) => column.key == item.key)?.select ? (
