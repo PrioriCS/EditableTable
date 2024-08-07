@@ -1,10 +1,10 @@
 {
   "name": "priorics-table",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "private": false,
   "main": "dist/index",
-  "types": "dist/index",
-  "module": "dist/index.js",
+  "types": "dist/tableTypes.ts",
+  "module": "dist/index.ts",
   "style": "dist/taillwind.css",
   "files": [
     "dist",
