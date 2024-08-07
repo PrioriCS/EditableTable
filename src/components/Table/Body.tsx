@@ -159,7 +159,7 @@ export default function Body({
                         }
                         disabled={columns?.find((column: TColumns) => column.key == item.key)?.disabled}
                         className={twMerge(
-                          'border-none ring-0 focus:border-transparent focus:ring-0 w-full min-w-max text-center',
+                          'border-none ring-0 focus:border-transparent focus:ring-0 w-full text-center',
                           columns?.find((column: TColumns) => column.key == item.key)?.disabled && row?.style?.disabled
                             ? row.style.disabled
                             : row?.style?.background
