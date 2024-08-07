@@ -120,6 +120,49 @@ type TailwindSizesVariant =
   | 'max'
   | 'fit';
 
+type TailwindNumberValues =
+  | '0'
+  | '0.5'
+  | '1'
+  | '1.5'
+  | '2'
+  | '2.5'
+  | '3'
+  | '3.5'
+  | '4'
+  | '5'
+  | '6'
+  | '7'
+  | '8'
+  | '9'
+  | '10'
+  | '11'
+  | '12'
+  | '14'
+  | '16'
+  | '20'
+  | '24'
+  | '28'
+  | '32'
+  | '36'
+  | '40'
+  | '44'
+  | '48'
+  | '52'
+  | '56'
+  | '60'
+  | '64'
+  | '72'
+  | '80'
+  | '96';
+
+type TailwindPadding =
+  | 'py-auto'
+  | `py-${TailwindNumberValues}`
+  | `py-[${number | string}px]`
+  | `py-[${number | string}rem]`
+  | `py-[${number | string}em]`;
+
 export type TStyle = {
   rounded?:
     | 'rounded'
@@ -234,7 +277,7 @@ export type THead = {
   checkbox?: {
     style?: TStyle;
   };
-  linesHeight?: string;
+  linesHeight?: TailwindPadding;
 };
 
 export type TTableHeadProps = {
@@ -245,7 +288,7 @@ export type TTableHeadProps = {
   checkboxOnly?: boolean;
   children?: React.ReactNode;
   handleChangeColumnWidth?: Function;
-  lineHeight?: string;
+  lineHeight?: TailwindPadding;
 };
 
 export type TBodyValues = TRow[];
@@ -256,7 +299,16 @@ export type TBody = {
   checkbox?: {
     style?: TStyle;
   };
-  linesHeight?: string;
+  linesHeight?:
+    | 'my-auto'
+    | `my-${TailwindNumberValues}`
+    | `my-[${number | string}px]`
+    | `my-[${number | string}rem]`
+    | `my-[${number | string}em]`
+    | `-my-${TailwindNumberValues}`
+    | `-my-[${number | string}px]`
+    | `-my-[${number | string}rem]`
+    | `-my-[${number | string}em]`;
 };
 
 export type TBodyHeader = {

@@ -15,7 +15,7 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
   return (
     <td
       className={twMerge(
-        'text-center overflow-x-scroll overflow-y-hidden scrollbar-custom',
+        'text-center overflow-x-auto overflow-y-hidden scrollbar-custom',
         columns?.find((column: TColumns) => column?.key == item?.key)?.date
           ? 'w-48'
           : columns?.find((column: TColumns) => column?.key == item?.key)?.width
@@ -79,7 +79,7 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
       )}
       style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
       <div
-        className={twMerge('whitespace-nowrap text-center', lineHeight ? lineHeight : '-my-2')}
+        className={twMerge('whitespace-nowrap text-center', lineHeight ? lineHeight : '')}
         style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
         {children}
       </div>

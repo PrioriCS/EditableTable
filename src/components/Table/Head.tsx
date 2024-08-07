@@ -50,7 +50,7 @@ const TableHead: React.FC<TTableHeadProps> = ({
     <th
       key={index}
       className={twMerge(
-        'border-b overflow-x-scroll text-center w-auto',
+        'border-b overflow-x-auto text-center w-auto',
         index < (columns?.length ?? 0) - 1 ? 'border-r' : '',
         column?.primaryKey
           ? lineHeight
