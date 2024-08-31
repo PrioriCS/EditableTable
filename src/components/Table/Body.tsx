@@ -324,7 +324,10 @@ export default function Body({
 											functions={itemC?.functions}
 											value={item.value}
 											row={row}
-											p={itemC.props}
+											p={{
+												...itemC.props,
+												onChange: (e) => edit(rowIndex, itemIndex, e),
+											}}
 										/>
 									) : itemC?.date && !isNil(item?.value) ? (
 										moment
