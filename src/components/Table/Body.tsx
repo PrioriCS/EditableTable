@@ -11,10 +11,10 @@ const Personalized: React.FC<any> = ({
 	functions,
 	value,
 	row,
-	...props
+	p,
 }) => {
 	const Component: React.FC<any> = component;
-	return <Component functions={functions} value={value} row={row} {...props} />;
+	return <Component functions={functions} value={value} row={row} {...p} />;
 };
 
 const TableData = ({
@@ -324,7 +324,7 @@ export default function Body({
 											functions={itemC?.functions}
 											value={item.value}
 											row={row}
-											{...itemC.props}
+											p={itemC.props}
 										/>
 									) : itemC?.date && !isNil(item?.value) ? (
 										moment
