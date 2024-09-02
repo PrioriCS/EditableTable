@@ -312,8 +312,11 @@ export type TTableHeadProps = {
 
 export type TBodyValues = TRow[];
 
+export type TRemoveRow = React.ReactNode;
+
 export type TBody = {
   values?: TBodyValues;
+  removeRow?: TRemoveRow;
   style?: TStyle;
   checkbox?: {
     style?: TStyle;
@@ -330,16 +333,11 @@ export type TBody = {
     | `-my-[${number | string}em]`;
 };
 
-export type TRemoveRow = {
-  component?: React.ReactNode;
-};
-
 export type TBodyHeader = {
   data?: TBody;
   columns?: TColumns[];
   edit?: Function;
   transferableRow?: boolean;
-  removeRow?: TRemoveRow;
   transferencykey?: string;
   handleSelectRow?: Function;
   onRowDoubleClick?: Function;

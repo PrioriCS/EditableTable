@@ -76,13 +76,12 @@ export default function Body({
   edit = noop,
   transferableRow = false,
   transferencykey = '',
-  removeRow = {},
   handleSelectRow = noop,
   onRowDoubleClick = noop,
   selected = [],
 }: TBodyHeader) {
   const { style, checkbox }: any = data;
-  const { component: Remove }: any = removeRow;
+  const { component: Remove }: any = data.removeRow;
   return (
     <tbody id='table-body'>
       {data?.values?.map((row: TRow, rowIndex: number) => (
@@ -230,7 +229,7 @@ export default function Body({
               )
             );
           })}
-          {removeRow && !isEmpty(removeRow) && (
+          {data.removeRow && !isEmpty(data.removeRow) && (
             <TableData columns={columns} row={row} rowIndex={rowIndex} itemIndex={row?.data?.length} data={data} style={style}>
               <Remove row={row} />
             </TableData>
