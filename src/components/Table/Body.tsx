@@ -4,68 +4,47 @@ import moment from 'moment';
 import { twMerge } from 'tailwind-merge';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import { TBodyHeader, TColumns, TRow, TRowItem } from '../tableTypes';
+import type { TBodyHeader, TColumns, TRow, TRowItem } from '../tableTypes';
 
-const Personalized: React.FC<any> = ({ component, functions, value, row }) => {
+const Personalized: React.FC<any> = ({ component, functions, value, row, p }) => {
   const Component: React.FC<any> = component;
-  return <Component functions={functions} value={value} row={row} />;
+  return <Component functions={functions} value={value} row={row} {...p} />;
 };
 
 const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, children, lineHeight }: any) => {
+  const column = columns?.find((column: TColumns) => column.key === item?.key);
   return (
     <td
       className={twMerge(
         'text-center overflow-x-auto overflow-y-hidden scrollbar-custom',
-        columns?.find((column: TColumns) => column?.key == item?.key)?.date
-          ? 'w-48'
-          : columns?.find((column: TColumns) => column?.key == item?.key)?.width
-            ? columns?.find((column: TColumns) => column?.key == item?.key)?.width
-            : 'w-auto',
-        (columns?.find((column: TColumns) => column?.key == item?.key)?.editable &&
-          !columns?.find((column: TColumns) => column?.key == item?.key)?.disabled) ||
-          columns?.find((column: TColumns) => column?.key == item?.key)?.select ||
-          columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
-          ? ''
-          : 'cursor-not-allowed',
+        column?.date ? 'w-48' : column?.width ? column?.width : 'w-auto',
+        (column?.editable && !column?.disabled) || column?.select || column?.personalized ? '' : 'cursor-not-allowed',
         rowIndex < data?.values?.length - 1 ? 'border-b' : '',
         itemIndex < row?.data?.length - 1 ? 'border-r' : '',
-        row?.style?.background &&
-          !columns?.find((column: TColumns) => column?.key == item?.key)?.disabled &&
-          (columns?.find((column: TColumns) => column?.key == item?.key)?.editable ||
-            columns?.find((column: TColumns) => column?.key == item?.key)?.select ||
-            columns?.find((column: TColumns) => column?.key == item?.key)?.personalized)
+        row?.style?.background && !column?.disabled && (column?.editable || column?.select || column?.personalized)
           ? row.style.background
-          : style?.background &&
-              !columns?.find((column: TColumns) => column?.key == item?.key)?.disabled &&
-              (columns?.find((column: TColumns) => column?.key == item?.key)?.editable ||
-                columns?.find((column: TColumns) => column?.key == item?.key)?.select ||
-                columns?.find((column: TColumns) => column?.key == item?.key)?.personalized)
+          : style?.background && !column?.disabled && (column?.editable || column?.select || column?.personalized)
             ? style.background
             : '',
         row?.style?.disabled
-          ? (row?.style?.disabled && columns?.find((column: TColumns) => column?.key == item?.key)?.disabled) ||
-            (!columns?.find((column: TColumns) => column?.key == item?.key)?.editable &&
-              !columns?.find((column: TColumns) => column?.key == item?.key)?.select &&
-              row?.style?.disabled) ||
-            (columns?.find((column: TColumns) => column?.key == item?.key)?.select &&
-              columns?.find((column: TColumns) => column?.key == item?.key)?.disabled &&
-              row?.style?.disabled)
-            ? columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
+          ? (row?.style?.disabled && column?.disabled) ||
+            (!column?.editable && !column?.select && row?.style?.disabled) ||
+            (column?.select && column?.disabled && row?.style?.disabled)
+            ? column?.personalized
               ? ''
               : row.style.disabled
-            : columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
+            : column?.personalized
               ? ''
               : row?.style?.background
                 ? row.style.background
                 : style?.background
                   ? style.background
                   : 'bg-slate-50'
-          : (style?.disabled && columns?.find((column: TColumns) => column?.key == item?.key)?.disabled) ||
-              (!columns?.find((column: TColumns) => column?.key == item?.key)?.editable && style?.disabled)
-            ? columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
+          : (style?.disabled && column?.disabled) || (!column?.editable && style?.disabled)
+            ? column?.personalized
               ? ''
               : style.disabled
-            : columns?.find((column: TColumns) => column?.key == item?.key)?.personalized
+            : column?.personalized
               ? ''
               : row?.style?.background
                 ? row.style.background
@@ -77,10 +56,14 @@ const TableData = ({ columns, item, rowIndex, itemIndex, row, data, style, child
         row?.style?.textStyle ? row.style.textStyle : style?.textStyle ? style.textStyle : 'not-italic	',
         style?.size ? style.size : ''
       )}
-      style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
+      style={{
+        width: column?.resizedWidth,
+      }}>
       <div
         className={twMerge('whitespace-nowrap text-center', lineHeight ? lineHeight : '')}
-        style={{ width: columns?.find((column: TColumns) => column?.key == item?.key)?.resizedWidth }}>
+        style={{
+          width: column?.resizedWidth,
+        }}>
         {children}
       </div>
     </td>
@@ -105,15 +88,14 @@ export default function Body({
       {data?.values?.map((row: TRow, rowIndex: number) => (
         <tr key={rowIndex} onDoubleClick={() => onRowDoubleClick({ row: row, primaryKey: transferencykey })}>
           {transferableRow && (
-            // @ts-ignore
             <TableData columns={columns} row={row} rowIndex={rowIndex} itemIndex={0} data={data} style={style}>
               <div className='flex items-center justify-center'>
                 <input
                   type='checkbox'
                   checked={selected.find((item: string | number | boolean) => {
-                    const index = row?.data?.findIndex((val: TRowItem) => val.key == transferencykey);
+                    const index = row?.data?.findIndex((val: TRowItem) => val.key === transferencykey);
                     //@ts-ignore
-                    return row?.data[index]?.value == item;
+                    return row?.data[index]?.value === item;
                   })}
                   onChange={() => handleSelectRow(rowIndex)}
                   className={twMerge(
@@ -131,8 +113,8 @@ export default function Body({
             </TableData>
           )}
           {columns.map((column: TColumns) => {
-            const item = row.data?.find((value) => value.key == column.key);
-            //@ts-ignore
+            const item = row.data?.find((value) => value.key === column.key) as TRowItem;
+            const itemC = columns?.find((column: TColumns) => column.key === item?.key);
             const itemIndex = row.data?.indexOf(item);
             return (
               item && (
@@ -146,23 +128,17 @@ export default function Body({
                   lineHeight={data.linesHeight}
                   style={style}
                   key={itemIndex}>
-                  {columns?.find((column: TColumns) => column.key == item.key)?.select ? (
+                  {itemC?.select ? (
                     <div className='w-full'>
                       <select
                         value={isNil(item.value) ? '' : item.value}
                         onChange={({ target }) =>
-                          edit(
-                            rowIndex,
-                            itemIndex,
-                            columns?.find((column: TColumns) => column.key == item.key)?.selectPrimaryKey
-                              ? parseInt(target.value)
-                              : target.value
-                          )
+                          edit(rowIndex, itemIndex, itemC?.selectPrimaryKey ? Number.parseInt(target.value) : target.value)
                         }
-                        disabled={columns?.find((column: TColumns) => column.key == item.key)?.disabled}
+                        disabled={itemC?.disabled}
                         className={twMerge(
                           'border-none ring-0 focus:border-transparent focus:ring-0 w-full text-center',
-                          columns?.find((column: TColumns) => column.key == item.key)?.disabled && row?.style?.disabled
+                          itemC?.disabled && row?.style?.disabled
                             ? row.style.disabled
                             : row?.style?.background
                               ? row.style.background
@@ -172,54 +148,32 @@ export default function Body({
                           style?.size ? style.size : '',
                           row?.style?.textStyle ? row.style.textStyle : style?.textStyle ? style.textStyle : 'not-italic	',
                           isNil(item.value) ? 'text-gray-300' : '',
-                          columns?.find((column: TColumns) => column.key == item.key)?.disabled
-                            ? 'cursor-not-allowed'
-                            : 'cursor-pointer'
+                          itemC?.disabled ? 'cursor-not-allowed' : 'cursor-pointer'
                         )}>
-                        <option
-                          disabled={!columns?.find((column: TColumns) => column.key == item.key)?.canClearSelect}
-                          value=''
-                          className='text-gray-300'>
-                          {columns?.find((column: TColumns) => column.key == item.key)?.selectText
-                            ? //@ts-ignore
-                              columns.find((column: TColumns) => column.key == item.key).selectText
-                            : 'Selecione uma opção'}
+                        <option disabled={!itemC?.canClearSelect} value='' className='text-gray-300'>
+                          {itemC?.selectText ? itemC.selectText : 'Selecione uma opção'}
                         </option>
-                        {//@ts-ignore
-                        columns
-                          ?.find((column: TColumns) => column.key == item.key)
-                          ?.options.map((option, index: number | string) => (
-                            <option
-                              value={
-                                option[
-                                  //@ts-ignore
-                                  columns?.find((column: TColumns) => column.key == item.key)?.selectKey
-                                    ? //@ts-ignore
-                                      columns.find((column: TColumns) => column.key == item.key).selectKey
-                                    : 'id'
-                                ]
-                              }
-                              key={index}>
-                              {
-                                option[
-                                  //@ts-ignore
-                                  columns?.find((column: TColumns) => column.key == item.key)?.selectView
-                                    ? //@ts-ignore
-                                      columns.find((column: TColumns) => column.key == item.key).selectView
-                                    : 'name'
-                                ]
-                              }
-                            </option>
-                          ))}
+                        {itemC?.options?.map((option, index: number | string) => (
+                          <option
+                            value={
+                              //@ts-ignore
+                              option[itemC?.selectKey ? itemC.selectKey : 'id']
+                            }
+                            key={index}>
+                            {
+                              //@ts-ignore
+                              option[itemC?.selectView ? itemC.selectView : 'name']
+                            }
+                          </option>
+                        ))}
                       </select>
                     </div>
-                  ) : columns?.find((column: TColumns) => column.key == item.key)?.editable &&
-                    !columns?.find((column: TColumns) => column.key == item.key)?.disabled ? (
-                    columns?.find((column: TColumns) => column.key == item.key)?.date ? (
+                  ) : itemC?.editable && !itemC?.disabled ? (
+                    itemC?.date ? (
                       <DatePicker
                         selected={item.value}
                         onChange={(val) => edit(rowIndex, itemIndex, val)}
-                        disabled={columns?.find((column: TColumns) => column.key == item.key)?.disabled}
+                        disabled={itemC?.disabled}
                         dateFormat='dd/MM/yyyy'
                         className={twMerge(
                           'border-none ring-0 w-full min-w-max focus:border-transparent focus:ring-0 text-center',
@@ -230,15 +184,9 @@ export default function Body({
                       />
                     ) : (
                       <input
-                        type={
-                          columns?.find((column: TColumns) => column.key == item.key)?.type
-                            ? columns?.find((column: TColumns) => column.key == item.key)?.type
-                            : 'text'
-                        }
+                        type={itemC?.type ? itemC?.type : 'text'}
                         value={
-                          columns?.find((column: TColumns) => column.key == item.key)?.money &&
-                          item?.value &&
-                          !isNil(item.value)
+                          itemC?.money && item?.value && !isNil(item.value)
                             ? item?.value?.toLocaleString('pt-br', {
                                 minimumFractionDigits: 2,
                               })
@@ -246,41 +194,31 @@ export default function Body({
                               ? ''
                               : item.value
                         }
-                        onChange={({ target }) =>
-                          edit(
-                            rowIndex,
-                            itemIndex,
-                            target.value,
-                            columns?.find((column: TColumns) => column.key == item.key)?.money
-                          )
-                        }
-                        disabled={columns?.find((column: TColumns) => column.key == item.key)?.disabled}
+                        onChange={({ target }) => edit(rowIndex, itemIndex, target.value, itemC?.money)}
+                        disabled={itemC?.disabled}
                         className={twMerge(
                           'border-none ring-0 focus:border-transparent focus:ring-0 text-center overflow-y-hidden w-full min-w-max',
                           row?.style?.background ? row.style.background : style?.background ? style.background : '',
-                          columns?.find((column: TColumns) => column?.key == item?.key)?.width
-                            ? columns?.find((column: TColumns) => column?.key == item?.key)?.width
-                            : 'w-full',
+                          itemC?.width ? itemC?.width : 'w-full',
                           row?.style?.textStyle ? row.style.textStyle : style?.textStyle ? style.textStyle : 'not-italic	',
                           style?.size ? style.size : ''
                         )}
                       />
                     )
-                  ) : columns?.find((column: TColumns) => column.key == item.key)?.personalized ? (
+                  ) : itemC?.personalized ? (
                     <Personalized
-                      component={columns?.find((column: TColumns) => column.key == item.key)?.component}
-                      functions={columns?.find((column: TColumns) => column.key == item.key)?.functions}
+                      component={itemC?.component}
+                      functions={itemC?.functions}
                       value={item.value}
                       row={row}
+                      p={{
+                        ...itemC.props,
+                        onChange: (e: any) => edit(rowIndex, itemIndex, e),
+                      }}
                     />
-                  ) : columns?.find((column: TColumns) => column.key == item.key)?.date && !isNil(item?.value) ? (
-                    moment.utc(item.value).format(
-                      columns?.find((column: TColumns) => column.key == item.key)?.format
-                        ? //@ts-ignore
-                          columns.find((column: TColumns) => column.key == item.key).format
-                        : 'L'
-                    )
-                  ) : columns?.find((column: TColumns) => column.key == item.key)?.money && item?.value ? (
+                  ) : itemC?.date && !isNil(item?.value) ? (
+                    moment.utc(item.value).format(itemC?.format ? itemC.format : 'L')
+                  ) : itemC?.money && item?.value ? (
                     'R$' +
                     item?.value?.toLocaleString('pt-br', {
                       minimumFractionDigits: 2,

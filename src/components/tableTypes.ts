@@ -170,10 +170,28 @@ export type TStyle = {
     | `${'rounded-' | `rounded-${TailwindRadiusDirectionsVariant}-`}${TailwindRadiusSizeVariant}`;
   border?:
     | `${'border-'}${TailwindUniqueColor}`
-    | `${'border-' | 'border-t-' | 'border-r-' | 'border-b-' | 'border-l-' | 'border-x-' | 'border-y-' | 'border-s-' | 'border-e-'}${TailwindColor}-${TailwindColorVariant}`;
+    | `${
+        | 'border-'
+        | 'border-t-'
+        | 'border-r-'
+        | 'border-b-'
+        | 'border-l-'
+        | 'border-x-'
+        | 'border-y-'
+        | 'border-s-'
+        | 'border-e-'}${TailwindColor}-${TailwindColorVariant}`;
   focus?:
     | `focus:border-${TailwindUniqueColor}`
-    | `focus:${'border-' | 'border-t-' | 'border-r-' | 'border-b-' | 'border-l-' | 'border-x-' | 'border-y-' | 'border-s-' | 'border-e-'}${TailwindColor}-${TailwindColorVariant}`;
+    | `focus:${
+        | 'border-'
+        | 'border-t-'
+        | 'border-r-'
+        | 'border-b-'
+        | 'border-l-'
+        | 'border-x-'
+        | 'border-y-'
+        | 'border-s-'
+        | 'border-e-'}${TailwindColor}-${TailwindColorVariant}`;
   text?: 'text-inherit' | `text-${TailwindUniqueColor}` | `text-${TailwindColor}-${TailwindColorVariant}`;
   placeholder?: string;
   background?: 'bg-inherit' | `bg-${TailwindUniqueColor}` | `bg-${TailwindColor}-${TailwindColorVariant}`;
@@ -256,6 +274,7 @@ export type TColumns = {
   date?: boolean;
   personalized?: boolean;
   component?: React.ReactNode;
+  props?: { [key: string]: any };
   functions?: Function[];
   options?: TSelectOptions[];
   resizedWidth?: number;
