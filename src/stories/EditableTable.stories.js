@@ -11,12 +11,17 @@ const test = (value) => {
   console.log(value);
 };
 
+const Button = () => {
+  return <button>A</button>;
+};
+
 const data = {
   table: {
     transferableRow: true,
     transferencyKey: 'id',
     onConfirm: test,
     onRowDoubleClick: (e) => console.log(e),
+    removeRow: Button,
   },
   head: {
     columns: [
