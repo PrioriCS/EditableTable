@@ -106,6 +106,7 @@ export default function EditableTable({ data }: TDataType) {
                 isNil(editableData?.body?.values) ||
                 isUndefined(editableData?.body?.values)
               }
+              canRemoveRow={data?.table?.removeRow ? true : false}
             />
             <Body
               data={editableData?.body}
@@ -116,6 +117,7 @@ export default function EditableTable({ data }: TDataType) {
               edit={handleEdit}
               handleSelectRow={handleSelectRow}
               onRowDoubleClick={onRowDoubleClick}
+              RemoveRowComponent={data?.table?.removeRow}
             />
           </table>
         </div>

@@ -84,6 +84,7 @@ export default function Head({
   handleSelectAll = noop,
   allSelected = false,
   disableAllSelect = false,
+  canRemoveRow = false,
 }) {
   const { columns, style, checkbox, linesHeight }: THead = data;
   return (
@@ -127,6 +128,13 @@ export default function Head({
                 {column.value}
               </TableHead>
             )
+        )}
+        {canRemoveRow && (
+          <TableHead columns={columns} style={style} checkboxOnly>
+            <div className='flex items-center justify-center px-4'>
+              <p>Remover</p>
+            </div>
+          </TableHead>
         )}
       </tr>
     </thead>

@@ -1,5 +1,5 @@
 import React from 'react';
-import { isEmpty, isNil, noop } from 'lodash';
+import { isNil, noop } from 'lodash';
 import moment from 'moment';
 import { twMerge } from 'tailwind-merge';
 import DatePicker from 'react-datepicker';
@@ -79,9 +79,10 @@ export default function Body({
   handleSelectRow = noop,
   onRowDoubleClick = noop,
   selected = [],
+  RemoveRowComponent,
 }: TBodyHeader) {
   const { style, checkbox }: any = data;
-  const { component: Remove }: any = data.removeRow;
+
   return (
     <tbody id='table-body'>
       {data?.values?.map((row: TRow, rowIndex: number) => (
@@ -229,9 +230,10 @@ export default function Body({
               )
             );
           })}
-          {data.removeRow && !isEmpty(data.removeRow) && (
+          {RemoveRowComponent && (
             <TableData columns={columns} row={row} rowIndex={rowIndex} itemIndex={row?.data?.length} data={data} style={style}>
-              <Remove row={row} />
+              {/* @ts-ignore */}
+              <RemoveRowComponent row={row} />
             </TableData>
           )}
         </tr>

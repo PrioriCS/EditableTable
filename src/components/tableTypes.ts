@@ -236,6 +236,8 @@ export type TSearchBar = {
   onRight?: React.ComponentType;
 };
 
+export type TRemoveRow = React.ComponentType;
+
 export type TTable = {
   transferableRow?: boolean;
   withoutToolbar?: boolean;
@@ -248,6 +250,7 @@ export type TTable = {
   rowsSelectionConfirm?: Function;
   onRowDoubleClick?: Function;
   style?: TStyle;
+  removeRow?: TRemoveRow;
 };
 
 export type TSelectOptions = {
@@ -312,11 +315,8 @@ export type TTableHeadProps = {
 
 export type TBodyValues = TRow[];
 
-export type TRemoveRow = React.ReactNode;
-
 export type TBody = {
   values?: TBodyValues;
-  removeRow?: TRemoveRow;
   style?: TStyle;
   checkbox?: {
     style?: TStyle;
@@ -342,6 +342,7 @@ export type TBodyHeader = {
   handleSelectRow?: Function;
   onRowDoubleClick?: Function;
   selected?: any[];
+  RemoveRowComponent?: TRemoveRow;
 };
 
 export type TPaginationIcon = {
