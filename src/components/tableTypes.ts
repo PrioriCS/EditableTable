@@ -311,11 +311,16 @@ export type TBody = {
     | `-my-[${number | string}em]`;
 };
 
+export type TRemoveRow = {
+  component?: React.ReactNode;
+};
+
 export type TBodyHeader = {
   data?: TBody;
   columns?: TColumns[];
   edit?: Function;
   transferableRow?: boolean;
+  removeRow?: TRemoveRow;
   transferencykey?: string;
   handleSelectRow?: Function;
   onRowDoubleClick?: Function;
