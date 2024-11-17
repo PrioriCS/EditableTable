@@ -1,9 +1,24 @@
-import React, { useState } from 'react';
-import { noop } from 'lodash';
+import React from 'react';
 import { twMerge } from 'tailwind-merge';
-import { TColumns, THead, TTableHeadProps } from '../tableTypes';
+import { TColumns, THead } from '../tableTypes';
 
-const TableHead: React.FC<TTableHeadProps> = ({
+export default function Head({ columns, tHeadClassName, tRowClassName, thClassName }: THead) {
+  return (
+    <thead className={twMerge('border-b', tHeadClassName)}>
+      <tr className={tRowClassName}>
+        {(columns as TColumns[]).map((column, index) => (
+          <th key={index} style={{ width: column?.width }} className={twMerge('border-r p-3', thClassName)}>
+            {column?.title}
+          </th>
+        ))}
+      </tr>
+    </thead>
+  );
+}
+
+/*
+ *
+ * const TableHead: React.FC<TTableHeadProps> = ({
   index = 0,
   columns = [],
   column = {},
@@ -75,68 +90,4 @@ const TableHead: React.FC<TTableHeadProps> = ({
       </div>
     </th>
   );
-};
-
-export default function Head({
-  data = {},
-  handleChangeColumnWidth = noop,
-  transferableRow = false,
-  handleSelectAll = noop,
-  allSelected = false,
-  disableAllSelect = false,
-  canRemoveRow = false,
-}) {
-  const { columns, style, checkbox, linesHeight }: THead = data;
-  return (
-    <thead className={twMerge('sticky top-0 w-full z-10', style?.background ? style.background : 'bg-slate-50')}>
-      <tr>
-        {transferableRow && (
-          <TableHead columns={columns} style={style} checkboxOnly>
-            <div className='flex items-center justify-center px-4'>
-              <input
-                type='checkbox'
-                onChange={handleSelectAll}
-                checked={allSelected}
-                disabled={disableAllSelect}
-                className={twMerge(
-                  'appearance-none focus:ring-0 focus:ring-offset-0',
-                  checkbox?.style?.width ? checkbox.style.width : 'w-6',
-                  checkbox?.style?.height ? checkbox.style.height : 'h-6',
-                  checkbox?.style?.rounded ? checkbox.style.rounded : 'rounded-md',
-                  checkbox?.style?.border ? checkbox.style.border : '',
-                  `checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
-                  `focus:checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
-                  `hover:checked:${checkbox?.style?.background ? checkbox.style.background : ''}`,
-                  disableAllSelect ? 'cursor-not-allowed' : 'cursor-pointer'
-                )}
-              />
-            </div>
-          </TableHead>
-        )}
-
-        {columns?.map(
-          (column: TColumns, index: number) =>
-            !column.disabled && (
-              <TableHead
-                key={index}
-                index={index}
-                columns={columns}
-                column={column}
-                style={style}
-                lineHeight={linesHeight}
-                handleChangeColumnWidth={handleChangeColumnWidth}>
-                {column.value}
-              </TableHead>
-            )
-        )}
-        {canRemoveRow && (
-          <TableHead columns={columns} style={style} checkboxOnly>
-            <div className='flex items-center justify-center px-4'>
-              <p>Remover</p>
-            </div>
-          </TableHead>
-        )}
-      </tr>
-    </thead>
-  );
-}
+};*/

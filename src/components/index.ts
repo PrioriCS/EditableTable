@@ -1,4 +1,6 @@
-import EditableTable from './Table/EditableTable';
-import './tailwind.css';
+import Table from './Table/Table';
+import Head from './Table/Head';
+import Body from './Table/Body';
+import '../../dist/tailwind.css';
 
-export { EditableTable };
+export { Table, Head, Body };
