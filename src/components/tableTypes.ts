@@ -1,3 +1,5 @@
+import React from 'react';
+
 type TailwindNumberValues =
   | '0'
   | '0.5'
@@ -45,6 +47,14 @@ export type TTableType = {
     | `max-h-[${number | string}rem]`
     | `max-h-[${number | string}em]`;
   children?: React.ReactNode;
+};
+
+export type TSearchBar = {
+  className?: string;
+  inputClassName?: string;
+  iconClassName?: string;
+  icon?: React.ComponentType<{ className?: string }>;
+  right?: React.ComponentType<{ className?: string }>;
 };
 
 export type TColumns = {

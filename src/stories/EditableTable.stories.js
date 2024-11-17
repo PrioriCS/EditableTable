@@ -1,4 +1,4 @@
-import { Table, Head, Body } from '../components';
+import { Table, Head, Body, SearchBar } from '../components';
 import React from 'react';
 
 export default {
@@ -8,7 +8,8 @@ export default {
 
 const Template = (args) => (
   <div className='shadow-gray-600 drop-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full'>
-    <Table {...args} className='rounded-xl' />
+    <SearchBar />
+    <Table {...args} className='rounded-b-xl' />
   </div>
 );
 
