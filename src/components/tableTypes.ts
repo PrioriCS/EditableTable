@@ -1,5 +1,3 @@
-import React from 'react';
-
 type TailwindNumberValues =
   | '0'
   | '0.5'
@@ -36,6 +34,32 @@ type TailwindNumberValues =
   | '80'
   | '96';
 
+export type TSelectedIds = number | undefined;
+
+export type TContextType = {
+  children?: React.ReactNode;
+  columnsData?: TColumns[];
+  columns?: TColumns[];
+  initialData?: TBodyValues;
+  canSelect?: boolean;
+  filteredData?: TBodyValues;
+  editedData?: TBodyValues;
+  setColumns?: Function;
+  data?: TBodyValues;
+  setData?: Function;
+  filterData?: Function;
+  selected?: TSelectedIds[];
+  setSelected?: Function;
+  toggleSelectAll?: Function;
+  filterName?: string;
+  filterId?: string;
+  handleEdit?: Function;
+  isAllSelected?: boolean;
+  selectKey?: string;
+  handleSelect?: Function;
+  handleScroll?: Function;
+};
+
 export type TTableType = {
   className?: string;
   scrollY?: boolean;
@@ -53,6 +77,8 @@ export type TSearchBar = {
   className?: string;
   inputClassName?: string;
   iconClassName?: string;
+  filterKey?: string;
+  placeholder?: string;
   icon?: React.ComponentType<{ className?: string }>;
   right?: React.ComponentType<{ className?: string }>;
 };
@@ -73,10 +99,11 @@ export type TColumns = {
 };
 
 export type THead = {
-  columns?: TColumns[];
   tHeadClassName?: string;
   tRowClassName?: string;
   thClassName?: string;
+  tHeadCheckboxClassName?: string;
+  checkboxClassName?: string;
 };
 
 export type TRowItem = {
@@ -91,10 +118,10 @@ export type TRow = {
   tRowClassName?: string;
 };
 
-export type TBodyValyes = TRow[];
+export type TBodyValues = TRow[];
 
 export type TBody = {
-  values?: TBodyValyes;
-  columns?: TColumns[];
   tBodyClassName?: string;
+  tDataCheckboxClassName?: string;
+  checkboxClassName?: string;
 };

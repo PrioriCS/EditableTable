@@ -1,11 +1,30 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { TColumns, THead } from '../tableTypes';
+import { useTableContext } from './TableContext';
 
-export default function Head({ columns, tHeadClassName, tRowClassName, thClassName }: THead) {
+export default function Head({ tHeadClassName, tRowClassName, thClassName, tHeadCheckboxClassName, checkboxClassName }: THead) {
+  const { columns, canSelect, isAllSelected, toggleSelectAll } = useTableContext();
+
+  const handleSelectAll = () => {
+    if (toggleSelectAll) {
+      toggleSelectAll();
+    }
+  };
+
   return (
     <thead className={twMerge('border-b', tHeadClassName)}>
       <tr className={tRowClassName}>
+        {canSelect && (
+          <th className={twMerge('border-r p-2', tHeadCheckboxClassName)}>
+            <input
+              type='checkbox'
+              checked={isAllSelected}
+              onChange={() => handleSelectAll()}
+              className={twMerge('h-5 w-5 rounded-md ring-0 focus:ring-0 cursor-pointer', checkboxClassName)}
+            />
+          </th>
+        )}
         {(columns as TColumns[]).map((column, index) => (
           <th key={index} style={{ width: column?.width }} className={twMerge('border-r p-3', thClassName)}>
             {column?.title}

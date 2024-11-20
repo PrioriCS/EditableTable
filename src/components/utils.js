@@ -15,68 +15,27 @@ export const normalizeMoney = (money) => {
     .join('');
 };
 
-export function edit(setData, setEditedData, setIsEditing, rowIndex, itemIndex, newVal, money = false) {
+export function edit(setData, setEditedData, rowIndex, itemIndex, valKey, newVal, money = false, key) {
   setData((value) => {
-    const temp = { ...value };
+    const temp = [...value];
+    temp[rowIndex].data[itemIndex].value = money ? normalizeMoney(newVal) : newVal;
 
     setEditedData((val) => {
-      const tempVal = { ...val };
-      const valIndex = tempVal.values.findIndex((item) => item == temp.body.values[rowIndex].data);
+      const tempVal = [...val];
+      const valIndex = tempVal.findIndex((item) => item[key] == temp[rowIndex].data.find((it) => it.key == key).value);
 
       if (valIndex >= 0) {
-        tempVal.values[valIndex][itemIndex].value = money ? normalizeMoney(newVal) : newVal;
+        tempVal[valIndex][valKey] = money ? normalizeMoney(newVal) : newVal;
       } else {
-        tempVal.values = [...tempVal.values, temp.body.values[rowIndex].data];
+        const combinedObject = temp[rowIndex].data.reduce((acc, obj) => {
+          acc[obj.key] = obj.value;
+          return acc;
+        }, {});
+        tempVal.push(combinedObject);
       }
 
-      return tempVal;
+      return [...tempVal];
     });
-
-    temp.body.values[rowIndex].data[itemIndex].value = money ? normalizeMoney(newVal) : newVal;
-
     return temp;
   });
-
-  setIsEditing(true);
-}
-
-export function selectAllRows(selected, data, setSelected, key) {
-  if (selected.length == data?.body?.values?.length) {
-    setSelected([]);
-  } else {
-    setSelected(() => {
-      const temp = [];
-
-      data?.body?.values?.map((item) => {
-        const index = item?.data?.findIndex((val) => val.key == key);
-        temp.push(parseInt(item?.data[index].value));
-      });
-
-      return temp;
-    });
-  }
-}
-
-export function selectRow(data, rowIndex, selected, setSelected, key) {
-  const index = data?.body?.values[rowIndex]?.data?.findIndex((val) => val.key == key);
-  const value = data?.body?.values[rowIndex]?.data[index]?.value;
-
-  if (selected.find((item) => item == parseInt(value))) {
-    const existingIndex = selected.findIndex((item) => item == parseInt(value));
-    setSelected((arr) => {
-      const temp = [...arr];
-
-      temp.splice(existingIndex, 1);
-
-      return temp;
-    });
-  } else {
-    setSelected((arr) => {
-      const temp = [...arr];
-
-      temp.push(parseInt(value));
-
-      return temp;
-    });
-  }
 }
