@@ -114,6 +114,7 @@ export const TableProvider = ({ children, columns: columnsData, initialData, can
         toggleSelectAll,
         canSelect,
         editedData,
+        setEditedData,
         handleEdit,
         isAllSelected,
         selectKey,

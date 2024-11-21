@@ -84,10 +84,10 @@ export type TSearchBar = {
 };
 
 export type TColumns = {
-  key?: string | number;
+  key: string | number;
   title?: string;
   width?: string;
-  editable?: boolean;
+  editable: boolean;
   money?: boolean;
   date?: boolean;
   personalized?: boolean;
@@ -107,14 +107,14 @@ export type THead = {
 };
 
 export type TRowItem = {
-  key?: string | number;
-  value?: any;
+  key: string | number;
+  value: any;
   className?: string;
   tDataClassName?: string;
 };
 
 export type TRow = {
-  data?: TRowItem[];
+  data: TRowItem[];
   tRowClassName?: string;
 };
 
