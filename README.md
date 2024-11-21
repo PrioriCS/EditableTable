@@ -54,6 +54,7 @@ export default function EditableTable() {
   | initialData |                Dados iniciais da tabela                 |  Array  |    true     |
   |  canSelect  |       Define se as linhas podem ser selecionáveis       | Boolean |    false    |
   |  selectKey  | Define a chave que será selecionada nas linhas (Ex: ID) | String  |    false    |
+  | minPerPage  |        Mínimo de itens por página, 20 por padrão        | number  |    false    |
 
 ### Table
 
