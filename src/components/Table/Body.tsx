@@ -13,15 +13,13 @@ const Personalized = ({ component, functions, value, row, props }: any) => {
 type TTableData = {
   data: TRowItem;
   row: TRow;
-  columns: TColumns;
   edit: Function | undefined;
   rowIndex: number;
   itemIndex: number;
+  column: TColumns;
 };
 
-const TableData = ({ data, row, columns, edit, rowIndex, itemIndex }: TTableData) => {
-  const column = (columns as TColumns[]).find((column) => column.key == data.key);
-
+const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData) => {
   const handleEdit = (value: any) => {
     if (edit) {
       edit(rowIndex, itemIndex, data.key, value, column?.money);
@@ -109,17 +107,21 @@ export default function Body({ tBodyClassName, tDataCheckboxClassName, checkboxC
               checkboxClassName={checkboxClassName}
             />
           )}
-          {val?.data?.map((response, i) => (
-            <TableData
-              key={i}
-              data={response}
-              columns={columns as TColumns}
-              row={val}
-              edit={handleEdit}
-              rowIndex={index}
-              itemIndex={i}
-            />
-          ))}
+          {(columns as TColumns[]).map((column, colIndex) => {
+            const data = val?.data?.find((item) => item.key === column.key);
+
+            return (
+              <TableData
+                key={colIndex}
+                data={data as TRowItem}
+                column={column}
+                row={val}
+                edit={handleEdit}
+                rowIndex={index}
+                itemIndex={colIndex}
+              />
+            );
+          })}
         </tr>
       ))}
     </tbody>
