@@ -8,6 +8,7 @@ export const TableProvider = ({ children, columnsData, initialData, canSelect, s
   const [columns, setColumns] = useState(columnsData);
   const [data, setData] = useState(initialData || []);
   const [filteredData, setFilteredData] = useState(initialData || []);
+  const [fullFilteredData, setFullFilteredData] = useState(initialData || []);
   const [editedData, setEditedData] = useState([]);
   const [selected, setSelected] = useState<(number | undefined)[]>([]);
   const [isAllSelected, setIsAllSelected] = useState(false);
@@ -26,12 +27,13 @@ export const TableProvider = ({ children, columnsData, initialData, canSelect, s
   };
 
   const filterData = (value: string, key: string) => {
-    const filtered = data?.filter((val: any) =>
-      val?.data?.find((item: any) => item[key].toString().toLowerCase().includes(value.toLowerCase()))
+    const filtered = data.filter((val: any) =>
+      val.data.some((item: any) => item[key]?.toString().toLowerCase().includes(value.toLowerCase()))
     );
 
+    setFullFilteredData(filtered);
     setFilteredData(filtered.slice(0, 20));
-    return;
+    setPage(1);
   };
 
   const toggleSelectAll = () => {
@@ -88,9 +90,15 @@ export const TableProvider = ({ children, columnsData, initialData, canSelect, s
     if (page > 1) {
       const startIndex = (page - 1) * 20;
       const endIndex = page * 20;
-      setFilteredData((prevItems: any) => [...prevItems, ...(data as any)?.slice(startIndex, endIndex)]);
+
+      setFilteredData((prevItems) => [...prevItems, ...fullFilteredData.slice(startIndex, endIndex)]);
     }
-  }, [page, data]);
+  }, [page, fullFilteredData]);
+
+  useEffect(() => {
+    setFullFilteredData(data);
+    setFilteredData(data.slice(0, 20));
+  }, [data]);
 
   return (
     <TableContext.Provider
