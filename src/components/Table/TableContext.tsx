@@ -4,7 +4,7 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const TableContext = createContext<TContextType>({});
 
-export const TableProvider = ({ children, columnsData, initialData, canSelect, selectKey }: TContextType) => {
+export const TableProvider = ({ children, columns: columnsData, initialData, canSelect, selectKey }: TContextType) => {
   const [columns, setColumns] = useState(columnsData);
   const [data, setData] = useState(initialData || []);
   const [filteredData, setFilteredData] = useState(initialData || []);
@@ -120,7 +120,7 @@ export const TableProvider = ({ children, columnsData, initialData, canSelect, s
         handleSelect,
         handleScroll,
       }}>
-      {children}
+      <div className='shadow-gray-600 drop-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full'>{children}</div>
     </TableContext.Provider>
   );
 };

@@ -318,11 +318,9 @@ const columns = [
 ];
 
 const Template = (args) => (
-  <TableProvider columnsData={columns} initialData={values} canSelect={true} selectKey='cdpessoa'>
-    <div className='shadow-gray-600 drop-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full'>
-      <SearchBar filterKey='value' />
-      <Table {...args} className='rounded-b-xl' scrollY />
-    </div>
+  <TableProvider columns={columns} initialData={values} canSelect={true} selectKey='cdpessoa'>
+    <SearchBar filterKey='value' />
+    <Table {...args} className='rounded-b-xl' scrollY />
   </TableProvider>
 );
 
