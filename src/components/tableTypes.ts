@@ -58,6 +58,10 @@ export type TContextType = {
   selectKey?: string;
   handleSelect?: Function;
   handleScroll?: Function;
+  setEditedData?: Function;
+  page?: number;
+  setPage?: Function;
+  minPerPage?: number;
 };
 
 export type TTableType = {

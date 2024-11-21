@@ -54,6 +54,7 @@ export default function EditableTable() {
   | initialData |                Dados iniciais da tabela                 |  Array  |    true     |
   |  canSelect  |       Define se as linhas podem ser selecionáveis       | Boolean |    false    |
   |  selectKey  | Define a chave que será selecionada nas linhas (Ex: ID) | String  |    false    |
+  | minPerPage  |        Mínimo de itens por página, 20 por padrão        | number  |    false    |
 
 ### Table
 
@@ -207,10 +208,12 @@ Para limpar dados, o `TableContext` disponibiliza os `sets` para realizar as aç
 ```jsx
 import { useTableContext } from 'priorics-table';
 
-const { setEditedData, setSelected, setData } = useTableContext();
+const { setEditedData, setSelected, setData, page, setPage } = useTableContext();
 
 setEditedData([]); //Zera o array de dados editados
 setSelected([]); //Zera o array de linhas selecionadas
+setPage(2); //Define a página atual do scroll infinito
+console.log(page) //Acessa o número da página atual
 
 const newData = [...];
 setData(newData); //Define os dados da tabela com novos

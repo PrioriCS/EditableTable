@@ -4,7 +4,14 @@ import React, { createContext, useContext, useEffect, useState } from 'react';
 
 const TableContext = createContext<TContextType>({});
 
-export const TableProvider = ({ children, columns: columnsData, initialData, canSelect, selectKey }: TContextType) => {
+export const TableProvider = ({
+  children,
+  columns: columnsData,
+  initialData,
+  canSelect,
+  selectKey,
+  minPerPage,
+}: TContextType) => {
   const [columns, setColumns] = useState(columnsData);
   const [data, setData] = useState(initialData || []);
   const [filteredData, setFilteredData] = useState(initialData || []);
@@ -32,7 +39,7 @@ export const TableProvider = ({ children, columns: columnsData, initialData, can
     );
 
     setFullFilteredData(filtered);
-    setFilteredData(filtered.slice(0, 20));
+    setFilteredData(filtered.slice(0, minPerPage ?? 20));
     setPage(1);
   };
 
@@ -83,13 +90,13 @@ export const TableProvider = ({ children, columns: columnsData, initialData, can
   }, [selected]);
 
   useEffect(() => {
-    setFilteredData(data?.slice(0, 20));
+    setFilteredData(data?.slice(0, minPerPage ?? 20));
   }, [data]);
 
   useEffect(() => {
     if (page > 1) {
-      const startIndex = (page - 1) * 20;
-      const endIndex = page * 20;
+      const startIndex = (page - 1) * (minPerPage ?? 20);
+      const endIndex = page * (minPerPage ?? 20);
 
       setFilteredData((prevItems) => [...prevItems, ...fullFilteredData.slice(startIndex, endIndex)]);
     }
@@ -97,7 +104,7 @@ export const TableProvider = ({ children, columns: columnsData, initialData, can
 
   useEffect(() => {
     setFullFilteredData(data);
-    setFilteredData(data.slice(0, 20));
+    setFilteredData(data.slice(0, minPerPage ?? 20));
   }, [data]);
 
   return (
@@ -120,6 +127,8 @@ export const TableProvider = ({ children, columns: columnsData, initialData, can
         selectKey,
         handleSelect,
         handleScroll,
+        page,
+        setPage,
       }}>
       <div className='shadow-gray-600 drop-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full'>{children}</div>
     </TableContext.Provider>
