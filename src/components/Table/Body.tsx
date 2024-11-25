@@ -52,18 +52,23 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
               'border-none ring-0 focus:border-transparent focus:ring-0 overflow-y-hidden w-full min-w-max p-1.5',
               data.className
             )}
+            style={{ width: column.width }}
           />
         ) : column?.date ? (
-          <div className={twMerge('w-full p-1.5', data.className)}>{moment.utc(data.value).format(column?.format ?? 'L')}</div>
+          <div className={twMerge('w-full p-1.5', data.className)} style={{ width: column.width }}>
+            {moment.utc(data.value).format(column?.format ?? 'L')}
+          </div>
         ) : column?.money ? (
-          <div className={twMerge('w-full p-1.5', data.className)}>
+          <div className={twMerge('w-full p-1.5', data.className)} style={{ width: column.width }}>
             {'R$' +
               data.value.toLocaleString('pt-br', {
                 minimumFractionDigits: 2,
               })}
           </div>
         ) : (
-          <div className={twMerge('w-full p-1.5', data.className)}>{data.value}</div>
+          <div className={twMerge('w-full p-1.5', data.className)} style={{ width: column.width }}>
+            {data.value}
+          </div>
         )}
       </td>
     )

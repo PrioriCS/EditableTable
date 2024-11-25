@@ -26,7 +26,7 @@ export default function Head({ tHeadClassName, tRowClassName, thClassName, tHead
           </th>
         )}
         {(columns as TColumns[]).map((column, index) => (
-          <th key={index} style={{ width: column?.width }} className={twMerge('border-r p-3', thClassName)}>
+          <th key={index} style={{ width: column?.width }} className={twMerge('border-r p-3 whitespace-nowrap', thClassName)}>
             {column?.title}
           </th>
         ))}

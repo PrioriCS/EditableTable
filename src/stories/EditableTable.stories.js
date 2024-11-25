@@ -310,17 +310,17 @@ const values = [
 ];
 
 const columns = [
-  { key: 'nmusuario', title: 'Nome', width: '50%', editable: true },
-  { key: 'endereco', title: 'Endereço', width: '40%', editable: true },
-  { key: 'idade', title: 'Idade', width: '10%' },
-  { key: 'aniversario', title: 'Aniversário', width: '10%', date: true },
-  { key: 'salario', title: 'Salário', width: '10%', money: true },
+  { key: 'nmusuario', title: 'Nome', width: '20%', editable: true },
+  { key: 'endereco', title: 'Endereço', width: '20%', editable: true },
+  { key: 'idade', title: 'Idade', width: '20%' },
+  { key: 'aniversario', title: 'Aniversário', width: '20%', date: true },
+  { key: 'salario', title: 'Salário', width: '20%', money: true },
 ];
 
 const Template = (args) => (
   <TableProvider columns={columns} initialData={values} canSelect={true} selectKey='cdpessoa'>
     <SearchBar filterKey='value' />
-    <Table {...args} className='rounded-b-xl' scrollY />
+    <Table {...args} className='rounded-b-xl' scrollY scrollX />
   </TableProvider>
 );
 
@@ -328,8 +328,8 @@ export const Default = Template.bind({});
 Default.args = {
   children: (
     <>
-      <Head columns={columns} />
-      <Body columns={columns} />
+      <Head />
+      <Body />
     </>
   ),
 };
