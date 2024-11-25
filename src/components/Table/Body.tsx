@@ -5,9 +5,9 @@ import { twMerge } from 'tailwind-merge';
 import { TBody, TColumns, TRow, TRowItem } from 'components/tableTypes';
 import { useTableContext } from './TableContext';
 
-const Personalized = ({ component, functions, value, row, props }: any) => {
+const Personalized = ({ component, functions, value, row, props, edit }: any) => {
   const Component = component;
-  return <Component functions={functions} value={value} row={row} {...props} />;
+  return <Component functions={functions} value={value} row={row} edit={edit} {...props} />;
 };
 
 type TTableData = {
@@ -36,6 +36,7 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
             value={data?.value}
             row={row}
             props={column?.props}
+            edit={handleEdit}
           />
         ) : column?.editable ? (
           <input
