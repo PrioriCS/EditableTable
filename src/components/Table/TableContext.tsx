@@ -1,6 +1,7 @@
 import { TContextType } from 'components/tableTypes';
 import { edit } from '../utils';
 import React, { createContext, useContext, useEffect, useState } from 'react';
+import { isEmpty } from 'lodash';
 
 const TableContext = createContext<TContextType>({});
 
@@ -82,12 +83,12 @@ export const TableProvider = ({
   };
 
   useEffect(() => {
-    if (selected.length == data?.length) {
+    if (selected.length == data?.length && !isEmpty(data)) {
       setIsAllSelected(true);
     } else {
       setIsAllSelected(false);
     }
-  }, [selected]);
+  }, [selected, data]);
 
   useEffect(() => {
     setFilteredData(data?.slice(0, minPerPage ?? 20));
