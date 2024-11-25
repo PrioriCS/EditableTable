@@ -67,15 +67,13 @@ export const TableProvider = ({
 
   const handleSelect = (key: number) => {
     const index: number = selected.findIndex((item) => item == key) ?? -1;
-
     if (index >= 0) {
       setSelected((val) => {
         const temp = [...val];
-        temp.splice(index, 0);
+        temp.splice(index, 1);
 
         return temp;
       });
-      selected.splice(index, 1);
     } else {
       setSelected((val) => [...val, key]);
     }
