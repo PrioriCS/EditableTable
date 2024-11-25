@@ -1,6 +1,6 @@
 {
   "name": "priorics-table",
-  "version": "4.0.6",
+  "version": "4.0.7",
   "private": false,
   "main": "dist/index",
   "types": "dist/tableTypes.ts",

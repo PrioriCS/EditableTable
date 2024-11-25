@@ -9,8 +9,8 @@ export const TableProvider = ({
   children,
   columns: columnsData,
   initialData,
-  canSelect,
-  selectKey,
+  canSelect: selectble,
+  selectKey: key,
   minPerPage,
 }: TContextType) => {
   const [columns, setColumns] = useState(columnsData);
@@ -22,6 +22,9 @@ export const TableProvider = ({
   const [isAllSelected, setIsAllSelected] = useState(false);
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
+  const [canSelect, setCanSelect] = useState(selectble);
+  const [selectKey, setSelectKey] = useState(key);
+  const [perPage, setPerPage] = useState(minPerPage);
 
   const handleScroll = (e: any) => {
     const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
@@ -40,7 +43,7 @@ export const TableProvider = ({
     );
 
     setFullFilteredData(filtered);
-    setFilteredData(filtered.slice(0, minPerPage ?? 20));
+    setFilteredData(filtered.slice(0, perPage ?? 20));
     setPage(1);
   };
 
@@ -91,13 +94,13 @@ export const TableProvider = ({
   }, [selected, data]);
 
   useEffect(() => {
-    setFilteredData(data?.slice(0, minPerPage ?? 20));
+    setFilteredData(data?.slice(0, perPage ?? 20));
   }, [data]);
 
   useEffect(() => {
     if (page > 1) {
-      const startIndex = (page - 1) * (minPerPage ?? 20);
-      const endIndex = page * (minPerPage ?? 20);
+      const startIndex = (page - 1) * (perPage ?? 20);
+      const endIndex = page * (perPage ?? 20);
 
       setFilteredData((prevItems) => [...prevItems, ...fullFilteredData.slice(startIndex, endIndex)]);
     }
@@ -105,7 +108,7 @@ export const TableProvider = ({
 
   useEffect(() => {
     setFullFilteredData(data);
-    setFilteredData(data.slice(0, minPerPage ?? 20));
+    setFilteredData(data.slice(0, perPage ?? 20));
   }, [data]);
 
   return (
