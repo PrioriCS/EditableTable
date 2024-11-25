@@ -62,6 +62,9 @@ export type TContextType = {
   page?: number;
   setPage?: Function;
   minPerPage?: number;
+  setCanSelect?: Function;
+  setPerPage?: Function;
+  setSelectKey?: Function;
 };
 
 export type TTableType = {

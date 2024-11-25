@@ -133,6 +133,9 @@ export const TableProvider = ({
         handleScroll,
         page,
         setPage,
+        setCanSelect,
+        setPerPage,
+        setSelectKey,
       }}>
       <div className='shadow-gray-600 drop-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full'>{children}</div>
     </TableContext.Provider>
