@@ -10,7 +10,7 @@ export const TableProvider = ({
   columns: columnsData,
   initialData,
   canSelect: selectble,
-  selectKey: key,
+  selectKey: keySelect,
   minPerPage,
 }: TContextType) => {
   const [columns, setColumns] = useState(columnsData);
@@ -23,7 +23,7 @@ export const TableProvider = ({
   const [loading, setLoading] = useState(false);
   const [page, setPage] = useState(1);
   const [canSelect, setCanSelect] = useState(selectble);
-  const [selectKey, setSelectKey] = useState(key);
+  const [selectKey, setSelectKey] = useState(keySelect);
   const [perPage, setPerPage] = useState(minPerPage);
 
   const handleScroll = (e: any) => {
@@ -66,17 +66,17 @@ export const TableProvider = ({
   };
 
   const handleSelect = (key: number) => {
-    const index: number = selected.findIndex((item) => item == key) ?? -1;
-    if (index >= 0) {
-      setSelected((val) => {
-        const temp = [...val];
-        temp.splice(index, 1);
+    setSelected((prevSelected) => {
+      const index = prevSelected.findIndex((item) => item === key);
 
+      if (index >= 0) {
+        const temp = [...prevSelected];
+        temp.splice(index, 1);
         return temp;
-      });
-    } else {
-      setSelected((val) => [...val, key]);
-    }
+      } else {
+        return [...prevSelected, key];
+      }
+    });
   };
 
   const handleEdit = (rowIndex: number, itemIndex: number, valKey: string, newVal: any, money: boolean) => {
