@@ -42,11 +42,13 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
             <input
               type={column?.type ?? 'text'}
               value={
-                column?.money
-                  ? data?.value?.toLocaleString('pt-br', {
-                      minimumFractionDigits: 2,
-                    })
-                  : data?.value
+                data?.value
+                  ? column?.money
+                    ? data?.value?.toLocaleString('pt-br', {
+                        minimumFractionDigits: 2,
+                      })
+                    : data?.value
+                  : ''
               }
               onChange={({ target }) => handleEdit(target.value)}
               className={twMerge(

@@ -18,14 +18,16 @@ export const normalizeMoney = (money) => {
 export function edit(setData, setEditedData, rowIndex, itemIndex, valKey, newVal, money = false, key) {
   setData((value) => {
     const temp = [...value];
-    temp[rowIndex].data[itemIndex].value = money ? normalizeMoney(newVal) : newVal;
+    const formattedValue = money ? parseFloat(normalizeMoney(newVal).replace('.', '').replace(',', '.')) : newVal;
+
+    temp[rowIndex].data[itemIndex].value = formattedValue;
 
     setEditedData((val) => {
       const tempVal = [...val];
       const valIndex = tempVal.findIndex((item) => item[key] == temp[rowIndex].data.find((it) => it.key == key).value);
 
       if (valIndex >= 0) {
-        tempVal[valIndex][valKey] = money ? normalizeMoney(newVal) : newVal;
+        tempVal[valIndex][valKey] = formattedValue;
       } else {
         const combinedObject = temp[rowIndex].data.reduce((acc, obj) => {
           acc[obj.key] = obj.value;
