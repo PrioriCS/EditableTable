@@ -2,6 +2,9 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { TTableType } from '../tableTypes';
 import { useTableContext } from './TableContext';
+import moment from 'moment';
+import 'moment/locale/pt-br';
+moment.locale('pt-br');
 
 export default function Table({ className, scrollY, scrollX, scrollMinHeight, children }: TTableType) {
   const { handleScroll } = useTableContext();

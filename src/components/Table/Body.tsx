@@ -1,9 +1,8 @@
 import React from 'react';
-import moment from 'moment';
-moment.locale('pt-br');
 import { twMerge } from 'tailwind-merge';
 import { TBody, TColumns, TRow, TRowItem } from 'components/tableTypes';
 import { useTableContext } from './TableContext';
+import moment from 'moment';
 
 const Personalized = ({ component, functions, value, row, props, edit }: any) => {
   const Component = component;
