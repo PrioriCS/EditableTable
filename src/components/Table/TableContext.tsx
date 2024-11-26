@@ -84,12 +84,12 @@ export const TableProvider = ({
   };
 
   useEffect(() => {
-    if (selected.length == data?.length && !isEmpty(data)) {
+    if (selected.length == filteredData?.length && !isEmpty(filteredData)) {
       setIsAllSelected(true);
     } else {
       setIsAllSelected(false);
     }
-  }, [selected, data]);
+  }, [selected, filteredData, data, page]);
 
   useEffect(() => {
     setFilteredData(data?.slice(0, perPage ?? 20));
