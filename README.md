@@ -201,9 +201,9 @@ Output:
 */
 ```
 
-## Limpar Dados
+## Setters
 
-Para limpar dados, o `TableContext` disponibiliza os `sets` para realizar as ações quando o Dev quiser, por exemplo logo após atualizar os dados, limpar o array `editedData`
+Para setar dados, o `TableContext` disponibiliza alguns `sets` para realizar as ações quando o Dev quiser, por exemplo logo após atualizar os dados, limpar o array `editedData`
 
 ```jsx
 import { useTableContext } from 'priorics-table';
