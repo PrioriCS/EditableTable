@@ -28,44 +28,48 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
 
   return (
     column?.key == data.key && (
-      <td key={data.key} className={twMerge('border-r whitespace-nowrap', data.tDataClassName)} style={{ width: column.width }}>
-        {column?.personalized ? (
-          <Personalized
-            component={column?.component}
-            functions={column?.functions}
-            value={data?.value}
-            row={row}
-            props={column?.props}
-            edit={handleEdit}
-          />
-        ) : column?.editable ? (
-          <input
-            type={column?.type ?? 'text'}
-            value={
-              column?.money
-                ? data.value.toLocaleString('pt-br', {
-                    minimumFractionDigits: 2,
-                  })
-                : data.value
-            }
-            onChange={({ target }) => handleEdit(target.value)}
-            className={twMerge(
-              'border-none ring-0 focus:border-transparent focus:ring-0 overflow-y-hidden w-full min-w-max p-1.5',
-              data.className
-            )}
-          />
-        ) : column?.date ? (
-          <div className={twMerge('w-full p-1.5', data.className)}>{moment.utc(data.value).format(column?.format ?? 'L')}</div>
-        ) : column?.money ? (
-          <div className={twMerge('w-full p-1.5', data.className)}>
-            {'R$' +
-              data.value.toLocaleString('pt-br', {
-                minimumFractionDigits: 2,
-              })}
-          </div>
-        ) : (
-          <div className={twMerge('w-full p-1.5', data.className)}>{data.value}</div>
-        )}
+      <td key={data.key} className={twMerge('border-r whitespace-nowrap', data.tDataClassName)}>
+        <div style={{ width: column?.width }}>
+          {column?.personalized ? (
+            <Personalized
+              component={column?.component}
+              functions={column?.functions}
+              value={data?.value}
+              row={row}
+              props={column?.props}
+              edit={handleEdit}
+            />
+          ) : column?.editable ? (
+            <input
+              type={column?.type ?? 'text'}
+              value={
+                column?.money
+                  ? data?.value?.toLocaleString('pt-br', {
+                      minimumFractionDigits: 2,
+                    })
+                  : data?.value
+              }
+              onChange={({ target }) => handleEdit(target.value)}
+              className={twMerge(
+                'border-none ring-0 focus:border-transparent focus:ring-0 overflow-y-hidden w-full min-w-max p-1.5',
+                data.className
+              )}
+            />
+          ) : column?.date ? (
+            <div className={twMerge('w-full p-1.5', data.className)}>
+              {moment.utc(data.value).format(column?.format ?? 'L')}
+            </div>
+          ) : column?.money ? (
+            <div className={twMerge('w-full p-1.5', data.className)}>
+              {'R$' +
+                data?.value?.toLocaleString('pt-br', {
+                  minimumFractionDigits: 2,
+                })}
+            </div>
+          ) : (
+            <div className={twMerge('w-full p-1.5', data.className)}>{data?.value}</div>
+          )}
+        </div>
       </td>
     )
   );
