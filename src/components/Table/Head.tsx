@@ -22,7 +22,7 @@ export default function Head({ tHeadClassName, tRowClassName, thClassName, tHead
               type='checkbox'
               checked={isAllSelected}
               onChange={() => handleSelectAll()}
-              className={twMerge('h-5 w-5 rounded-md ring-0 focus:ring-0 cursor-pointer', checkboxClassName)}
+              className={twMerge('rounded-md ring-0 focus:ring-0 cursor-pointer', 'h-5 w-5', checkboxClassName)}
             />
           </th>
         )}

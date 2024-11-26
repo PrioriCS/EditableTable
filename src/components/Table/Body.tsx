@@ -88,7 +88,7 @@ const Checkbox = ({ selected, handleSelectItem, val, selectKey, tDataCheckboxCla
         type='checkbox'
         onChange={() => handleSelectItem(item)}
         checked={(selected as number[]).includes(item)}
-        className={twMerge('h-5 w-5 rounded-md ring-0 focus:ring-0 cursor-pointer', checkboxClassName)}
+        className={twMerge('rounded-md ring-0 focus:ring-0 cursor-pointer', 'h-5 w-5', checkboxClassName)}
       />
     </td>
   );
@@ -113,7 +113,7 @@ export default function Body({ tBodyClassName, tDataCheckboxClassName, checkboxC
               handleSelectItem={handleSelectItem}
               val={val}
               selectKey={selectKey}
-              tdClassName={tDataCheckboxClassName}
+              tDataCheckboxClassName={tDataCheckboxClassName}
               checkboxClassName={checkboxClassName}
             />
           )}
