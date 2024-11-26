@@ -2,6 +2,7 @@ import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import { TColumns, THead } from '../tableTypes';
 import { useTableContext } from './TableContext';
+import { isEmpty } from 'lodash';
 
 export default function Head({ tHeadClassName, tRowClassName, thClassName, tHeadCheckboxClassName, checkboxClassName }: THead) {
   const { columns, canSelect, isAllSelected, toggleSelectAll } = useTableContext();
@@ -25,11 +26,12 @@ export default function Head({ tHeadClassName, tRowClassName, thClassName, tHead
             />
           </th>
         )}
-        {(columns as TColumns[]).map((column, index) => (
-          <th key={index} style={{ width: column?.width }} className={twMerge('border-r p-3 whitespace-nowrap', thClassName)}>
-            {column?.title}
-          </th>
-        ))}
+        {!isEmpty(columns) &&
+          (columns as TColumns[]).map((column, index) => (
+            <th key={index} style={{ width: column?.width }} className={twMerge('border-r p-3 whitespace-nowrap', thClassName)}>
+              {column?.title}
+            </th>
+          ))}
       </tr>
     </thead>
   );

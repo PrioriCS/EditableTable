@@ -3,6 +3,7 @@ import { twMerge } from 'tailwind-merge';
 import { TBody, TColumns, TRow, TRowItem } from 'components/tableTypes';
 import { useTableContext } from './TableContext';
 import moment from 'moment';
+import { isEmpty, isNil, isUndefined } from 'lodash';
 
 const Personalized = ({ component, functions, value, row, props, edit }: any) => {
   const Component = component;
@@ -26,8 +27,11 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
   };
 
   return (
-    column?.key == data.key && (
-      <td key={data.key} className={twMerge('border-r whitespace-nowrap', data.tDataClassName)}>
+    column?.key == data?.key &&
+    !isNil(data) &&
+    !isUndefined(data) &&
+    !isEmpty(data) && (
+      <td key={data?.key} className={twMerge('border-r whitespace-nowrap', data?.tDataClassName)}>
         <div style={{ width: column?.width }}>
           {column?.personalized ? (
             <Personalized

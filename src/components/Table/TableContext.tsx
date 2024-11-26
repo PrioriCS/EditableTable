@@ -109,6 +109,11 @@ export const TableProvider = ({
     setFilteredData(data.slice(0, perPage ?? 20));
   }, [data]);
 
+  useEffect(() => {
+    setColumns([]);
+    setData([]);
+  }, []);
+
   return (
     <TableContext.Provider
       value={{
