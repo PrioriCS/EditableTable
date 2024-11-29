@@ -1,4 +1,4 @@
-import { isDate, isNil, isUndefined } from 'lodash';
+import { isNil } from 'lodash';
 
 export const normalizeMoney = (money) => {
   const numberToFormat = typeof money === 'number' ? String(money) : money;
@@ -32,7 +32,7 @@ export function edit(setData, setEditedData, rowIndex, itemIndex, valKey, newVal
         tempVal[valIndex][valKey] = formattedValue;
       } else {
         const combinedObject = temp[rowIndex].data.reduce((acc, obj) => {
-          if ((!isNil(obj.value) && !isUndefined(obj.value)) || isDate(obj.value)) {
+          if (!isNil(obj.value)) {
             acc[obj.key] = obj.value;
             return acc;
           }
