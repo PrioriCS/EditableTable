@@ -1,3 +1,4 @@
+import '!style-loader!css-loader!postcss-loader!tailwindcss/tailwind.css';
 import { Table, Head, Body, SearchBar, TableProvider } from '../components';
 import React from 'react';
 
@@ -14,7 +15,7 @@ const values = [
       { key: 'endereco', value: 'Rua 1401, 100' },
       { key: 'idade', value: 23 },
       { key: 'aniversario', value: '2001-02-04' },
-      { key: 'salario', value: 2400 },
+      { key: 'salario', value: 2400.20 },
     ],
   },
   {
@@ -310,11 +311,11 @@ const values = [
 ];
 
 const columns = [
-  { key: 'nmusuario', title: 'Nome', width: '20%', editable: true },
-  { key: 'endereco', title: 'Endereço', width: '20%', editable: true },
-  { key: 'idade', title: 'Idade', width: '20%' },
-  { key: 'aniversario', title: 'Aniversário', width: '20%', date: true },
-  { key: 'salario', title: 'Salário', width: '20%', money: true },
+  { key: 'nmusuario', title: 'Nome', /* width: '20%', */ editable: true },
+  { key: 'endereco', title: 'Endereço', /* width: '20%', */ editable: true },
+  { key: 'idade', title: 'Idade', /* width: '20%' */ type: 'number' },
+  { key: 'aniversario', title: 'Aniversário', /* width: '20%', */ date: true },
+  { key: 'salario', title: 'Salário', /* width: '20%', */ money: true },
 ];
 
 const Template = (args) => (

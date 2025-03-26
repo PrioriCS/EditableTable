@@ -38,9 +38,31 @@ export const TableProvider = ({
   };
 
   const filterData = (value: string, key: string) => {
-    const filtered = data.filter((val: any) =>
-      val.data.some((item: any) => item[key]?.toString().toLowerCase().includes(value.toLowerCase()))
-    );
+
+    const filtered = data.filter((val: any) => {
+	
+      return val.data.some((item: any) => {
+		
+		if(!item[key]) return false;
+
+		let compValue = value;
+		let itemVal: any = item[key];
+		const valAsDate = Date.parse(item[key]);
+		const isValDate = !Number.isNaN(Date.parse(item[key])) && valAsDate > 0;
+
+		if(typeof item[key] == 'number'){ // Making sure number representation is consistent
+
+			compValue = parseFloat(value.replace('R$', '').replace('.', '').replace(',', '.')).toString();
+			console.log(compValue, itemVal.toString().includes(compValue));
+
+		}else if(isValDate) // Making sure date representation is consistent
+			itemVal = itemVal.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1');
+
+		return itemVal.toString().toLowerCase().includes(compValue.toLowerCase());
+	
+	  });
+
+    });
 
     setFullFilteredData(filtered);
     setFilteredData(filtered.slice(0, perPage ?? 20));
@@ -109,10 +131,10 @@ export const TableProvider = ({
     setFilteredData(data.slice(0, perPage ?? 20));
   }, [data]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     setColumns([]);
     setData([]);
-  }, []);
+  }, []); */
 
   return (
     <TableContext.Provider
