@@ -42,20 +42,16 @@ export const TableProvider = ({
     const filtered = data.filter((val: any) => {
 	
       return val.data.some((item: any) => {
-		
+				
 		if(!item[key]) return false;
 
 		let compValue = value;
 		let itemVal: any = item[key];
-		const valAsDate = Date.parse(item[key]);
-		const isValDate = !Number.isNaN(Date.parse(item[key])) && valAsDate > 0;
 
-		if(typeof item[key] == 'number'){ // Making sure number representation is consistent
-
-			compValue = parseFloat(value.replace('R$', '').replace('.', '').replace(',', '.')).toString();
-			console.log(compValue, itemVal.toString().includes(compValue));
-
-		}else if(isValDate) // Making sure date representation is consistent
+		if(typeof itemVal == 'number'){ // Making sure number representation is consistent
+			compValue = value.replace('R$', '').replace('.', '').replace(',', '.');
+			itemVal = itemVal.toFixed(2);
+		}else if(itemVal.match(/(\d{4})-(\d{2})-(\d{2})/)) // Making sure date representation is consistent
 			itemVal = itemVal.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1');
 
 		return itemVal.toString().toLowerCase().includes(compValue.toLowerCase());
@@ -67,6 +63,7 @@ export const TableProvider = ({
     setFullFilteredData(filtered);
     setFilteredData(filtered.slice(0, perPage ?? 20));
     setPage(1);
+
   };
 
   const toggleSelectAll = () => {
