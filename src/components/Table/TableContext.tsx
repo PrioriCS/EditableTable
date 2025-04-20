@@ -27,13 +27,13 @@ export const TableProvider = ({
   const [perPage, setPerPage] = useState(minPerPage);
 
   const handleScroll = (e: any) => {
-    const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
-    if (bottom && !loading && filteredData?.length < data?.length) {
+    const bottom = e.target.scrollHeight <= e.target.scrollTop + e.target.clientHeight*1.75;
+    if (bottom && /* !loading && Causes auto load to fail when scrolling with middle click */ filteredData?.length < data?.length) {
       setLoading(true);
-      setTimeout(() => {
-        setPage((prevPage) => prevPage + 1);
+	  setPage((prevPage) => prevPage + 1);
+      /* setTimeout(() => { // Replaced with useEffect :120
         setLoading(false);
-      }, 500);
+      }, 200); */
     }
   };
 
@@ -103,11 +103,7 @@ export const TableProvider = ({
   };
 
   useEffect(() => {
-    if (selected.length == filteredData?.length && !isEmpty(filteredData)) {
-      setIsAllSelected(true);
-    } else {
-      setIsAllSelected(false);
-    }
+    setIsAllSelected(selected.length == filteredData?.length && !isEmpty(filteredData));
   }, [selected, filteredData, data, page]);
 
   useEffect(() => {
@@ -120,6 +116,7 @@ export const TableProvider = ({
       const endIndex = page * (perPage ?? 20);
 
       setFilteredData((prevItems) => [...prevItems, ...fullFilteredData.slice(startIndex, endIndex)]);
+	  setLoading(false);
     }
   }, [page, fullFilteredData]);
 
