@@ -27,24 +27,43 @@ export const TableProvider = ({
   const [perPage, setPerPage] = useState(minPerPage);
 
   const handleScroll = (e: any) => {
-    const bottom = e.target.scrollHeight === e.target.scrollTop + e.target.clientHeight;
-    if (bottom && !loading && filteredData?.length < data?.length) {
+    const bottom = e.target.scrollHeight <= e.target.scrollTop + e.target.clientHeight*1.75;
+    if (bottom && /* !loading && Causes auto load to fail when scrolling with middle click */ filteredData?.length < data?.length) {
       setLoading(true);
-      setTimeout(() => {
-        setPage((prevPage) => prevPage + 1);
+	  setPage((prevPage) => prevPage + 1);
+      /* setTimeout(() => { // Replaced with useEffect :120
         setLoading(false);
-      }, 500);
+      }, 200); */
     }
   };
 
   const filterData = (value: string, key: string) => {
-    const filtered = data.filter((val: any) =>
-      val.data.some((item: any) => item[key]?.toString().toLowerCase().includes(value.toLowerCase()))
-    );
+
+    const filtered = data.filter((val: any) => {
+	
+      return val.data.some((item: any) => {
+				
+		if(!item[key]) return false;
+
+		let compValue = value;
+		let itemVal: any = item[key];
+
+		if(typeof itemVal == 'number'){ // Making sure number representation is consistent
+			compValue = value.replace('R$', '').replace('.', '').replace(',', '.');
+			itemVal = itemVal.toFixed(2);
+		}else if(itemVal.match(/(\d{4})-(\d{2})-(\d{2})/)) // Making sure date representation is consistent
+			itemVal = itemVal.replace(/(\d{4})-(\d{2})-(\d{2})/, '$3/$2/$1');
+
+		return itemVal.toString().toLowerCase().includes(compValue.toLowerCase());
+	
+	  });
+
+    });
 
     setFullFilteredData(filtered);
     setFilteredData(filtered.slice(0, perPage ?? 20));
     setPage(1);
+
   };
 
   const toggleSelectAll = () => {
@@ -84,11 +103,7 @@ export const TableProvider = ({
   };
 
   useEffect(() => {
-    if (selected.length == filteredData?.length && !isEmpty(filteredData)) {
-      setIsAllSelected(true);
-    } else {
-      setIsAllSelected(false);
-    }
+    setIsAllSelected(selected.length == filteredData?.length && !isEmpty(filteredData));
   }, [selected, filteredData, data, page]);
 
   useEffect(() => {
@@ -101,6 +116,7 @@ export const TableProvider = ({
       const endIndex = page * (perPage ?? 20);
 
       setFilteredData((prevItems) => [...prevItems, ...fullFilteredData.slice(startIndex, endIndex)]);
+	  setLoading(false);
     }
   }, [page, fullFilteredData]);
 
@@ -109,10 +125,10 @@ export const TableProvider = ({
     setFilteredData(data.slice(0, perPage ?? 20));
   }, [data]);
 
-  useEffect(() => {
+  /* useEffect(() => {
     setColumns([]);
     setData([]);
-  }, []);
+  }, []); */
 
   return (
     <TableContext.Provider
@@ -140,7 +156,7 @@ export const TableProvider = ({
         setPerPage,
         setSelectKey,
       }}>
-      <div className='shadow-gray-600 drop-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full'>{children}</div>
+      <div className='shadow-gray-600 box-shadow-[0_0_8px_rgba(30,64,175,0.15)] w-full'>{children}</div>
     </TableContext.Provider>
   );
 };

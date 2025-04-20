@@ -57,6 +57,7 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
               onChange={({ target }) => handleEdit(target.value)}
               className={twMerge(
                 'border-none ring-0 focus:border-transparent focus:ring-0 overflow-y-hidden w-full min-w-max p-1.5',
+				(column?.type == 'number' && 'text-right'),
                 data.className
               )}
             />
@@ -65,14 +66,21 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
               {moment.utc(data.value).format(column?.format ?? 'L')}
             </div>
           ) : column?.money ? (
-            <div className={twMerge('w-full p-1.5', data.className)}>
+            <div className={twMerge(
+				'w-full p-1.5 text-right',
+				data.className
+			)}>
               {'R$' +
                 data?.value?.toLocaleString('pt-br', {
                   minimumFractionDigits: 2,
                 })}
             </div>
           ) : (
-            <div className={twMerge('w-full p-1.5', data.className)}>{data?.value}</div>
+            <div className={twMerge(
+				'w-full p-1.5',
+				(column?.type == 'number' && 'text-right'),
+				data.className
+			)}>{data?.value}</div>
           )}
         </div>
       </td>
@@ -83,7 +91,7 @@ const TableData = ({ data, row, column, edit, rowIndex, itemIndex }: TTableData)
 const Checkbox = ({ selected, handleSelectItem, val, selectKey, tDataCheckboxClassName, checkboxClassName }: any) => {
   const item = val?.data?.find((item: any) => item?.key == selectKey)?.value;
   return (
-    <td className={twMerge('border-r p-2', tDataCheckboxClassName)}>
+    <td className={twMerge('border-r p-2 text-center', tDataCheckboxClassName)}>
       <input
         type='checkbox'
         onChange={() => handleSelectItem(item)}
